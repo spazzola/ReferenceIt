@@ -1,4 +1,4 @@
-package com.referenceit.jwt;
+package com.referenceit.security.jwt;
 
 import lombok.Data;
 

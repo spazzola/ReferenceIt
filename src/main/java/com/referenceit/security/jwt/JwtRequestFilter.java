@@ -1,6 +1,6 @@
-package com.referenceit.jwt;
+package com.referenceit.security.jwt;
 
-import com.referenceit.userdetails.MyUserDetailsService;
+import com.referenceit.security.userdetails.MyUserDetailsService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;

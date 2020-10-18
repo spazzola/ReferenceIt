@@ -1,7 +1,7 @@
 package com.referenceit.security;
 
-import com.referenceit.jwt.JwtRequestFilter;
-import com.referenceit.userdetails.MyUserDetailsService;
+import com.referenceit.security.jwt.JwtRequestFilter;
+import com.referenceit.security.userdetails.MyUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -32,7 +32,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         httpSecurity.cors().and().authorizeRequests()
                 .antMatchers("/user/authenticate").permitAll()
                 .antMatchers("/user/register").permitAll()
-                .antMatchers("/h2-console/**").permitAll()
+                .antMatchers("/**").permitAll()
                 .anyRequest().authenticated().and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 

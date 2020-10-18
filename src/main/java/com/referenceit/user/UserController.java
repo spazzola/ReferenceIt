@@ -1,10 +1,10 @@
 package com.referenceit.user;
 
-import com.referenceit.jwt.AuthenticationRequest;
-import com.referenceit.jwt.AuthenticationResponse;
-import com.referenceit.jwt.JwtUtil;
+import com.referenceit.security.jwt.AuthenticationRequest;
+import com.referenceit.security.jwt.AuthenticationResponse;
+import com.referenceit.security.jwt.JwtUtil;
 import com.referenceit.security.SecurityConfiguration;
-import com.referenceit.userdetails.MyUserDetailsService;
+import com.referenceit.security.userdetails.MyUserDetailsService;
 import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

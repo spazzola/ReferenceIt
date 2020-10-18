@@ -1,4 +1,4 @@
-package com.referenceit.jwt;
+package com.referenceit.security.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

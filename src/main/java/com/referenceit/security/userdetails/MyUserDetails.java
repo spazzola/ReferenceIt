@@ -1,4 +1,4 @@
-package com.referenceit.userdetails;
+package com.referenceit.security.userdetails;
 
 import com.referenceit.user.User;
 import org.springframework.security.core.GrantedAuthority;
