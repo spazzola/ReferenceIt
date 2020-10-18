@@ -1,16 +1,19 @@
 package com.referenceit.journalarticles;
 
 import com.referenceit.reference.Author;
+import com.referenceit.reference.ReferenceService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Service
 public class JournalArticleService {
 
-    public JournalArticleService() {
+    private ReferenceService referenceService;
 
-    }
+
 
     public String generateReference(JournalArticle journalArticle) {
         String resultReference = "";
@@ -49,9 +52,9 @@ public class JournalArticleService {
     private String remakeAndAppendMultipleAuthors(List<Author> authors) {
         String resultReference = "";
         for (int i = 1; i <= authors.size(); i++) {
-            resultReference += remakeAuthor(authors.get(i - 1)) + "";
-            if(checkIfAreMoreThanTwoAuthors(i, authors)) {
-                if (checkIfAuthorIsPenultimate(i, authors)) {
+            resultReference += referenceService.remakeAuthor(authors.get(i - 1)) + "";
+            if(referenceService.checkIfAreTwoOrThreeWriters(i, authors)) {
+                if (referenceService.checkIfWriterIsPenultimate(i, authors)) {
                     resultReference += " and ";
                 }
                 else {
@@ -62,35 +65,10 @@ public class JournalArticleService {
         return resultReference;
     }
 
-    private String remakeAuthor(Author author) {
-        String resultString = "";
-        resultString += author.getSurname().toUpperCase();
-        resultString += ",";
-        resultString += " " + author.getFirstName().toUpperCase().charAt(0);
-        if (hasAuthorSecondName(author)) {
-            resultString += "." + author.getSecondName().toUpperCase().charAt(0);
-        }
-        resultString += ".";
-
-        return resultString;
-    }
-
     private String appendAvailableFromAndAccessedDate(JournalArticle journalArticle) {
         String resultString = "";
         resultString += appendDotOrWhiteSpace(journalArticle);
         return resultString + "Available from: " + journalArticle.getAvailableFrom() + " [Accessed " + journalArticle.getAccessedDate() + "]";
-    }
-
-    private boolean hasAuthorSecondName(Author author) {
-        return author.getSecondName() != null;
-    }
-
-    private boolean checkIfAuthorIsPenultimate(int loopIteration, List<Author> authors) {
-        return (loopIteration + 1) == authors.size();
-    }
-
-    private boolean checkIfAreMoreThanTwoAuthors(int loopIteration, List<Author> authors) {
-        return loopIteration != authors.size();
     }
 
     private String appendYear(JournalArticle journalArticle) {

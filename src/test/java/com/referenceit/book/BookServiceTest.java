@@ -2,6 +2,7 @@ package com.referenceit.book;
 
 import com.referenceit.reference.Author;
 import com.referenceit.reference.Editor;
+import com.referenceit.reference.ReferenceService;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -11,13 +12,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BookServiceTest {
 
+    private ReferenceService referenceService = new ReferenceService();
+
     public BookServiceTest() {
     }
 
     @Test
     public void shouldPassReferencingBookWithOneAuthorAndWithoutChapterAndEdition() {
         //given
-        BookService bookService = new BookService();
+        BookService bookService = new BookService(referenceService);
         List<Author> authors = Arrays.asList(new Author("Simon", null, "Clarke"));
         Book book = Book.builder()
                 .authors(authors)
@@ -40,7 +43,7 @@ public class BookServiceTest {
     @Test
     public void shouldPassReferencingBookWithOneAuthorAndEditionAndWithoutChapter() {
         //given
-        BookService bookService = new BookService();
+        BookService bookService = new BookService(referenceService);
         List<Author> authors = Arrays.asList(new Author("Simon", null, "Seidman"));
         Book book = Book.builder()
                 .authors(authors)
@@ -64,7 +67,7 @@ public class BookServiceTest {
     @Test
     public void shouldPassReferencingBookWithTwoAuthorsAndWithoutChapterAndEdition() {
         //given
-        BookService bookService = new BookService();
+        BookService bookService = new BookService(referenceService);
         List<Author> authors = Arrays.asList(
                 new Author("Ramon", null, "Sharda"),
                 new Author("Elen", null, "Turban"));
@@ -90,7 +93,7 @@ public class BookServiceTest {
     @Test
     public void shouldPassReferencingBookWithThreeAuthorsAndWithoutChapterAndEdition() {
         //given
-        BookService bookService = new BookService();
+        BookService bookService = new BookService(referenceService);
         List<Author> authors = Arrays.asList(
                 new Author("Ramon", null, "Sharda"),
                 new Author("Daniel", null, "Delen"),
@@ -117,7 +120,7 @@ public class BookServiceTest {
     @Test
     public void shouldPassReferencingBookWithMoreThanThreeAuthorsAndWithoutChapterAndEdition() {
         //given
-        BookService bookService = new BookService();
+        BookService bookService = new BookService(referenceService);
         List<Author> authors = Arrays.asList(
                 new Author("Hubert", null, "Karau"),
                 new Author("Daniel", null, "Delen"),
@@ -148,7 +151,7 @@ public class BookServiceTest {
     @Test
     public void shouldPassReferencingBookWithOneEditorAndWithoutChapterAndEdition() {
         //given
-        BookService bookService = new BookService();
+        BookService bookService = new BookService(referenceService);
         List<Editor> editors = Arrays.asList(new Editor("Alan", null, "Furse"));
         Book book = Book.builder()
                 .editors(editors)
@@ -171,7 +174,7 @@ public class BookServiceTest {
     @Test
     public void shouldPassReferencingBookWithTwoEditorsAndWithoutChapterAndEdition() {
         //given
-        BookService bookService = new BookService();
+        BookService bookService = new BookService(referenceService);
         List<Editor> editors = Arrays.asList(new Editor("Alan", null, "Furse"),
                                              new Editor("Hans", null, "Schurk"));
         Book book = Book.builder()
@@ -195,7 +198,7 @@ public class BookServiceTest {
     @Test
     public void shouldPassReferencingBookWithThreeEditorsAndWithoutChapterAndEdition() {
         //given
-        BookService bookService = new BookService();
+        BookService bookService = new BookService(referenceService);
         List<Editor> editors = Arrays.asList(new Editor("Alan", null, "Furse"),
                                              new Editor("Hans", null, "Schurk"),
                                              new Editor("Jan", null, "Kowalski"));
@@ -220,7 +223,7 @@ public class BookServiceTest {
 
     @Test
     public void shouldPassReferencingBookWithOneAuthorAndTwoEditorsAndWithChapterAndPagesWithoutAndEdition() {
-        BookService bookService = new BookService();
+        BookService bookService = new BookService(referenceService);
         List<Author> authors = Arrays.asList(new Author("Hans", null, "Schurk"));
         List<Editor> editors = Arrays.asList(new Editor("Cyran", null, "Perren"),
                                              new Editor("Marian", null, "Mlecek"));

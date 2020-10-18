@@ -2,16 +2,19 @@ package com.referenceit.book;
 
 import com.referenceit.reference.Author;
 import com.referenceit.reference.Editor;
+import com.referenceit.reference.ReferenceService;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Service
 public class BookService {
 
-    public BookService() {
+    private ReferenceService referenceService;
 
-    }
 
     public String generateReference(Book book) {
         String resultReference = "";
@@ -51,11 +54,11 @@ public class BookService {
             if (checkIfAreMoreThanThreeWriters(authors)) {
                 resultReference = "";
                 Author firstAuthor = authors.get(0);
-                resultReference += remakeAuthor(firstAuthor) + " et al.";
+                resultReference += referenceService.remakeAuthor(firstAuthor) + " et al.";
             } else {
-                resultReference += remakeAuthor(authors.get(i - 1)) + "";
-                if (checkIfAreTwoOrThreeWriters(i, authors)) {
-                    if (checkIfWriterIsPenultimate(i, authors)) {
+                resultReference += referenceService.remakeAuthor(authors.get(i - 1)) + "";
+                if (referenceService.checkIfAreTwoOrThreeWriters(i, authors)) {
+                    if (referenceService.checkIfWriterIsPenultimate(i, authors)) {
                         resultReference += " and ";
                     } else {
                         resultReference += ", ";
@@ -87,55 +90,13 @@ public class BookService {
 
         return resultReference;
     }
-    /*private String remakeAndAppendMultipleEditors(List<Editor> editors) {
-        String resultReference = "";
-        for (int i = 1; i <= editors.size(); i++) {
-            if (checkIfAreMoreThanThreeWriters(editors)) {
-                resultReference = "";
-                Editor firstEditor = editors.get(0);
-                resultReference += remakeEditor(firstEditor) + " (eds.)";
-            } else {
-                resultReference += remakeEditor(editors.get(i - 1)) + "";
-                if (checkIfAreTwoOrThreeWriters(i, editors)) {
-                    if (checkIfWriterIsPenultimate(i, editors)) {
-                        resultReference += " and ";
-                    } else {
-                        resultReference += ", ";
-                    }
-                }
-                resultReference += " (ed.)";
-            }
-        }
-        return resultReference;
-    }*/
 
     private boolean checkIfAreMoreThanThreeWriters(List<?> writers) {
         return writers.size() > 3;
     }
 
-    private boolean checkIfAreTwoOrThreeWriters(int loopIteration, List<?> writers) {
-        return loopIteration != writers.size();
-    }
-
     private boolean checkIfIsOneWriter(List<?> writers) {
         return writers.size() == 1;
-    }
-
-    private boolean checkIfWriterIsPenultimate(int loopIteration, List<?> writers) {
-        return (loopIteration + 1) == writers.size();
-    }
-
-    private String remakeAuthor(Author author) {
-        String resultString = "";
-        resultString += author.getSurname().toUpperCase();
-        resultString += ",";
-        resultString += " " + author.getFirstName().toUpperCase().charAt(0);
-        if (hasAuthorSecondName(author)) {
-            resultString += "." + author.getSecondName().toUpperCase().charAt(0);
-        }
-        resultString += ".";
-
-        return resultString;
     }
 
     private String remakeEditor(Editor editor) {
@@ -149,10 +110,6 @@ public class BookService {
         resultString += ".";
 
         return resultString;
-    }
-
-    private boolean hasAuthorSecondName(Author author) {
-        return author.getSecondName() != null;
     }
 
     private boolean hasEditorSecondName(Editor editor) {

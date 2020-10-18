@@ -3,7 +3,9 @@ package com.referenceit.journalarticle;
 import com.referenceit.reference.Author;
 import com.referenceit.journalarticles.JournalArticle;
 import com.referenceit.journalarticles.JournalArticleService;
+import com.referenceit.reference.ReferenceService;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;
 import java.util.List;
@@ -11,6 +13,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JournalArticleTest {
+
+
+    private ReferenceService referenceService = new ReferenceService();
 
     public JournalArticleTest() {
     }
@@ -23,7 +28,7 @@ public class JournalArticleTest {
     @Test
     public void shouldPassReferencingJournalArticleWithOneAuthorWithOneName() {
         //given
-        JournalArticleService journalArticleService = new JournalArticleService();
+        JournalArticleService journalArticleService = new JournalArticleService(referenceService);
         List<Author> authors = Arrays.asList(new Author("Daniel", null, "Maimon"));
 
         JournalArticle journalArticle = JournalArticle.builder()
@@ -48,7 +53,7 @@ public class JournalArticleTest {
     @Test
     public void shouldPassReferencingJournalArticleWithTwoAuthorsWithOneName() {
         //given
-        JournalArticleService journalArticleService = new JournalArticleService();
+        JournalArticleService journalArticleService = new JournalArticleService(referenceService);
         List<Author> authors = Arrays.asList(new Author("Daniel", null, "Maimon"),
                                              new Author("Chrystian", null, "Larens"));
 
@@ -74,7 +79,7 @@ public class JournalArticleTest {
     @Test
     public void shouldPassReferencingJournalArticleWithThreeAuthorsWithOneName() {
         //given
-        JournalArticleService journalArticleService = new JournalArticleService();
+        JournalArticleService journalArticleService = new JournalArticleService(referenceService);
         List<Author> authors = Arrays.asList(new Author("Daniel", null, "Maimon"),
                                              new Author("Chrystian", null, "Larens"),
                                              new Author("Paul", null, "Ralph"));
@@ -106,7 +111,7 @@ public class JournalArticleTest {
     @Test
     public void shouldPassReferencingJournalArticleWithOneAuthorWithTwoNames() {
         //given
-        JournalArticleService journalArticleService = new JournalArticleService();
+        JournalArticleService journalArticleService = new JournalArticleService(referenceService);
         List<Author> authors = Arrays.asList(new Author("Daniel", "Karol", "Maimon"));
 
         JournalArticle journalArticle = JournalArticle.builder()
@@ -131,7 +136,7 @@ public class JournalArticleTest {
     @Test
     public void shouldPassReferencingJournalArticleWithTwoAuthorsWithTwoNames() {
         //given
-        JournalArticleService journalArticleService = new JournalArticleService();
+        JournalArticleService journalArticleService = new JournalArticleService(referenceService);
         List<Author> authors = Arrays.asList(new Author("Daniel", "Karol", "Maimon"),
                 new Author("Chrystian", "Mark", "Larens"));
 
@@ -157,7 +162,7 @@ public class JournalArticleTest {
     @Test
     public void shouldPassReferencingJournalArticleWithThreeAuthorsWithTwoNames() {
         //given
-        JournalArticleService journalArticleService = new JournalArticleService();
+        JournalArticleService journalArticleService = new JournalArticleService(referenceService);
         List<Author> authors = Arrays.asList(new Author("Daniel", "Karol", "Maimon"),
                 new Author("Chrystian", "Mark", "Larens"),
                 new Author("Paul", "Yens", "Ralph"));
@@ -189,7 +194,7 @@ public class JournalArticleTest {
     @Test
     public void shouldPassReferencingJournalArticleAvailableOnlineWithOneAuthorWithOneName() {
         //given
-        JournalArticleService journalArticleService = new JournalArticleService();
+        JournalArticleService journalArticleService = new JournalArticleService(referenceService);
         List<Author> authors = Arrays.asList(new Author("Tomas", null, "Heus"),
                                              new Author("Herold", "Jon", "Jonker"));
 
@@ -216,7 +221,7 @@ public class JournalArticleTest {
     @Test
     public void shouldPassReferencingJournalArticleAvailableOnlineWithTwoAuthorsWithTwoNames() {
         //given
-        JournalArticleService journalArticleService = new JournalArticleService();
+        JournalArticleService journalArticleService = new JournalArticleService(referenceService);
         List<Author> authors = Arrays.asList(new Author("Daniel", "Karol", "Maimon"),
                 new Author("Chrystian", "Mark", "Larens"));
 
@@ -243,7 +248,7 @@ public class JournalArticleTest {
     @Test
     public void shouldPassReferencingJournalArticleAvailableOnlineWithThreeAuthorsWithTwoNames() {
         //given
-        JournalArticleService journalArticleService = new JournalArticleService();
+        JournalArticleService journalArticleService = new JournalArticleService(referenceService);
         List<Author> authors = Arrays.asList(new Author("Daniel", "Karol", "Maimon"),
                                              new Author("Chrystian", "Mark", "Larens"),
                                              new Author("Paul", "Yens", "Ralph"));
@@ -276,7 +281,7 @@ public class JournalArticleTest {
     @Test
     public void shouldPassReferencingJournalArticleNotYetPrintedWithThreeAuthorsWithTwoNames() {
         //given
-        JournalArticleService journalArticleService = new JournalArticleService();
+        JournalArticleService journalArticleService = new JournalArticleService(referenceService);
         List<Author> authors = Arrays.asList(new Author("Daniel", "Patrick", "Royall"),
                                              new Author("Bob", "Lauren", "Thiel"),
                                              new Author("Anthony", "Mark", "Donald"));
@@ -304,7 +309,7 @@ public class JournalArticleTest {
     @Test
     public void shouldPassReferencingJournalArticleOpenAccessRepoAvailableOnlineWithTwoAuthors() {
         //given
-        JournalArticleService journalArticleService = new JournalArticleService();
+        JournalArticleService journalArticleService = new JournalArticleService(referenceService);
         List<Author> authors = Arrays.asList(new Author("Daniel", null, "Palit"),
                                              new Author("Silva", "Cylion", "BHATTACHARYYA"));
 
