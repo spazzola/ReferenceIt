@@ -1,30 +1,12 @@
 package com.referenceit.book;
 
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class BookMapper {
-
-    public BookDto toDto(Book book) {
-        return BookDto.builder()
-                .authors(book.getAuthors())
-                .editors(book.getEditors())
-                .year(book.getYear())
-                .title(book.getTitle())
-                .edition(book.getEdition())
-                .publicationPlace(book.getPublicationPlace())
-                .publisher(book.getPublisher())
-                .chapterTitle(book.getChapterTitle())
-                .pages(book.getPages())
-                .isWithChapter(book.isWithChapter())
-                .build();
-    }
-
-    public List<BookDto> toDto(List<Book> books) {
-        return books.stream()
-                .map(this::toDto)
-                .collect(Collectors.toList());
-    }
 
     public Book fromDto(BookDto bookDto) {
         return Book.builder()

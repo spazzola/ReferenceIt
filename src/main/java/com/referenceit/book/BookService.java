@@ -3,27 +3,26 @@ package com.referenceit.book;
 import com.referenceit.reference.Author;
 import com.referenceit.reference.Editor;
 import com.referenceit.reference.ReferenceService;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@AllArgsConstructor
 @Service
 public class BookService {
 
     private ReferenceService referenceService;
     private BookMapper bookMapper;
 
+    public BookService(ReferenceService referenceService, BookMapper bookMapper) {
+        this.referenceService = referenceService;
+        this.bookMapper = bookMapper;
+    }
 
-    public List<BookResponse> generateReferences(List<BookDto> bookDtoList) {
-        List<Book> books = bookMapper.fromDto(bookDtoList);
-        List<BookResponse> resultReferences = new ArrayList<>();
-        for (Book book : books) {
-            resultReferences.add(createReference(book));
-        }
-        return resultReferences;
+    public BookResponse generateReferences(BookDto bookDto) {
+        Book book = bookMapper.fromDto(bookDto);
+
+        return createReference(book);
     }
 
     public BookResponse createReference(Book book) {
