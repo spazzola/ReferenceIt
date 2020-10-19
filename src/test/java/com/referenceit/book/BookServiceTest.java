@@ -13,6 +13,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class BookServiceTest {
 
     private ReferenceService referenceService = new ReferenceService();
+    private BookMapper bookMapper = new BookMapper();
+    private BookService bookService = new BookService(referenceService, bookMapper);
 
     public BookServiceTest() {
     }
@@ -20,7 +22,6 @@ public class BookServiceTest {
     @Test
     public void shouldPassReferencingBookWithOneAuthorAndWithoutChapterAndEdition() {
         //given
-        BookService bookService = new BookService(referenceService);
         List<Author> authors = Arrays.asList(new Author("Simon", null, "Clarke"));
         Book book = Book.builder()
                 .authors(authors)
@@ -32,18 +33,18 @@ public class BookServiceTest {
                 .build();
 
         //when
-        String resultReference = bookService.generateReference(book);
+        BookResponse bookResponse = bookService.createReference(book);
 
         //then
         String expectedResult = "CLARKE, S. (2011) Textile design. London: Laurence King.";
 
-        assertEquals(expectedResult, resultReference);
+        assertEquals(expectedResult, bookResponse.toString());
     }
+
 
     @Test
     public void shouldPassReferencingBookWithOneAuthorAndEditionAndWithoutChapter() {
         //given
-        BookService bookService = new BookService(referenceService);
         List<Author> authors = Arrays.asList(new Author("Simon", null, "Seidman"));
         Book book = Book.builder()
                 .authors(authors)
@@ -56,7 +57,13 @@ public class BookServiceTest {
                 .build();
 
         //when
-        String resultReference = bookService.generateReference(book);
+        BookResponse bookResponse = bookService.createReference(book);
+        String resultReference = "";
+        resultReference += bookResponse.getAuthorsPart();
+        resultReference += bookResponse.getYearPart();
+        resultReference += bookResponse.getBookTitlePart();
+        resultReference += bookResponse.getEditionPart();
+        resultReference += bookResponse.getPublisherAndPublicationPlacePart();
 
         //then
         String expectedResult = "SEIDMAN, S. (2012) Contested knowledge. 5th ed. Hoboken, New Jersey: Wiley-Blackwell.";
@@ -67,7 +74,6 @@ public class BookServiceTest {
     @Test
     public void shouldPassReferencingBookWithTwoAuthorsAndWithoutChapterAndEdition() {
         //given
-        BookService bookService = new BookService(referenceService);
         List<Author> authors = Arrays.asList(
                 new Author("Ramon", null, "Sharda"),
                 new Author("Elen", null, "Turban"));
@@ -82,7 +88,12 @@ public class BookServiceTest {
                 .build();
 
         //when
-        String resultReference = bookService.generateReference(book);
+        BookResponse bookResponse = bookService.createReference(book);
+        String resultReference = "";
+        resultReference += bookResponse.getAuthorsPart();
+        resultReference += bookResponse.getYearPart();
+        resultReference += bookResponse.getBookTitlePart();
+        resultReference += bookResponse.getPublisherAndPublicationPlacePart();
 
         //then
         String expectedResult = "SHARDA, R. and TURBAN, E. (2015) Business intelligence: a managerial perspective on analytics. London: Pearson Education.";
@@ -93,7 +104,6 @@ public class BookServiceTest {
     @Test
     public void shouldPassReferencingBookWithThreeAuthorsAndWithoutChapterAndEdition() {
         //given
-        BookService bookService = new BookService(referenceService);
         List<Author> authors = Arrays.asList(
                 new Author("Ramon", null, "Sharda"),
                 new Author("Daniel", null, "Delen"),
@@ -109,7 +119,12 @@ public class BookServiceTest {
                 .build();
 
         //when
-        String resultReference = bookService.generateReference(book);
+        BookResponse bookResponse = bookService.createReference(book);
+        String resultReference = "";
+        resultReference += bookResponse.getAuthorsPart();
+        resultReference += bookResponse.getYearPart();
+        resultReference += bookResponse.getBookTitlePart();
+        resultReference += bookResponse.getPublisherAndPublicationPlacePart();
 
         //then
         String expectedResult = "SHARDA, R., DELEN, D. and TURBAN, E. (2015) Business intelligence: a managerial perspective on analytics. London: Pearson Education.";
@@ -120,7 +135,6 @@ public class BookServiceTest {
     @Test
     public void shouldPassReferencingBookWithMoreThanThreeAuthorsAndWithoutChapterAndEdition() {
         //given
-        BookService bookService = new BookService(referenceService);
         List<Author> authors = Arrays.asList(
                 new Author("Hubert", null, "Karau"),
                 new Author("Daniel", null, "Delen"),
@@ -137,7 +151,12 @@ public class BookServiceTest {
                 .build();
 
         //when
-        String resultReference = bookService.generateReference(book);
+        BookResponse bookResponse = bookService.createReference(book);
+        String resultReference = "";
+        resultReference += bookResponse.getAuthorsPart();
+        resultReference += bookResponse.getYearPart();
+        resultReference += bookResponse.getBookTitlePart();
+        resultReference += bookResponse.getPublisherAndPublicationPlacePart();
 
         //then
         String expectedResult = "KARAU, H. et al. (2015) Learning Spark. Sebastopol, Ca: O’Reilly.";
@@ -145,13 +164,9 @@ public class BookServiceTest {
         assertEquals(expectedResult, resultReference);
     }
 
-
-    //FURSE, A. (ed.) (2011) Theatre in pieces: politics, poetics and interdisciplinary collaboration: an anthology of play texts 1966-2010. London: Methuen Drama.
-
     @Test
     public void shouldPassReferencingBookWithOneEditorAndWithoutChapterAndEdition() {
         //given
-        BookService bookService = new BookService(referenceService);
         List<Editor> editors = Arrays.asList(new Editor("Alan", null, "Furse"));
         Book book = Book.builder()
                 .editors(editors)
@@ -163,7 +178,12 @@ public class BookServiceTest {
                 .build();
 
         //when
-        String resultReference = bookService.generateReference(book);
+        BookResponse bookResponse = bookService.createReference(book);
+        String resultReference = "";
+        resultReference += bookResponse.getEditorsPart();
+        resultReference += bookResponse.getYearPart();
+        resultReference += bookResponse.getBookTitlePart();
+        resultReference += bookResponse.getPublisherAndPublicationPlacePart();
 
         //then
         String expectedResult = "FURSE, A. (ed.) (2011) Theatre in pieces: politics, poetics and interdisciplinary collaboration: an anthology of play texts 1966-2010. London: Methuen Drama.";
@@ -174,7 +194,6 @@ public class BookServiceTest {
     @Test
     public void shouldPassReferencingBookWithTwoEditorsAndWithoutChapterAndEdition() {
         //given
-        BookService bookService = new BookService(referenceService);
         List<Editor> editors = Arrays.asList(new Editor("Alan", null, "Furse"),
                                              new Editor("Hans", null, "Schurk"));
         Book book = Book.builder()
@@ -187,7 +206,12 @@ public class BookServiceTest {
                 .build();
 
         //when
-        String resultReference = bookService.generateReference(book);
+        BookResponse bookResponse = bookService.createReference(book);
+        String resultReference = "";
+        resultReference += bookResponse.getEditorsPart();
+        resultReference += bookResponse.getYearPart();
+        resultReference += bookResponse.getBookTitlePart();
+        resultReference += bookResponse.getPublisherAndPublicationPlacePart();
 
         //then
         String expectedResult = "FURSE, A. and SCHURK, H. (eds.) (2011) Theatre in pieces: politics, poetics and interdisciplinary collaboration: an anthology of play texts 1966-2010. London: Methuen Drama.";
@@ -198,7 +222,6 @@ public class BookServiceTest {
     @Test
     public void shouldPassReferencingBookWithThreeEditorsAndWithoutChapterAndEdition() {
         //given
-        BookService bookService = new BookService(referenceService);
         List<Editor> editors = Arrays.asList(new Editor("Alan", null, "Furse"),
                                              new Editor("Hans", null, "Schurk"),
                                              new Editor("Jan", null, "Kowalski"));
@@ -212,7 +235,12 @@ public class BookServiceTest {
                 .build();
 
         //when
-        String resultReference = bookService.generateReference(book);
+        BookResponse bookResponse = bookService.createReference(book);
+        String resultReference = "";
+        resultReference += bookResponse.getEditorsPart();
+        resultReference += bookResponse.getYearPart();
+        resultReference += bookResponse.getBookTitlePart();
+        resultReference += bookResponse.getPublisherAndPublicationPlacePart();
 
         //then
         String expectedResult = "FURSE, A., SCHURK, H. and KOWALSKI, J. (eds.) (2011) Theatre in pieces: politics, poetics and interdisciplinary collaboration: an anthology of play texts 1966-2010. London: Methuen Drama.";
@@ -223,7 +251,6 @@ public class BookServiceTest {
 
     @Test
     public void shouldPassReferencingBookWithOneAuthorAndTwoEditorsAndWithChapterAndPagesWithoutAndEdition() {
-        BookService bookService = new BookService(referenceService);
         List<Author> authors = Arrays.asList(new Author("Hans", null, "Schurk"));
         List<Editor> editors = Arrays.asList(new Editor("Cyran", null, "Perren"),
                                              new Editor("Marian", null, "Mlecek"));
@@ -240,12 +267,21 @@ public class BookServiceTest {
                 .build();
 
         //when
-        String resultReference = bookService.generateReference(book);
+        BookResponse bookResponse = bookService.createReference(book);
+        String resultReference = "";
+        resultReference += bookResponse.getAuthorsPart();
+        resultReference += bookResponse.getYearPart();
+        resultReference += bookResponse.getChapterTitlePartWithEditors();
+        resultReference += bookResponse.getBookTitlePart();
+        resultReference += bookResponse.getPublisherAndPublicationPlacePart();
+        resultReference += bookResponse.getPagesPart();
+
 
         //then
         String expectedResult = "SCHURK, H. (2015) Manipulations in imagined space. In: PERREN, C. and MLECEK, M. (eds.) Perception in architecture: here and now. Newcastle upon Tyne: Cambridge Scholars Publishing, pp. 78-85.";
 
         assertEquals(expectedResult, resultReference);
     }
+
 
 }

@@ -4,9 +4,9 @@ import com.referenceit.reference.Author;
 import com.referenceit.reference.Editor;
 import com.referenceit.reference.ReferenceService;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -14,38 +14,61 @@ import java.util.List;
 public class BookService {
 
     private ReferenceService referenceService;
+    private BookMapper bookMapper;
 
 
-    public String generateReference(Book book) {
-        String resultReference = "";
+    public List<BookResponse> generateReferences(List<BookDto> bookDtoList) {
+        List<Book> books = bookMapper.fromDto(bookDtoList);
+        List<BookResponse> resultReferences = new ArrayList<>();
+        for (Book book : books) {
+            resultReferences.add(createReference(book));
+        }
+        return resultReferences;
+    }
+
+    public BookResponse createReference(Book book) {
+        BookResponse bookResponse = new BookResponse();
+
         List<Author> authors = book.getAuthors();
         List<Editor> editors = book.getEditors();
 
         if (editors != null && !book.isWithChapter()) {
-            resultReference += remakeAndAppendMultipleEditors(editors);
+            String editorsPart = remakeAndAppendMultipleEditors(editors);
+            bookResponse.setEditorsPart(editorsPart);
         } else {
-            resultReference += remakeAndAppendMultipleAuthors(authors);
+            String authorsPart = remakeAndAppendMultipleAuthors(authors);
+            bookResponse.setAuthorsPart(authorsPart);
         }
-        resultReference += appendYear(book);
+        String yearPart = appendYear(book);
+        bookResponse.setYearPart(yearPart);
         if (book.isWithChapter()) {
-            resultReference += appendChapterTitle(book);
-            resultReference += "In: ";
-            resultReference += remakeAndAppendMultipleEditors(book.getEditors()) + " ";
+            String chapterTitlePart = "";
+            chapterTitlePart += appendChapterTitle(book) + "In: ";
+            chapterTitlePart += remakeAndAppendMultipleEditors(book.getEditors()) + " ";
+            bookResponse.setChapterTitlePartWithEditors(chapterTitlePart);
         }
-        resultReference += appendBookTitle(book);
+        String bookTitlePart = appendBookTitle(book);
+        bookResponse.setBookTitlePart(bookTitlePart);
         if (checkIfIsNotFirstEdition(book)) {
-            resultReference += appendEdition(book);
+            String editionPart = appendEdition(book);
+            bookResponse.setEditionPart(editionPart);
         }
-        resultReference += appendPublicationPlace(book);
-        resultReference += appendPublisher(book);
+        String publisherAndPublicationPlacePart = "";
+        publisherAndPublicationPlacePart += appendPublicationPlace(book);
+        publisherAndPublicationPlacePart += appendPublisher(book);
+        bookResponse.setPublisherAndPublicationPlacePart(publisherAndPublicationPlacePart);
         if (book.isWithChapter()) {
-            resultReference += ", ";
-            resultReference += appendPages(book) + ".";
+            String pagesPart = "";
+            pagesPart += ", ";
+            pagesPart += appendPages(book) + ".";
+            bookResponse.setPagesPart(pagesPart);
         } else {
-            resultReference += ".";
+            String endOfPublicationPlace = bookResponse.getPublisherAndPublicationPlacePart();
+            endOfPublicationPlace += ".";
+            bookResponse.setPublisherAndPublicationPlacePart(endOfPublicationPlace);
         }
 
-        return resultReference;
+        return bookResponse;
     }
 
     private String remakeAndAppendMultipleAuthors(List<Author> authors) {
@@ -70,6 +93,7 @@ public class BookService {
     }
 
     private String remakeAndAppendMultipleEditors(List<Editor> editors) {
+        List<Editor> resultEditors = new ArrayList<>();
         String resultReference = "";
         if (checkIfIsOneWriter(editors)) {
             resultReference += remakeEditor(editors.get(0)) + " (ed.)";
