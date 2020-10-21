@@ -12,6 +12,27 @@ import java.util.List;
 public class ReferenceService {
 
 
+    public String remakeAndAppendMultipleAuthors(List<Author> authors) {
+        String resultReference = "";
+        for (int i = 1; i <= authors.size(); i++) {
+            if (checkIfAreMoreThanThreeWriters(authors)) {
+                resultReference = "";
+                Author firstAuthor = authors.get(0);
+                resultReference += remakeAuthor(firstAuthor) + " et al.";
+            } else {
+                resultReference += remakeAuthor(authors.get(i - 1)) + "";
+                if (checkIfAreTwoOrThreeWriters(i, authors)) {
+                    if (checkIfWriterIsPenultimate(i, authors)) {
+                        resultReference += " and ";
+                    } else {
+                        resultReference += ", ";
+                    }
+                }
+            }
+        }
+        return resultReference;
+    }
+
     public String remakeAuthor(Author author) {
         String resultString = "";
         resultString += author.getSurname().toUpperCase();
@@ -36,5 +57,10 @@ public class ReferenceService {
     private boolean hasAuthorSecondName(Author author) {
         return author.getSecondName() != null;
     }
+
+    private boolean checkIfAreMoreThanThreeWriters(List<?> writers) {
+        return writers.size() > 3;
+    }
+
 
 }

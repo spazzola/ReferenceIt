@@ -35,7 +35,7 @@ public class BookService {
             String editorsPart = remakeAndAppendMultipleEditors(editors);
             bookResponse.setEditorsPart(editorsPart);
         } else {
-            String authorsPart = remakeAndAppendMultipleAuthors(authors);
+            String authorsPart = referenceService.remakeAndAppendMultipleAuthors(authors);
             bookResponse.setAuthorsPart(authorsPart);
         }
         String yearPart = appendYear(book);
@@ -70,29 +70,7 @@ public class BookService {
         return bookResponse;
     }
 
-    private String remakeAndAppendMultipleAuthors(List<Author> authors) {
-        String resultReference = "";
-        for (int i = 1; i <= authors.size(); i++) {
-            if (checkIfAreMoreThanThreeWriters(authors)) {
-                resultReference = "";
-                Author firstAuthor = authors.get(0);
-                resultReference += referenceService.remakeAuthor(firstAuthor) + " et al.";
-            } else {
-                resultReference += referenceService.remakeAuthor(authors.get(i - 1)) + "";
-                if (referenceService.checkIfAreTwoOrThreeWriters(i, authors)) {
-                    if (referenceService.checkIfWriterIsPenultimate(i, authors)) {
-                        resultReference += " and ";
-                    } else {
-                        resultReference += ", ";
-                    }
-                }
-            }
-        }
-        return resultReference;
-    }
-
     private String remakeAndAppendMultipleEditors(List<Editor> editors) {
-        List<Editor> resultEditors = new ArrayList<>();
         String resultReference = "";
         if (checkIfIsOneWriter(editors)) {
             resultReference += remakeEditor(editors.get(0)) + " (ed.)";
@@ -112,10 +90,6 @@ public class BookService {
 
 
         return resultReference;
-    }
-
-    private boolean checkIfAreMoreThanThreeWriters(List<?> writers) {
-        return writers.size() > 3;
     }
 
     private boolean checkIfIsOneWriter(List<?> writers) {
