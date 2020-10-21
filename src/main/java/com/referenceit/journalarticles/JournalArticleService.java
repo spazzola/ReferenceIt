@@ -12,8 +12,11 @@ import java.util.List;
 public class JournalArticleService {
 
     private ReferenceService referenceService;
+    private JournalArticleMapper journalArticleMapper;
 
 
+    public JournalArticleResponse generateReferences(JournalArticleDto journalArticleDto) {
+        JournalArticle journalArticle = journalArticleMapper.fromDto(journalArticleDto);
 
         return createReference(journalArticle);
     }
