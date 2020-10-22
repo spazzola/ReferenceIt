@@ -33,7 +33,7 @@ public class ReferenceService {
         return resultReference;
     }
 
-    public String remakeAuthor(Author author) {
+    private String remakeAuthor(Author author) {
         String resultString = "";
         resultString += author.getSurname().toUpperCase();
         resultString += ",";
@@ -46,11 +46,11 @@ public class ReferenceService {
         return resultString;
     }
 
-    public boolean checkIfWriterIsPenultimate(int loopIteration, List<?> writers) {
+    private boolean checkIfWriterIsPenultimate(int loopIteration, List<?> writers) {
         return (loopIteration + 1) == writers.size();
     }
 
-    public boolean checkIfAreTwoOrThreeWriters(int loopIteration, List<?> writers) {
+    private boolean checkIfAreTwoOrThreeWriters(int loopIteration, List<?> writers) {
         return loopIteration != writers.size();
     }
 
