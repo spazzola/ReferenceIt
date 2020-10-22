@@ -1,14 +1,12 @@
 package com.referenceit.book;
 
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @AllArgsConstructor
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/book")
 public class BookController {
 
@@ -17,7 +15,7 @@ public class BookController {
 
     @PostMapping("/create")
     public BookResponse generateBookReferences(@RequestBody BookDto bookDto) {
-
+        System.out.println(bookDto);
         return bookService.generateReferences(bookDto);
     }
 
