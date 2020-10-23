@@ -25,7 +25,7 @@ public class NewspaperArticleTest {
         //given
         List<Author> authors = Arrays.asList(new Author("Pamon", null, "Aldrick"));
 
-        NewspaperArticle newspaperArticle = NewspaperArticle.builder()
+        NewspaperArticleDto newspaperArticleDto = NewspaperArticleDto.builder()
                 .authors(authors)
                 .year("2014")
                 .articleTitle("It’s not just academic: universities could make a difference to Britain’s exports")
@@ -36,7 +36,7 @@ public class NewspaperArticleTest {
                 .build();
 
         //when
-        NewspaperArticleResponse newspaperArticleResponse = newspaperArticleService.createReference(newspaperArticle);
+        NewspaperArticleResponse newspaperArticleResponse = newspaperArticleService.generateReference(newspaperArticleDto);
         String resultReference = "";
         resultReference += newspaperArticleResponse.getAuthorsPart();
         resultReference += newspaperArticleResponse.getYearPart();
@@ -55,7 +55,7 @@ public class NewspaperArticleTest {
         //given
         List<Author> authors = Arrays.asList(new Author("Jon", null, "Sharpe"));
 
-        NewspaperArticle newspaperArticle = NewspaperArticle.builder()
+        NewspaperArticleDto newspaperArticleDto = NewspaperArticleDto.builder()
                 .authors(authors)
                 .year("2016")
                 .articleTitle("Jamie Vardy: The complete transfer saga as England striker turns down Arsenal for Leicester City")
@@ -68,7 +68,7 @@ public class NewspaperArticleTest {
                 .build();
 
         //when
-        NewspaperArticleResponse newspaperArticleResponse = newspaperArticleService.createReference(newspaperArticle);
+        NewspaperArticleResponse newspaperArticleResponse = newspaperArticleService.generateReference(newspaperArticleDto);
         String resultReference = "";
         resultReference += newspaperArticleResponse.getAuthorsPart();
         resultReference += newspaperArticleResponse.getYearPart();

@@ -20,7 +20,7 @@ public class NewspaperArticleService {
         return createReference(newspaperArticle);
     }
 
-    public NewspaperArticleResponse createReference(NewspaperArticle newspaperArticle) {
+    private NewspaperArticleResponse createReference(NewspaperArticle newspaperArticle) {
         NewspaperArticleResponse newspaperArticleResponse = new NewspaperArticleResponse();
         List<Author> authors = newspaperArticle.getAuthors();
 
