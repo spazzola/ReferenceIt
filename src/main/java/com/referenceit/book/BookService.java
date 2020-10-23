@@ -5,7 +5,6 @@ import com.referenceit.reference.Editor;
 import com.referenceit.reference.ReferenceService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,13 +18,13 @@ public class BookService {
         this.bookMapper = bookMapper;
     }
 
-    public BookResponse generateReferences(BookDto bookDto) {
+    public BookResponse generateReference(BookDto bookDto) {
         Book book = bookMapper.fromDto(bookDto);
 
         return createReference(book);
     }
 
-    public BookResponse createReference(Book book) {
+    private BookResponse createReference(Book book) {
         BookResponse bookResponse = new BookResponse();
 
         List<Author> authors = book.getAuthors();

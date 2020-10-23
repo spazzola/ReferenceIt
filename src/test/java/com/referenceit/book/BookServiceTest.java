@@ -23,7 +23,7 @@ public class BookServiceTest {
     public void shouldPassReferencingBookWithOneAuthorAndWithoutChapterAndEdition() {
         //given
         List<Author> authors = Arrays.asList(new Author("Simon", null, "Clarke"));
-        Book book = Book.builder()
+        BookDto bookDto = BookDto.builder()
                 .authors(authors)
                 .title("Textile design")
                 .year("2011")
@@ -33,12 +33,17 @@ public class BookServiceTest {
                 .build();
 
         //when
-        BookResponse bookResponse = bookService.createReference(book);
+        BookResponse bookResponse = bookService.generateReference(bookDto);
+        String referenceResult = "";
+        referenceResult += bookResponse.getAuthorsPart();
+        referenceResult += bookResponse.getYearPart();
+        referenceResult += bookResponse.getBookTitlePart();
+        referenceResult += bookResponse.getPublisherAndPublicationPlacePart();
 
         //then
         String expectedResult = "CLARKE, S. (2011) Textile design. London: Laurence King.";
 
-        assertEquals(expectedResult, bookResponse.toString());
+        assertEquals(expectedResult,referenceResult);
     }
 
 
@@ -46,7 +51,7 @@ public class BookServiceTest {
     public void shouldPassReferencingBookWithOneAuthorAndEditionAndWithoutChapter() {
         //given
         List<Author> authors = Arrays.asList(new Author("Simon", null, "Seidman"));
-        Book book = Book.builder()
+        BookDto bookDto = BookDto.builder()
                 .authors(authors)
                 .title("Contested knowledge")
                 .year("2012")
@@ -57,7 +62,7 @@ public class BookServiceTest {
                 .build();
 
         //when
-        BookResponse bookResponse = bookService.createReference(book);
+        BookResponse bookResponse = bookService.generateReference(bookDto);
         String resultReference = "";
         resultReference += bookResponse.getAuthorsPart();
         resultReference += bookResponse.getYearPart();
@@ -77,7 +82,7 @@ public class BookServiceTest {
         List<Author> authors = Arrays.asList(
                 new Author("Ramon", null, "Sharda"),
                 new Author("Elen", null, "Turban"));
-        Book book = Book.builder()
+        BookDto bookDto = BookDto.builder()
                 .authors(authors)
                 .title("Business intelligence: a managerial perspective on analytics")
                 .year("2015")
@@ -88,7 +93,7 @@ public class BookServiceTest {
                 .build();
 
         //when
-        BookResponse bookResponse = bookService.createReference(book);
+        BookResponse bookResponse = bookService.generateReference(bookDto);
         String resultReference = "";
         resultReference += bookResponse.getAuthorsPart();
         resultReference += bookResponse.getYearPart();
@@ -110,7 +115,7 @@ public class BookServiceTest {
                 new Author("Daniel", null, "Delen"),
                 new Author("Elen", null, "Turban"),
                 new Author("Marek", null, "Radclife"));
-        Book book = Book.builder()
+        BookDto bookDto = BookDto.builder()
                 .authors(authors)
                 .title("Learning Spark")
                 .year("2015")
@@ -121,7 +126,7 @@ public class BookServiceTest {
                 .build();
 
         //when
-        BookResponse bookResponse = bookService.createReference(book);
+        BookResponse bookResponse = bookService.generateReference(bookDto);
         String resultReference = "";
         resultReference += bookResponse.getAuthorsPart();
         resultReference += bookResponse.getYearPart();
@@ -138,7 +143,7 @@ public class BookServiceTest {
     public void shouldPassReferencingBookWithOneEditorAndWithoutChapterAndEdition() {
         //given
         List<Editor> editors = Arrays.asList(new Editor("Alan", null, "Furse"));
-        Book book = Book.builder()
+        BookDto bookDto = BookDto.builder()
                 .editors(editors)
                 .title("Theatre in pieces: politics, poetics and interdisciplinary collaboration: an anthology of play texts 1966-2010")
                 .year("2011")
@@ -148,7 +153,7 @@ public class BookServiceTest {
                 .build();
 
         //when
-        BookResponse bookResponse = bookService.createReference(book);
+        BookResponse bookResponse = bookService.generateReference(bookDto);
         String resultReference = "";
         resultReference += bookResponse.getEditorsPart();
         resultReference += bookResponse.getYearPart();
@@ -166,7 +171,7 @@ public class BookServiceTest {
         //given
         List<Editor> editors = Arrays.asList(new Editor("Alan", null, "Furse"),
                                              new Editor("Hans", null, "Schurk"));
-        Book book = Book.builder()
+        BookDto bookDto = BookDto.builder()
                 .editors(editors)
                 .title("Theatre in pieces: politics, poetics and interdisciplinary collaboration: an anthology of play texts 1966-2010")
                 .year("2011")
@@ -176,7 +181,7 @@ public class BookServiceTest {
                 .build();
 
         //when
-        BookResponse bookResponse = bookService.createReference(book);
+        BookResponse bookResponse = bookService.generateReference(bookDto);
         String resultReference = "";
         resultReference += bookResponse.getEditorsPart();
         resultReference += bookResponse.getYearPart();
@@ -195,7 +200,7 @@ public class BookServiceTest {
         List<Editor> editors = Arrays.asList(new Editor("Alan", null, "Furse"),
                                              new Editor("Hans", null, "Schurk"),
                                              new Editor("Jan", null, "Kowalski"));
-        Book book = Book.builder()
+        BookDto bookDto = BookDto.builder()
                 .editors(editors)
                 .title("Theatre in pieces: politics, poetics and interdisciplinary collaboration: an anthology of play texts 1966-2010")
                 .year("2011")
@@ -205,7 +210,7 @@ public class BookServiceTest {
                 .build();
 
         //when
-        BookResponse bookResponse = bookService.createReference(book);
+        BookResponse bookResponse = bookService.generateReference(bookDto);
         String resultReference = "";
         resultReference += bookResponse.getEditorsPart();
         resultReference += bookResponse.getYearPart();
@@ -224,7 +229,7 @@ public class BookServiceTest {
         List<Author> authors = Arrays.asList(new Author("Hans", null, "Schurk"));
         List<Editor> editors = Arrays.asList(new Editor("Cyran", null, "Perren"),
                                              new Editor("Marian", null, "Mlecek"));
-        Book book = Book.builder()
+        BookDto bookDto = BookDto.builder()
                 .authors(authors)
                 .editors(editors)
                 .title("Perception in architecture: here and now")
@@ -237,7 +242,7 @@ public class BookServiceTest {
                 .build();
 
         //when
-        BookResponse bookResponse = bookService.createReference(book);
+        BookResponse bookResponse = bookService.generateReference(bookDto);
         String resultReference = "";
         resultReference += bookResponse.getAuthorsPart();
         resultReference += bookResponse.getYearPart();
