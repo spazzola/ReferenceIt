@@ -15,7 +15,7 @@ public class JournalArticleController {
     @PostMapping("/create")
     public JournalArticleResponse generateBookReferences(@RequestBody JournalArticleDto journalArticleDto) {
 
-        return journalArticleService.generateReferences(journalArticleDto);
+        return journalArticleService.generateReference(journalArticleDto);
     }
 
 }

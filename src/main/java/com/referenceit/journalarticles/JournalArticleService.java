@@ -15,13 +15,13 @@ public class JournalArticleService {
     private JournalArticleMapper journalArticleMapper;
 
 
-    public JournalArticleResponse generateReferences(JournalArticleDto journalArticleDto) {
+    public JournalArticleResponse generateReference(JournalArticleDto journalArticleDto) {
         JournalArticle journalArticle = journalArticleMapper.fromDto(journalArticleDto);
 
         return createReference(journalArticle);
     }
 
-    public JournalArticleResponse createReference(JournalArticle journalArticle) {
+    private JournalArticleResponse createReference(JournalArticle journalArticle) {
         JournalArticleResponse journalArticleResponse = new JournalArticleResponse();
         List<Author> authors = journalArticle.getAuthors();
 
