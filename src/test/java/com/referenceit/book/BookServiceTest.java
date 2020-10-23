@@ -101,36 +101,6 @@ public class BookServiceTest {
         assertEquals(expectedResult, resultReference);
     }
 
-    @Test
-    public void shouldPassReferencingBookWithThreeAuthorsAndWithoutChapterAndEdition() {
-        //given
-        List<Author> authors = Arrays.asList(
-                new Author("Ramon", null, "Sharda"),
-                new Author("Daniel", null, "Delen"),
-                new Author("Elen", null, "Turban"));
-        Book book = Book.builder()
-                .authors(authors)
-                .title("Business intelligence: a managerial perspective on analytics")
-                .year("2015")
-                .edition("1")
-                .publicationPlace("London")
-                .publisher("Pearson Education")
-                .isWithChapter(false)
-                .build();
-
-        //when
-        BookResponse bookResponse = bookService.createReference(book);
-        String resultReference = "";
-        resultReference += bookResponse.getAuthorsPart();
-        resultReference += bookResponse.getYearPart();
-        resultReference += bookResponse.getBookTitlePart();
-        resultReference += bookResponse.getPublisherAndPublicationPlacePart();
-
-        //then
-        String expectedResult = "SHARDA, R., DELEN, D. and TURBAN, E. (2015) Business intelligence: a managerial perspective on analytics. London: Pearson Education.";
-
-        assertEquals(expectedResult, resultReference);
-    }
 
     @Test
     public void shouldPassReferencingBookWithMoreThanThreeAuthorsAndWithoutChapterAndEdition() {
