@@ -6,9 +6,15 @@ import com.referenceit.otherprintsource.britishstandard.BritishStandardService;
 import com.referenceit.otherprintsource.conferenceproceeding.ConferenceProceedingDto;
 import com.referenceit.otherprintsource.conferenceproceeding.ConferenceProceedingResponse;
 import com.referenceit.otherprintsource.conferenceproceeding.ConferenceProceedingService;
+import com.referenceit.otherprintsource.exhibition.ExhibitionDto;
+import com.referenceit.otherprintsource.exhibition.ExhibitionResponse;
+import com.referenceit.otherprintsource.exhibition.ExhibitionService;
 import com.referenceit.otherprintsource.governmentpublication.GovernmentPublicationDto;
 import com.referenceit.otherprintsource.governmentpublication.GovernmentPublicationResponse;
 import com.referenceit.otherprintsource.governmentpublication.GovernmentPublicationService;
+import com.referenceit.otherprintsource.legislation.LegislationDto;
+import com.referenceit.otherprintsource.legislation.LegislationResponse;
+import com.referenceit.otherprintsource.legislation.LegislationService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,6 +29,8 @@ public class OtherPrintSourceController {
     private BritishStandardService britishStandardService;
     private ConferenceProceedingService conferenceProceedingService;
     private GovernmentPublicationService governmentPublicationService;
+    private LegislationService legislationService;
+    private ExhibitionService exhibitionService;
 
 
     @PostMapping("/britishstandard/create")
@@ -40,4 +48,13 @@ public class OtherPrintSourceController {
         return governmentPublicationService.generateReference(governmentPublicationDto);
     }
 
+    @PostMapping
+    public ExhibitionResponse generateExhibitionReference(@RequestBody ExhibitionDto exhibitionDto) {
+        return exhibitionService.generateReference(exhibitionDto);
+    }
+
+    @PostMapping("/legislation/create")
+    public LegislationResponse generateLegislationReference(@RequestBody LegislationDto legislationDto) {
+        return legislationService.generateReference(legislationDto);
+    }
 }
