@@ -15,5 +15,5 @@ public abstract class Reference {
     private List<Author> authors;
     private List<Editor> editors;
 
-    //public abstract String generateReference(Object object);
+    //public abstract String createReference(Object object);
 }

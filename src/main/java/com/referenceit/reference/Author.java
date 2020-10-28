@@ -7,9 +7,7 @@ public class Author extends Writer {
     }
 
     public Author(String name, String secondName, String surname) {
-        setFirstName(name);
-        setSecondName(secondName);
-        setSurname(surname);
+        super(name, secondName, surname);
     }
 
 }

@@ -13,24 +13,32 @@ public class ReferenceService {
 
 
     public String remakeAndAppendMultipleAuthors(List<Author> authors) {
-        String resultReference = "";
-        for (int i = 1; i <= authors.size(); i++) {
-            if (checkIfAreMoreThanThreeWriters(authors)) {
-                resultReference = "";
-                Author firstAuthor = authors.get(0);
-                resultReference += remakeAuthor(firstAuthor) + " et al.";
-            } else {
-                resultReference += remakeAuthor(authors.get(i - 1)) + "";
-                if (checkIfAreTwoOrThreeWriters(i, authors)) {
-                    if (checkIfWriterIsPenultimate(i, authors)) {
-                        resultReference += " and ";
-                    } else {
-                        resultReference += ", ";
-                    }
+        if (authors.size() > 3) {
+            return prepareStringForAuthor(authors.get(0));
+        }
+
+        return prepareStringForAuthors(authors);
+    }
+
+    private String prepareStringForAuthor(Author author) {
+        return remakeAuthor(author) + " et al.";
+    }
+
+    private String prepareStringForAuthors(List<Author> authors) {
+        final StringBuilder builder = new StringBuilder();
+
+        for (int i = 0; i < authors.size() ; i++) {
+            builder.append(remakeAuthor(authors.get(i)));
+            if (i < authors.size() - 1) {
+                if (i == authors.size() - 2) {
+                    builder.append(" and ");
+                } else {
+                    builder.append(", ");
                 }
             }
         }
-        return resultReference;
+
+        return builder.toString();
     }
 
     private String remakeAuthor(Author author) {
@@ -46,21 +54,8 @@ public class ReferenceService {
         return resultString;
     }
 
-    private boolean checkIfWriterIsPenultimate(int loopIteration, List<?> writers) {
-        return (loopIteration + 1) == writers.size();
-    }
-
-    private boolean checkIfAreTwoOrThreeWriters(int loopIteration, List<?> writers) {
-        return loopIteration != writers.size();
-    }
-
     private boolean hasAuthorSecondName(Author author) {
         return author.getSecondName() != null;
     }
-
-    private boolean checkIfAreMoreThanThreeWriters(List<?> writers) {
-        return writers.size() > 3;
-    }
-
 
 }
