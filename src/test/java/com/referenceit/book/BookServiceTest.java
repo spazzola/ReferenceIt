@@ -2,22 +2,23 @@ package com.referenceit.book;
 
 import com.referenceit.reference.Author;
 import com.referenceit.reference.Editor;
-import com.referenceit.reference.ReferenceService;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@SpringBootTest
+@RunWith(SpringRunner.class)
 public class BookServiceTest {
 
-    private ReferenceService referenceService = new ReferenceService();
-    private BookMapper bookMapper = new BookMapper();
-    private BookService bookService = new BookService(referenceService, bookMapper);
-
-    public BookServiceTest() {
-    }
+    @Autowired
+    private BookService bookService;
 
     @Test
     public void shouldPassReferencingBookWithOneAuthorAndWithoutChapterAndEdition() {

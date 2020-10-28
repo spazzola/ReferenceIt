@@ -1,27 +1,27 @@
 package com.referenceit.otherprintsource.conferenceproceedings;
 
 import com.referenceit.otherprintsource.conferenceproceeding.ConferenceProceedingDto;
-import com.referenceit.otherprintsource.conferenceproceeding.ConferenceProceedingMapper;
 import com.referenceit.otherprintsource.conferenceproceeding.ConferenceProceedingResponse;
 import com.referenceit.otherprintsource.conferenceproceeding.ConferenceProceedingService;
 import com.referenceit.reference.Author;
-import com.referenceit.reference.ReferenceService;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ConferenceProceedingTest {
+@SpringBootTest
+@RunWith(SpringRunner.class)
+public class ConferenceProceedingServiceTest {
 
-    private ReferenceService referenceService = new ReferenceService();
-    private ConferenceProceedingMapper conferenceProceedingMapper = new ConferenceProceedingMapper();
-    private ConferenceProceedingService conferenceProceedingService = new ConferenceProceedingService(referenceService, conferenceProceedingMapper);
+    @Autowired
+    private ConferenceProceedingService conferenceProceedingService;
 
-    public ConferenceProceedingTest() {
-
-    }
 
     @Test
     public void shouldPassReferencingConferenceProceeding() {

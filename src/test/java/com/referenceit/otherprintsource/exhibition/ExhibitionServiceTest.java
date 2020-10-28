@@ -1,23 +1,24 @@
 package com.referenceit.otherprintsource.exhibition;
 
 import com.referenceit.reference.Author;
-import com.referenceit.reference.ReferenceService;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ExhibitionTest {
 
-    private ExhibitionMapper exhibitionMapper = new ExhibitionMapper();
-    private ReferenceService referenceService = new ReferenceService();
-    private ExhibitionService exhibitionService = new ExhibitionService(exhibitionMapper, referenceService);
+@SpringBootTest
+@RunWith(SpringRunner.class)
+public class ExhibitionServiceTest {
 
-    public ExhibitionTest() {
-
-    }
+    @Autowired
+    private ExhibitionService exhibitionService;
 
 
     @Test
