@@ -23,38 +23,40 @@ public class JournalArticleService {
 
     private JournalArticleResponse createReference(JournalArticle journalArticle) {
         JournalArticleResponse journalArticleResponse = new JournalArticleResponse();
+
+
         List<Author> authors = journalArticle.getAuthors();
-
-
         String authorsPart = referenceService.remakeAndAppendMultipleAuthors(authors) + " ";
         journalArticleResponse.setAuthorsPart(authorsPart);
 
         String yearPart = appendYear(journalArticle) + " ";
         journalArticleResponse.setYearPart(yearPart);
 
-        String articleTitlePart = appendArticleTitle(journalArticle);
+        String articleTitlePart = journalArticle.getArticleTitle() + ". ";
         journalArticleResponse.setArticleTitlePart(articleTitlePart);
 
-        String journalTitlePart = appendJournalTitle(journalArticle);
+        String journalTitlePart = journalArticle.getJournalTitle();
         journalArticleResponse.setJournalTitlePart(journalTitlePart);
 
         if (journalArticle.isOnlyAvailableOnline() && !journalArticle.isOpenAccessRepo()) {
             journalArticleResponse.setOnlinePart(". [Online] ");
         } else if (journalArticle.isOnlyAvailableOnline() && journalArticle.isOpenAccessRepo()) {
             journalArticleResponse.setForthcomingOrPostprintPart(" [Post-print]");
-        }
-        else {
+        } else {
             journalTitlePart += ", ";
             journalArticleResponse.setJournalTitlePart(journalTitlePart);
         }
+
         if (!journalArticle.isNotYetPrinted()) {
             String volIssueMonthPart = appendVolPartIssueMonthNumber(journalArticle);
             journalArticleResponse.setVolIssueMonthPart(volIssueMonthPart);
         }
+
         if (journalArticle.isOpenAccessRepo()) {
             String pagesPart = appendPages(journalArticle) + ".";
             journalArticleResponse.setPagesPart(pagesPart);
         }
+
         if (journalArticle.isOnlyAvailableOnline()) {
             String availableFromAndAccessedDatePart = appendAvailableFromAndAccessedDate(journalArticle) + ".";
             journalArticleResponse.setAvailableFromAndAccessedDatePart(availableFromAndAccessedDatePart);
@@ -66,6 +68,7 @@ public class JournalArticleService {
                 journalArticleResponse.setDotPart(dotPart);
             }
         }
+
         String comaAndSpacePart = ", ";
         journalArticleResponse.setComaAndSpacePart(comaAndSpacePart);
 
@@ -84,14 +87,6 @@ public class JournalArticleService {
         } else {
             return ("(" + journalArticle.getYear() + ")");
         }
-    }
-
-    public String appendArticleTitle(JournalArticle journalArticle) {
-        return journalArticle.getArticleTitle() + ". ";
-    }
-
-    public String appendJournalTitle(JournalArticle journalArticle) {
-        return journalArticle.getJournalTitle();
     }
 
     private String appendVolPartIssueMonthNumber(JournalArticle journalArticle) {
@@ -124,15 +119,14 @@ public class JournalArticleService {
     }
 
     private String appendDotOrWhiteSpace(JournalArticle journalArticle) {
-        String resultString = "";
         if (journalArticle.isNotYetPrinted() && !journalArticle.isOpenAccessRepo()) {
-            resultString += "";
+            return "";
         } else if (!journalArticle.isNotYetPrinted() && !journalArticle.isOpenAccessRepo()){
-            resultString += ". ";
+            return ". ";
         } else {
-            resultString += " ";
+            return " ";
         }
-        return resultString;
+
     }
 
 }

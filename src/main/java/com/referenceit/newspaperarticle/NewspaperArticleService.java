@@ -93,14 +93,13 @@ public class NewspaperArticleService {
     }
 
     private String remakeMonth(NewspaperArticle newspaperArticle) {
-        String month = newspaperArticle.getMonth();
+        final String month = newspaperArticle.getMonth();
         switch (month) {
             case "June":
-                return "June. ";
             case "July":
-                return "July. ";
+                return month + ". ";
             default:
-                return newspaperArticle.getMonth().substring(0, 3) + ". ";
+                return month.substring(0, 3) + ". ";
         }
     }
 
