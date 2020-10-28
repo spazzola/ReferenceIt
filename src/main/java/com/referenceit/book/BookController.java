@@ -15,7 +15,6 @@ public class BookController {
 
     @PostMapping("/create")
     public BookResponse generateBookReferences(@RequestBody BookDto bookDto) {
-        System.out.println(bookDto);
         return bookService.generateReference(bookDto);
     }
 

@@ -30,15 +30,18 @@ public class BookService {
         List<Author> authors = book.getAuthors();
         List<Editor> editors = book.getEditors();
 
+        // appendEditorsIfExist?
         if (editors != null && !book.isWithChapter()) {
             String editorsPart = remakeAndAppendMultipleEditors(editors);
             bookResponse.setEditorsPart(editorsPart);
+        // appendAuthorsIfExist?
         } else {
             String authorsPart = referenceService.remakeAndAppendMultipleAuthors(authors);
             bookResponse.setAuthorsPart(authorsPart);
         }
         String yearPart = appendYear(book);
         bookResponse.setYearPart(yearPart);
+        // appendChapterIfExist?
         if (book.isWithChapter()) {
             String chapterTitlePart = "";
             chapterTitlePart += appendChapterTitle(book) + "In: ";
@@ -47,6 +50,7 @@ public class BookService {
         }
         String bookTitlePart = appendBookTitle(book);
         bookResponse.setBookTitlePart(bookTitlePart);
+        // appenEditionIfNotFirst?
         if (checkIfIsNotFirstEdition(book)) {
             String editionPart = appendEdition(book);
             bookResponse.setEditionPart(editionPart);
@@ -55,6 +59,7 @@ public class BookService {
         publisherAndPublicationPlacePart += appendPublicationPlace(book);
         publisherAndPublicationPlacePart += appendPublisher(book);
         bookResponse.setPublisherAndPublicationPlacePart(publisherAndPublicationPlacePart);
+        // appendPagesIfBookIsWitchChapter?
         if (book.isWithChapter()) {
             String pagesPart = "";
             pagesPart += ", ";
