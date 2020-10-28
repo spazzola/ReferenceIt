@@ -15,15 +15,16 @@ import com.referenceit.otherprintsource.governmentpublication.GovernmentPublicat
 import com.referenceit.otherprintsource.legislation.LegislationDto;
 import com.referenceit.otherprintsource.legislation.LegislationResponse;
 import com.referenceit.otherprintsource.legislation.LegislationService;
+import com.referenceit.otherprintsource.musicscore.MusicScoreDto;
+import com.referenceit.otherprintsource.musicscore.MusicScoreResponse;
+import com.referenceit.otherprintsource.musicscore.MusicScoreService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-@RestController("/otherprintsource")
+@RestController
+@RequestMapping("/otherprintsource")
 public class OtherPrintSourceController {
 
     private BritishStandardService britishStandardService;
@@ -31,6 +32,7 @@ public class OtherPrintSourceController {
     private GovernmentPublicationService governmentPublicationService;
     private LegislationService legislationService;
     private ExhibitionService exhibitionService;
+    private MusicScoreService musicScoreService;
 
 
     @PostMapping("/britishstandard/create")
@@ -48,7 +50,7 @@ public class OtherPrintSourceController {
         return governmentPublicationService.generateReference(governmentPublicationDto);
     }
 
-    @PostMapping
+    @PostMapping("/exhibition/create")
     public ExhibitionResponse generateExhibitionReference(@RequestBody ExhibitionDto exhibitionDto) {
         return exhibitionService.generateReference(exhibitionDto);
     }
@@ -57,4 +59,10 @@ public class OtherPrintSourceController {
     public LegislationResponse generateLegislationReference(@RequestBody LegislationDto legislationDto) {
         return legislationService.generateReference(legislationDto);
     }
+
+    @PostMapping("/musicscore/create")
+    public MusicScoreResponse generateMusicScoreReference(@RequestBody MusicScoreDto musicScoreDto) {
+        return musicScoreService.generateReference(musicScoreDto);
+    }
+
 }
