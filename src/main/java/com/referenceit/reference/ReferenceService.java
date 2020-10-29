@@ -13,6 +13,9 @@ public class ReferenceService {
 
 
     public String remakeAndAppendMultipleAuthors(List<Author> authors) {
+        if (checkIfItsInstitution(authors)) {
+            return authors.get(0).getSurname().toUpperCase();
+        }
         if (authors.size() > 3) {
             return prepareStringForAuthor(authors.get(0));
         }
@@ -52,6 +55,10 @@ public class ReferenceService {
         resultString += ".";
 
         return resultString;
+    }
+
+    private boolean checkIfItsInstitution(List<Author> authors) {
+        return authors.size() == 1 && authors.get(0).getFirstName() == null && authors.get(0).getSecondName() == null;
     }
 
     private boolean hasAuthorSecondName(Author author) {
