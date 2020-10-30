@@ -21,6 +21,9 @@ import com.referenceit.onlinesource.onlinefilm.OnlineFilmService;
 import com.referenceit.onlinesource.onlineimage.OnlineImageDto;
 import com.referenceit.onlinesource.onlineimage.OnlineImageResponse;
 import com.referenceit.onlinesource.onlineimage.OnlineImageService;
+import com.referenceit.onlinesource.podcast.PodcastDto;
+import com.referenceit.onlinesource.podcast.PodcastResponse;
+import com.referenceit.onlinesource.podcast.PodcastService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,6 +40,7 @@ public class OnlineSourceController {
     private MarketResearchService marketResearchService;
     private OnlineFilmService onlineFilmService;
     private OnlineImageService onlineImageService;
+    private PodcastService podcastService;
 
 
     @PostMapping("/blog/create")
@@ -69,9 +73,14 @@ public class OnlineSourceController {
         return onlineFilmService.generateReference(onlineFilmDto);
     }
 
-    @PostMapping
+    @PostMapping("/onlineimage/create")
     public OnlineImageResponse generateOnlineImageReference(@RequestBody OnlineImageDto onlineImageDto) {
         return onlineImageService.generateReference(onlineImageDto);
+    }
+
+    @PostMapping("/podcast/create")
+    public PodcastResponse generatePodcastReference(@RequestBody PodcastDto podcastDto) {
+        return podcastService.generateReference(podcastDto);
     }
 
 }
