@@ -33,6 +33,9 @@ import com.referenceit.onlinesource.software.SoftwareService;
 import com.referenceit.onlinesource.systematicreview.SystematicReviewDto;
 import com.referenceit.onlinesource.systematicreview.SystematicReviewResponse;
 import com.referenceit.onlinesource.systematicreview.SystematicReviewService;
+import com.referenceit.onlinesource.webpage.WebPageDto;
+import com.referenceit.onlinesource.webpage.WebPageResponse;
+import com.referenceit.onlinesource.webpage.WebPageService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,6 +56,7 @@ public class OnlineSourceController {
     private SocialMediaService socialMediaService;
     private SoftwareService softwareService;
     private SystematicReviewService systematicReviewService;
+    private WebPageService webPageService;
 
 
     @PostMapping("/blog/create")
@@ -108,6 +112,11 @@ public class OnlineSourceController {
     @PostMapping("systematicreview/create")
     public SystematicReviewResponse generateSystematicReviewReference(@RequestBody SystematicReviewDto systematicReviewDto) {
         return systematicReviewService.generateReference(systematicReviewDto);
+    }
+
+    @PostMapping("webpage/create")
+    public WebPageResponse generateWebPageReference(@RequestBody WebPageDto webPageDto) {
+        return webPageService.generateReference(webPageDto);
     }
 
 }
