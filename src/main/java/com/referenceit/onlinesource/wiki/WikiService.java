@@ -18,7 +18,7 @@ public class WikiService {
         return createReference(wiki);
     }
 
-    public WikiResponse createReference(Wiki wiki) {
+    private WikiResponse createReference(Wiki wiki) {
         WikiResponse wikiResponse = new WikiResponse();
 
         String author = referenceService.remakeAndAppendMultipleAuthors(wiki.getAuthors());

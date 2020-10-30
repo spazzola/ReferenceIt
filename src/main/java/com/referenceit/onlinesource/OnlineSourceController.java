@@ -36,6 +36,10 @@ import com.referenceit.onlinesource.systematicreview.SystematicReviewService;
 import com.referenceit.onlinesource.webpage.WebPageDto;
 import com.referenceit.onlinesource.webpage.WebPageResponse;
 import com.referenceit.onlinesource.webpage.WebPageService;
+import com.referenceit.onlinesource.wiki.Wiki;
+import com.referenceit.onlinesource.wiki.WikiDto;
+import com.referenceit.onlinesource.wiki.WikiResponse;
+import com.referenceit.onlinesource.wiki.WikiService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -57,6 +61,7 @@ public class OnlineSourceController {
     private SoftwareService softwareService;
     private SystematicReviewService systematicReviewService;
     private WebPageService webPageService;
+    private WikiService wikiService;
 
 
     @PostMapping("/blog/create")
@@ -117,6 +122,11 @@ public class OnlineSourceController {
     @PostMapping("webpage/create")
     public WebPageResponse generateWebPageReference(@RequestBody WebPageDto webPageDto) {
         return webPageService.generateReference(webPageDto);
+    }
+
+    @PostMapping("wiki/create")
+    public WikiResponse generateWikiReference(@RequestBody WikiDto wikiDto) {
+        return wikiService.generateReference(wikiDto);
     }
 
 }
