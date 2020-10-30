@@ -18,6 +18,9 @@ import com.referenceit.onlinesource.marketresearch.MarketResearchService;
 import com.referenceit.onlinesource.onlinefilm.OnlineFilmDto;
 import com.referenceit.onlinesource.onlinefilm.OnlineFilmResponse;
 import com.referenceit.onlinesource.onlinefilm.OnlineFilmService;
+import com.referenceit.onlinesource.onlineimage.OnlineImageDto;
+import com.referenceit.onlinesource.onlineimage.OnlineImageResponse;
+import com.referenceit.onlinesource.onlineimage.OnlineImageService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +36,7 @@ public class OnlineSourceController {
     private FinancialReportService financialReportService;
     private MarketResearchService marketResearchService;
     private OnlineFilmService onlineFilmService;
+    private OnlineImageService onlineImageService;
 
 
     @PostMapping("/blog/create")
@@ -63,6 +67,11 @@ public class OnlineSourceController {
     @PostMapping("/onlinefilm/create")
     public OnlineFilmResponse generateOnlineFilmReference(@RequestBody OnlineFilmDto onlineFilmDto) {
         return onlineFilmService.generateReference(onlineFilmDto);
+    }
+
+    @PostMapping
+    public OnlineImageResponse generateOnlineImageReference(@RequestBody OnlineImageDto onlineImageDto) {
+        return onlineImageService.generateReference(onlineImageDto);
     }
 
 }
