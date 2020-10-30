@@ -27,6 +27,9 @@ import com.referenceit.onlinesource.podcast.PodcastService;
 import com.referenceit.onlinesource.socialmedia.SocialMediaDto;
 import com.referenceit.onlinesource.socialmedia.SocialMediaResponse;
 import com.referenceit.onlinesource.socialmedia.SocialMediaService;
+import com.referenceit.onlinesource.software.SoftwareDto;
+import com.referenceit.onlinesource.software.SoftwareResponse;
+import com.referenceit.onlinesource.software.SoftwareService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,6 +48,7 @@ public class OnlineSourceController {
     private OnlineImageService onlineImageService;
     private PodcastService podcastService;
     private SocialMediaService socialMediaService;
+    private SoftwareService softwareService;
 
 
     @PostMapping("/blog/create")
@@ -90,6 +94,11 @@ public class OnlineSourceController {
     @PostMapping("/socialmedia/create")
     public SocialMediaResponse generateSocialMediaReference(@RequestBody SocialMediaDto socialMediaDto) {
         return socialMediaService.generateReference(socialMediaDto);
+    }
+
+    @PostMapping("software/create")
+    public SoftwareResponse generateSoftwareReference(@RequestBody SoftwareDto softwareDto) {
+        return softwareService.generateReference(softwareDto);
     }
 
 }
