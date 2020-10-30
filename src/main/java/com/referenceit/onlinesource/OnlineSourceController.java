@@ -9,6 +9,9 @@ import com.referenceit.onlinesource.computergame.ComputerGameService;
 import com.referenceit.onlinesource.email.EmailDto;
 import com.referenceit.onlinesource.email.EmailResponse;
 import com.referenceit.onlinesource.email.EmailService;
+import com.referenceit.onlinesource.financialreport.FinancialReportDto;
+import com.referenceit.onlinesource.financialreport.FinancialReportResponse;
+import com.referenceit.onlinesource.financialreport.FinancialReportService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +24,7 @@ public class OnlineSourceController {
     private BlogService blogService;
     private ComputerGameService computerGameService;
     private EmailService emailService;
+    private FinancialReportService financialReportService;
 
 
     @PostMapping("/blog/create")
@@ -33,9 +37,14 @@ public class OnlineSourceController {
         return computerGameService.generateReference(computerGameDto);
     }
 
-    @PostMapping
+    @PostMapping("/email/create")
     public EmailResponse generateEmailReference(@RequestBody EmailDto emailDto) {
         return emailService.generateReference(emailDto);
+    }
+
+    @PostMapping("/financialreport/create")
+    public FinancialReportResponse generateFinancialReportReference(@RequestBody FinancialReportDto financialReportDto) {
+        return financialReportService.generateReference(financialReportDto);
     }
 
 }
