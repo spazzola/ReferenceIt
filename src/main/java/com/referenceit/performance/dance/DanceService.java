@@ -1,5 +1,6 @@
 package com.referenceit.performance.dance;
 
+import com.referenceit.reference.ReferenceResponse;
 import com.referenceit.reference.ReferenceService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,28 +13,28 @@ public class DanceService {
     private DanceMapper danceMapper;
 
 
-    public DanceResponse generateReference(DanceDto danceDto) {
+    public ReferenceResponse generateReference(DanceDto danceDto) {
         Dance dance = danceMapper.fromDto(danceDto);
 
         return createReference(dance);
     }
 
-    private DanceResponse createReference(Dance dance) {
-        DanceResponse danceResponse = new DanceResponse();
+    private ReferenceResponse createReference(Dance dance) {
+        ReferenceResponse referenceResponse = new ReferenceResponse();
 
         String author = referenceService.remakeAndAppendMultipleAuthors(dance.getAuthors());
         String year = appendYear(dance);
-        danceResponse.setAuthorAndYearPart(author + year);
+        referenceResponse.setFirstPartNormal(author + year);
 
         String title = appendTitle(dance);
-        danceResponse.setTitlePart(title);
+        referenceResponse.setItalicsPart(title);
 
         String company = appendCompanyIfExist(dance);
         String location = appendLocation(dance);
         String seenDate = appendSeenDate(dance);
-        danceResponse.setRestReferenceBodyPart(company + location + seenDate);
+        referenceResponse.setThirdPartNormal(company + location + seenDate);
 
-        return danceResponse;
+        return referenceResponse;
     }
 
     private String appendYear(Dance dance) {

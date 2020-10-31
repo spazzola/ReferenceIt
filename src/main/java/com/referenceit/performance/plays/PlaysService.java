@@ -1,6 +1,7 @@
 package com.referenceit.performance.plays;
 
 import com.referenceit.reference.Author;
+import com.referenceit.reference.ReferenceResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,16 +14,16 @@ public class PlaysService {
     private PlaysMapper playsMapper;
 
 
-    public PlaysResponse generateReference(PlaysDto playsDto) {
+    public ReferenceResponse generateReference(PlaysDto playsDto) {
         Plays plays = playsMapper.fromDto(playsDto);
 
         return createReference(plays);
     }
 
-    private PlaysResponse createReference(Plays plays) {
-        PlaysResponse playsResponse = new PlaysResponse();
+    private ReferenceResponse createReference(Plays plays) {
+        ReferenceResponse referenceResponse = new ReferenceResponse();
 
-        playsResponse.setTitlePart(plays.getTitle());
+        referenceResponse.setItalicsPart(plays.getTitle());
 
         String author = appendAuthor(plays.getAuthors());
         String year = appendYear(plays);
@@ -30,9 +31,9 @@ public class PlaysService {
         String companyName = appendCompanyNameIfExist(plays);
         String location = appendLocation(plays);
         String seenDate = appendSeenDate(plays);
-        playsResponse.setRestReferenceBodyPart(author + year + directorName + companyName + location + seenDate);
+        referenceResponse.setThirdPartNormal(author + year + directorName + companyName + location + seenDate);
 
-        return playsResponse;
+        return referenceResponse;
     }
 
     private String appendAuthor(List<Author> authors) {

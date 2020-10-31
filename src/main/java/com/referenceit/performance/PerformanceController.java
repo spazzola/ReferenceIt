@@ -4,11 +4,10 @@ import com.referenceit.performance.dance.DanceDto;
 import com.referenceit.performance.dance.DanceResponse;
 import com.referenceit.performance.dance.DanceService;
 import com.referenceit.performance.media.MediaDto;
-import com.referenceit.performance.media.MediaResponse;
 import com.referenceit.performance.media.MediaService;
 import com.referenceit.performance.plays.PlaysDto;
-import com.referenceit.performance.plays.PlaysResponse;
 import com.referenceit.performance.plays.PlaysService;
+import com.referenceit.reference.ReferenceResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,17 +26,17 @@ public class PerformanceController {
 
 
     @PostMapping("/dance/create")
-    public DanceResponse generateDanceReference(DanceDto danceDto) {
+    public ReferenceResponse generateDanceReference(DanceDto danceDto) {
         return danceService.generateReference(danceDto);
     }
 
     @PostMapping("/plays/create")
-    public PlaysResponse generatePlaysReference(PlaysDto playsDto) {
+    public ReferenceResponse generatePlaysReference(PlaysDto playsDto) {
         return playsService.generateReference(playsDto);
     }
 
     @PostMapping("/media/create")
-    public MediaResponse generateMediaReference(MediaDto mediaDto) {
+    public ReferenceResponse generateMediaReference(MediaDto mediaDto) {
         return mediaService.generateReference(mediaDto);
     }
 

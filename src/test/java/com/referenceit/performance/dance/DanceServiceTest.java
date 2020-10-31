@@ -1,6 +1,7 @@
 package com.referenceit.performance.dance;
 
 import com.referenceit.reference.Author;
+import com.referenceit.reference.ReferenceResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,16 +34,12 @@ public class DanceServiceTest {
                 .build();
 
         //when
-        DanceResponse danceResponse = danceService.generateReference(danceDto);
-        String referenceResult = "";
-        referenceResult += danceResponse.getAuthorAndYearPart();
-        referenceResult += danceResponse.getTitlePart();
-        referenceResult += danceResponse.getRestReferenceBodyPart();
+        ReferenceResponse referenceResponse = danceService.generateReference(danceDto);
 
         //then
         String expectedResult = "ASHTON, F. (1948) Cinderella. [Royal Opera House, London, 13th January 2004].";
 
-        assertEquals(expectedResult, referenceResult);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
 }

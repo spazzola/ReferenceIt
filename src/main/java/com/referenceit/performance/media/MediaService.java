@@ -1,5 +1,6 @@
 package com.referenceit.performance.media;
 
+import com.referenceit.reference.ReferenceResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,29 +11,29 @@ public class MediaService {
     private MediaMapper mediaMapper;
 
 
-    public MediaResponse generateReference(MediaDto mediaDto) {
+    public ReferenceResponse generateReference(MediaDto mediaDto) {
         Media media = mediaMapper.fromDto(mediaDto);
 
         return createReference(media);
     }
 
-    private MediaResponse createReference(Media media) {
-        MediaResponse mediaResponse = new MediaResponse();
+    private ReferenceResponse createReference(Media media) {
+        ReferenceResponse referenceResponse = new ReferenceResponse();
 
         String title = appendTitle(media);
-        mediaResponse.setTitlePart(title);
+        referenceResponse.setItalicsPart(title);
 
         String year = appendYear(media);
 
         //TODO add else for individual contributor
         if (isReferenceTypeVideo(media)) {
-            return processReferencingVideoType(media, mediaResponse, year);
+            return processReferencingVideoType(media, referenceResponse, year);
         }
         if (isReferenceTypeBroadcast(media)) {
-            return processReferencingBroadcastType(media, mediaResponse, year);
+            return processReferencingBroadcastType(media, referenceResponse, year);
         }
 
-        return mediaResponse;
+        return referenceResponse;
     }
 
     private String appendTitle(Media media) {
@@ -63,28 +64,28 @@ public class MediaService {
         return media.getReferenceType().toUpperCase().equals("VIDEO");
     }
 
-    private MediaResponse processReferencingVideoType(Media media, MediaResponse mediaResponse, String year) {
+    private ReferenceResponse processReferencingVideoType(Media media, ReferenceResponse referenceResponse, String year) {
         String mediaType = appendMediaType(media);
         String directorName = appendDirectorName(media);
         String productionPlace = appendProductionPlace(media);
         String productionCompany = appendProductionCompany(media);
-        mediaResponse.setRestReferenceBodyPart(year + mediaType + directorName + productionPlace + productionCompany);
+        referenceResponse.setThirdPartNormal(year + mediaType + directorName + productionPlace + productionCompany);
 
-        return mediaResponse;
+        return referenceResponse;
     }
 
     private boolean isReferenceTypeBroadcast(Media media) {
         return media.getReferenceType().toUpperCase().equals("BROADCAST");
     }
 
-    private MediaResponse processReferencingBroadcastType(Media media, MediaResponse mediaResponse, String year) {
+    private ReferenceResponse processReferencingBroadcastType(Media media, ReferenceResponse referenceResponse, String year) {
         String episodeNumber = appendEpisodeNumberAndNameIfExist(media);
         String mediaType = appendMediaType(media);
         String channel = appendChannel(media);
         String date = appendExactDate(media);
-        mediaResponse.setRestReferenceBodyPart(year + episodeNumber + mediaType + channel + date);
+        referenceResponse.setThirdPartNormal(year + episodeNumber + mediaType + channel + date);
 
-        return mediaResponse;
+        return referenceResponse;
     }
 
     private String appendEpisodeNumberAndNameIfExist(Media media) {

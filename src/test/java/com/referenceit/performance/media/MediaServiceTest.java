@@ -1,5 +1,6 @@
 package com.referenceit.performance.media;
 
+import com.referenceit.reference.ReferenceResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,15 +31,13 @@ public class MediaServiceTest {
                 .build();
 
         //when
-        MediaResponse mediaResponse = mediaService.generateReference(mediaDto);
-        String referenceResult = "";
-        referenceResult += mediaResponse.getTitlePart();
-        referenceResult += mediaResponse.getRestReferenceBodyPart();
+        ReferenceResponse referenceResponse = mediaService.generateReference(mediaDto);
+
 
         //then
         String expectedResult = "Rebel without a cause. (1983) [Film] Directed by NICHOLAS RAY. USA: Warner Bros.";
 
-        assertEquals(expectedResult, referenceResult);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
     @Test
@@ -56,15 +55,12 @@ public class MediaServiceTest {
                 .build();
 
         //when
-        MediaResponse mediaResponse = mediaService.generateReference(mediaDto);
-        String referenceResult = "";
-        referenceResult += mediaResponse.getTitlePart();
-        referenceResult += mediaResponse.getRestReferenceBodyPart();
+        ReferenceResponse referenceResponse = mediaService.generateReference(mediaDto);
 
         //then
         String expectedResult = "Panorama. (2016) Antibiotic crisis. [TV] BBC2. 23rd May, 2030 hrs.";
 
-        assertEquals(expectedResult, referenceResult);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
     @Test
@@ -83,15 +79,12 @@ public class MediaServiceTest {
                 .build();
 
         //when
-        MediaResponse mediaResponse = mediaService.generateReference(mediaDto);
-        String referenceResult = "";
-        referenceResult += mediaResponse.getTitlePart();
-        referenceResult += mediaResponse.getRestReferenceBodyPart();
+        ReferenceResponse referenceResponse = mediaService.generateReference(mediaDto);
 
         //then
         String expectedResult = "Doctor Who. (2015) Episode 12, Hell bent. [TV] BBC1. 5th December, 2000 hrs.";
 
-        assertEquals(expectedResult, referenceResult);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
 
