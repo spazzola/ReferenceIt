@@ -1,5 +1,6 @@
 package com.referenceit.onlinesource.onlinefilm;
 
+import com.referenceit.reference.ReferenceResponse;
 import com.referenceit.reference.ReferenceService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,26 +13,26 @@ public class OnlineFilmService {
     private OnlineFilmMapper onlineFilmMapper;
 
 
-    public OnlineFilmResponse generateReference(OnlineFilmDto onlineFilmDto) {
+    public ReferenceResponse generateReference(OnlineFilmDto onlineFilmDto) {
         OnlineFilm onlineFilm = onlineFilmMapper.fromDto(onlineFilmDto);
 
         return createReference(onlineFilm);
     }
 
-    private OnlineFilmResponse createReference(OnlineFilm onlineFilm) {
-        OnlineFilmResponse onlineFilmResponse = new OnlineFilmResponse();
+    private ReferenceResponse createReference(OnlineFilm onlineFilm) {
+        ReferenceResponse referenceResponse = new ReferenceResponse();
 
         String author = referenceService.remakeAndAppendMultipleAuthors(onlineFilm.getAuthors());
         String year = appendYear(onlineFilm);
-        onlineFilmResponse.setAuthorAndYearPart(author + year);
+        referenceResponse.setFirstPartNormal(author + year);
 
-        onlineFilmResponse.setTitlePart(onlineFilm.getTitle() + ". ");
+        referenceResponse.setItalicsPart(onlineFilm.getTitle() + ". ");
 
         String availableFrom = "[Online film] Available from: " + onlineFilm.getAvailableFrom();
         String accessedDate = " [Accessed " + onlineFilm.getAccessedDate() + "].";
-        onlineFilmResponse.setRestReferenceBodyPart(availableFrom + accessedDate);
+        referenceResponse.setThirdPartNormal(availableFrom + accessedDate);
 
-        return onlineFilmResponse;
+        return referenceResponse;
     }
 
     private String appendYear(OnlineFilm onlineFilm) {

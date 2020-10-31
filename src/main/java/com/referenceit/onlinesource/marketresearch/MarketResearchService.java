@@ -1,5 +1,6 @@
 package com.referenceit.onlinesource.marketresearch;
 
+import com.referenceit.reference.ReferenceResponse;
 import com.referenceit.reference.ReferenceService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,29 +13,29 @@ public class MarketResearchService {
     private MarketResearchMapper marketResearchMapper;
 
 
-    public MarketResearchResponse generateReference(MarketResearchDto marketResearchDto) {
+    public ReferenceResponse generateReference(MarketResearchDto marketResearchDto) {
         MarketResearch marketResearch = marketResearchMapper.fromDto(marketResearchDto);
 
         return createReference(marketResearch);
     }
 
-    private MarketResearchResponse createReference(MarketResearch marketResearch) {
-        MarketResearchResponse marketResearchResponse = new MarketResearchResponse();
+    private ReferenceResponse createReference(MarketResearch marketResearch) {
+        ReferenceResponse referenceResponse = new ReferenceResponse();
 
         String author = referenceService.remakeAndAppendMultipleAuthors(marketResearch.getAuthors());
         String year = appendYear(marketResearch);
-        marketResearchResponse.setAuthorAndYearPart(author + year);
+        referenceResponse.setFirstPartNormal(author + year);
 
         String title = marketResearch.getTitle();
         String date = appendDateIfExist(marketResearch);
-        marketResearchResponse.setTitleAndDatePart(title + date);
+        referenceResponse.setItalicsPart(title + date);
 
         String edition = appendEditionIfExist(marketResearch);
         String availableFrom = "[Online] Available from: " + marketResearch.getAvailableFrom();
         String accessedDate = " [Accessed " + marketResearch.getAccessedDate() + "].";
-        marketResearchResponse.setRestReferenceBodyPart(edition + availableFrom + accessedDate);
+        referenceResponse.setThirdPartNormal(edition + availableFrom + accessedDate);
 
-        return marketResearchResponse;
+        return referenceResponse;
     }
 
     private String appendYear(MarketResearch marketResearch) {

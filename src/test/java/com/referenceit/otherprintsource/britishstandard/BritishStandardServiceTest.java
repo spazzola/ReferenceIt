@@ -1,5 +1,6 @@
 package com.referenceit.otherprintsource.britishstandard;
 
+import com.referenceit.reference.ReferenceResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,17 +35,12 @@ public class BritishStandardServiceTest {
                 .build();
 
         //when
-        BritishStandardResponse britishStandardResponse = britishStandardService.generateReference(britishStandardDto);
-        String referenceResult = "";
-        referenceResult += britishStandardResponse.getAuthorisingOrganisationNamePart();
-        referenceResult += britishStandardResponse.getYearPart();
-        referenceResult += britishStandardResponse.getTitleOfStandardPart();
-        referenceResult += britishStandardResponse.getPublisherAndPublicationPlacePart();
+        ReferenceResponse referenceResponse = britishStandardService.generateReference(britishStandardDto);
 
         String expectedResult = "BRITISH STANDARDS INSTITUTE (2016) BS ISO 6626-1: Internal Combustion engines. Piston rings. Part 1 Coil-spring-loaded oil control rings made of cast iron. London: British Standards Institute.";
 
         //then
-        assertEquals(expectedResult, referenceResult);
+        assertEquals(expectedResult, referenceResponse.toString());
 
     }
 

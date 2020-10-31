@@ -1,6 +1,7 @@
 package com.referenceit.onlinesource.financialreport;
 
 import com.referenceit.reference.Author;
+import com.referenceit.reference.ReferenceResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,17 +35,13 @@ public class FinancialReportServiceTest {
 
 
         //when
-        FinancialReportResponse financialReportResponse = financialReportService.generateReference(financialReportDto);
-        String referenceResult = "";
-        referenceResult += financialReportResponse.getAuthorAndYearPart();
-        referenceResult += financialReportResponse.getTitlePart();
-        referenceResult += financialReportResponse.getRestReferenceBodyPart();
+        ReferenceResponse referenceResponse = financialReportService.generateReference(financialReportDto);
 
         //then
         String expectedResult = "BUREAU VAN DIJK (2020) Next PLC company report. [Online] " +
                 "Available from: https://fame.bvdinfo.com/version-2020423/fame/1/Companies/Report [Accessed 13/05/20].";
 
-        assertEquals(expectedResult, referenceResult);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
 }

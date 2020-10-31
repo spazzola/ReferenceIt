@@ -1,5 +1,6 @@
 package com.referenceit.journalarticles;
 
+import com.referenceit.reference.ReferenceResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +14,7 @@ public class JournalArticleController {
 
 
     @PostMapping("/create")
-    public JournalArticleResponse generateBookReferences(@RequestBody JournalArticleDto journalArticleDto) {
+    public ReferenceResponse generateBookReferences(@RequestBody JournalArticleDto journalArticleDto) {
 
         return journalArticleService.generateReference(journalArticleDto);
     }

@@ -1,6 +1,7 @@
 package com.referenceit.onlinesource.podcast;
 
 import com.referenceit.reference.Author;
+import com.referenceit.reference.ReferenceResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,17 +36,13 @@ public class PodcastServiceTest {
                 .build();
 
         //when
-        PodcastResponse podcastResponse = podcastService.generateReference(podcastDto);
-        String referenceResult = "";
-        referenceResult += podcastResponse.getAuthorAndYearPart();
-        referenceResult += podcastResponse.getTitlePart();
-        referenceResult += podcastResponse.getRestReferenceBodyPart();
+        ReferenceResponse referenceResponse = podcastService.generateReference(podcastDto);
 
         //then
         String expectedResult = "HOPKIN, K. (2008) The mythical daily water requirement. [Podcast] Scientific American. 2nd April. " +
                 "Available from: http://www.sciam.com/podcast/episode.cfm?id=0BD1CF72-E411-2EE5- A4CDEE3447E81C93 [Accessed 19/06/13].";
 
-        assertEquals(expectedResult, referenceResult);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
 }

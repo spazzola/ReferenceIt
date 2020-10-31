@@ -1,9 +1,9 @@
 package com.referenceit.otherprintsource.conferenceproceedings;
 
 import com.referenceit.otherprintsource.conferenceproceeding.ConferenceProceedingDto;
-import com.referenceit.otherprintsource.conferenceproceeding.ConferenceProceedingResponse;
 import com.referenceit.otherprintsource.conferenceproceeding.ConferenceProceedingService;
 import com.referenceit.reference.Author;
+import com.referenceit.reference.ReferenceResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,21 +44,13 @@ public class ConferenceProceedingServiceTest {
 
 
         //when
-        ConferenceProceedingResponse conferenceProceedingResponse = conferenceProceedingService.generateReference(conferenceProceedingDto);
-        String resultReference = "";
-        resultReference += conferenceProceedingResponse.getAuthorsPart();
-        resultReference += conferenceProceedingResponse.getYearPart();
-        resultReference += conferenceProceedingResponse.getTitlePart();
-        resultReference += conferenceProceedingResponse.getTitleOfConferenceProceedingsPart();
-        resultReference += conferenceProceedingResponse.getPlaceAndDatePart();
-        resultReference += conferenceProceedingResponse.getPublicationPlaceAndPublisherPart();
-        resultReference += conferenceProceedingResponse.getPages();
+        ReferenceResponse referenceResponse = conferenceProceedingService.generateReference(conferenceProceedingDto);
 
         String expectedResult = "HUFFMEYER, M. and SCHREIER, U. (2016) RestACL: An access control language for RESTful services. " +
                 "In: Proceedings of the 2016 ACM International Workshop on attribute Based Access Control, New Orleans, March 2016. New York: ACM, pp. 58-67.";
 
         //then
-        assertEquals(expectedResult, resultReference);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
 }

@@ -1,5 +1,6 @@
 package com.referenceit.onlinesource.podcast;
 
+import com.referenceit.reference.ReferenceResponse;
 import com.referenceit.reference.ReferenceService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,28 +13,28 @@ public class PodcastService {
     private PodcastMapper podcastMapper;
 
 
-    public PodcastResponse generateReference(PodcastDto podcastDto) {
+    public ReferenceResponse generateReference(PodcastDto podcastDto) {
         Podcast podcast = podcastMapper.fromDto(podcastDto);
 
         return createReference(podcast);
     }
 
-    private PodcastResponse createReference(Podcast podcast) {
-        PodcastResponse podcastResponse = new PodcastResponse();
+    private ReferenceResponse createReference(Podcast podcast) {
+        ReferenceResponse referenceResponse = new ReferenceResponse();
 
         String author = referenceService.remakeAndAppendMultipleAuthors(podcast.getAuthors());
         String year = appendYear(podcast);
-        podcastResponse.setAuthorAndYearPart(author + year);
+        referenceResponse.setFirstPartNormal(author + year);
 
-        podcastResponse.setTitlePart(podcast.getTitle() + ". ");
+        referenceResponse.setItalicsPart(podcast.getTitle() + ". ");
 
         String publisher = "[Podcast] " + podcast.getPublisher() + ". ";
         String dayAndMonth = podcast.getDayAndMonth() + ". ";
         String availableFrom = "Available from: " + podcast.getAvailableFrom();
         String accessedDate = " [Accessed " + podcast.getAccessedDate() + "].";
-        podcastResponse.setRestReferenceBodyPart(publisher + dayAndMonth + availableFrom + accessedDate);
+        referenceResponse.setThirdPartNormal(publisher + dayAndMonth + availableFrom + accessedDate);
 
-        return podcastResponse;
+        return referenceResponse;
     }
 
     private String appendYear(Podcast podcast) {

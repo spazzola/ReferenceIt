@@ -1,6 +1,7 @@
 package com.referenceit.onlinesource.blog;
 
 import com.referenceit.reference.Author;
+import com.referenceit.reference.ReferenceResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,17 +36,13 @@ public class BlogServiceTest {
                 .build();
 
         //when
-        BlogResponse blogResponse = blogService.generateReference(blogDto);
-        String referenceResult = "";
-        referenceResult += blogResponse.getAuthorYearAndPostingTitlePart();
-        referenceResult += blogResponse.getSiteTitlePart();
-        referenceResult += blogResponse.getRestReferenceBodyPart();
+        ReferenceResponse referenceResponse = blogService.generateReference(blogDto);
 
         //then
         String expectedResult = "TRANSPORTATION SECURITY ADMINISTRATION (2016) #TSATravelSafe – improving your checkpoint experience & keeping you safe. " +
                 "[Weblog] The TSA Blog. 3rd June. Available from: http://blog.tsa.gov/2016/06/tsatravelsafe-improving-your-checkpoint.html [Accessed 28/06/16].";
 
-        assertEquals(expectedResult, referenceResult);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
 
@@ -63,17 +60,13 @@ public class BlogServiceTest {
                 .build();
 
         //when
-        BlogResponse blogResponse = blogService.generateReference(blogDto);
-        String referenceResult = "";
-        referenceResult += blogResponse.getAuthorYearAndPostingTitlePart();
-        referenceResult += blogResponse.getSiteTitlePart();
-        referenceResult += blogResponse.getRestReferenceBodyPart();
+        ReferenceResponse referenceResponse = blogService.generateReference(blogDto);
 
         //then
         String expectedResult = "TRANSPORTATION SECURITY ADMINISTRATION (2016) " +
                 "[Weblog] The TSA Blog. 3rd June. Available from: http://blog.tsa.gov/2016/06/tsatravelsafe-improving-your-checkpoint.html [Accessed 28/06/16].";
 
-        assertEquals(expectedResult, referenceResult);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
 }

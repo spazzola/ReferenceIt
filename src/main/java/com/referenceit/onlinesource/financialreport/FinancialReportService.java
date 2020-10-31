@@ -1,5 +1,6 @@
 package com.referenceit.onlinesource.financialreport;
 
+import com.referenceit.reference.ReferenceResponse;
 import com.referenceit.reference.ReferenceService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,26 +13,26 @@ public class FinancialReportService {
     private FinancialReportMapper financialReportMapper;
 
 
-    public FinancialReportResponse generateReference(FinancialReportDto financialReportDto) {
+    public ReferenceResponse generateReference(FinancialReportDto financialReportDto) {
         FinancialReport financialReport = financialReportMapper.fromDto(financialReportDto);
 
         return createReference(financialReport);
     }
 
-    private FinancialReportResponse createReference(FinancialReport financialReport) {
-        FinancialReportResponse financialReportResponse = new FinancialReportResponse();
+    private ReferenceResponse createReference(FinancialReport financialReport) {
+        ReferenceResponse referenceResponse = new ReferenceResponse();
 
         String author = referenceService.remakeAndAppendMultipleAuthors(financialReport.getAuthors());
         String year = appendYear(financialReport);
-        financialReportResponse.setAuthorAndYearPart(author + year);
+        referenceResponse.setFirstPartNormal(author + year);
 
-        financialReportResponse.setTitlePart(financialReport.getTitle() + ". [Online] ");
+        referenceResponse.setItalicsPart(financialReport.getTitle() + ". [Online] ");
 
         String availableFrom = "Available from: " + financialReport.getAvailableFrom();
         String accessedDate = " [Accessed " + financialReport.getAccessedDate() + "].";
-        financialReportResponse.setRestReferenceBodyPart(availableFrom + accessedDate);
+        referenceResponse.setThirdPartNormal(availableFrom + accessedDate);
 
-        return financialReportResponse;
+        return referenceResponse;
     }
 
     private String appendYear(FinancialReport financialReport) {

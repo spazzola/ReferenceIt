@@ -1,6 +1,7 @@
 package com.referenceit.onlinesource.socialmedia;
 
 import com.referenceit.reference.Author;
+import com.referenceit.reference.ReferenceResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,16 +36,12 @@ public class SocialMediaServiceTest {
                 .build();
 
         //when
-        SocialMediaResponse socialMediaResponse = socialMediaService.generateReference(socialMediaDto);
-        String referenceResult = "";
-        referenceResult += socialMediaResponse.getAuthorAndYearPart();
-        referenceResult += socialMediaResponse.getTitlePart();
-        referenceResult += socialMediaResponse.getRestReferenceBodyPart();
+        ReferenceResponse referenceResponse = socialMediaService.generateReference(socialMediaDto);
 
         //then
         String expectedResult = "JONES, S. (2015) Referencing group. [Facebook] 5th May. Available from: www.facebook.com [Accessed 04/07/16].";
 
-        assertEquals(expectedResult, referenceResult);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
 }

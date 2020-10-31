@@ -1,6 +1,7 @@
 package com.referenceit.onlinesource.onlinefilm;
 
 import com.referenceit.reference.Author;
+import com.referenceit.reference.ReferenceResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,17 +34,13 @@ public class OnlineFilmServiceTest {
                 .build();
 
         //when
-        OnlineFilmResponse onlineFilmResponse = onlineFilmService.generateReference(onlineFilmDto);
-        String referenceResult = "";
-        referenceResult += onlineFilmResponse.getAuthorAndYearPart();
-        referenceResult += onlineFilmResponse.getTitlePart();
-        referenceResult += onlineFilmResponse.getRestReferenceBodyPart();
+        ReferenceResponse referenceResponse = onlineFilmService.generateReference(onlineFilmDto);
 
         //then
         String expectedResult = "PROQUESTREFWORKS (2012) Adding references to Refworks using direct export. " +
                 "[Online film] Available from: http://www.youtube.com/watch?v=0CzBU5rTzGY [Accessed 17/07/13].";
 
-        assertEquals(expectedResult, referenceResult);
+        assertEquals(expectedResult, referenceResponse.toString());
 
     }
 

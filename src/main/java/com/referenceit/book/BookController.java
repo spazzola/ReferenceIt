@@ -1,5 +1,6 @@
 package com.referenceit.book;
 
+import com.referenceit.reference.ReferenceResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +15,7 @@ public class BookController {
 
 
     @PostMapping("/create")
-    public BookResponse generateBookReferences(@RequestBody BookDto bookDto) {
+    public ReferenceResponse generateBookReferences(@RequestBody BookDto bookDto) {
         return bookService.generateReference(bookDto);
     }
 

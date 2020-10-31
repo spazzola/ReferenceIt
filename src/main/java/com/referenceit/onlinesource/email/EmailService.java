@@ -1,5 +1,6 @@
 package com.referenceit.onlinesource.email;
 
+import com.referenceit.reference.ReferenceResponse;
 import com.referenceit.reference.ReferenceService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,31 +13,29 @@ public class EmailService {
     private ReferenceService referenceService;
 
 
-    public EmailResponse generateReference(EmailDto emailDto) {
+    public ReferenceResponse generateReference(EmailDto emailDto) {
         Email email = emailMapper.fromDto(emailDto);
 
         return createReference(email);
     }
 
-    private EmailResponse createReference(Email email) {
-        EmailResponse emailResponse = new EmailResponse();
+    private ReferenceResponse createReference(Email email) {
+        ReferenceResponse referenceResponse = new ReferenceResponse();
 
         String author = referenceService.remakeAndAppendMultipleAuthors(email.getAuthors());
         String year = appendYear(email);
-        emailResponse.setAuthorAndYearPart(author + year);
-
         String titlePart = email.getTitle() + ". [Online] ";
-        emailResponse.setTitlePart(titlePart);
+        referenceResponse.setFirstPartNormal(author + year + titlePart);
 
-        emailResponse.setElectronicConference(email.getElectronicConference() + ", ");
+        referenceResponse.setItalicsPart(email.getElectronicConference() + ", ");
 
         String dayAndMonthPart = appendDayAndMonth(email);
 
         String availableFrom = "Available from: " + email.getAvailableFrom();
         String accessedDate = " [Accessed " + email.getAccessedDate() + "].";
-        emailResponse.setRestReferenceBodyPart(dayAndMonthPart + availableFrom + accessedDate);
+        referenceResponse.setThirdPartNormal(dayAndMonthPart + availableFrom + accessedDate);
 
-        return emailResponse;
+        return referenceResponse;
     }
 
     private String appendYear(Email email) {

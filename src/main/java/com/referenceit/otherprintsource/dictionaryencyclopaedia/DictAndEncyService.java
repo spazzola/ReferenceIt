@@ -2,6 +2,7 @@ package com.referenceit.otherprintsource.dictionaryencyclopaedia;
 
 import com.referenceit.reference.Author;
 import com.referenceit.reference.Editor;
+import com.referenceit.reference.ReferenceResponse;
 import com.referenceit.reference.ReferenceService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,32 +16,28 @@ public class DictAndEncyService {
     private ReferenceService referenceService;
     private DictAndEncyMapper dictAndEncyMapper;
 
-    public DictAndEncyResponse generateReference(DictAndEncyDto dictAndEncyDto) {
+
+    public ReferenceResponse generateReference(DictAndEncyDto dictAndEncyDto) {
         DictAndEncy dictAndEncy = dictAndEncyMapper.fromDto(dictAndEncyDto);
 
         return createReference(dictAndEncy);
     }
 
-    private DictAndEncyResponse createReference(DictAndEncy dictAndEncy) {
-        DictAndEncyResponse dictAndEncyResponse = new DictAndEncyResponse();
+    private ReferenceResponse createReference(DictAndEncy dictAndEncy) {
+        ReferenceResponse referenceResponse = new ReferenceResponse();
 
         List<Author> authors = dictAndEncy.getAuthors();
 
-        String firstPartNormal = "";
         String authorsPart = referenceService.remakeAndAppendMultipleAuthors(authors);
-        firstPartNormal += authorsPart;
-
         String yearPart = appendYear(dictAndEncy);
-        firstPartNormal += yearPart;
 
         String chapterTitlePart = "";
         chapterTitlePart += appendChapterTitle(dictAndEncy) + "In: ";
         chapterTitlePart += remakeAndAppendMultipleEditors(dictAndEncy.getEditors()) + " ";
-        firstPartNormal += chapterTitlePart;
-        dictAndEncyResponse.setFirstPartNormal(firstPartNormal);
+        referenceResponse.setFirstPartNormal(authorsPart + yearPart + chapterTitlePart);
 
         String bookTitlePart = appendBookTitle(dictAndEncy);
-        dictAndEncyResponse.setSecondPartItalics(bookTitlePart);
+        referenceResponse.setItalicsPart(bookTitlePart);
 
         String thirdPartNormal = "";
 
@@ -63,9 +60,9 @@ public class DictAndEncyService {
         pagesPart += appendPages(dictAndEncy) + ".";
         thirdPartNormal += pagesPart;
 
-        dictAndEncyResponse.setThirdPartNorma(thirdPartNormal);
+        referenceResponse.setThirdPartNormal(thirdPartNormal);
 
-        return dictAndEncyResponse;
+        return referenceResponse;
     }
 
     private String remakeAndAppendMultipleEditors(List<Editor> editors) {

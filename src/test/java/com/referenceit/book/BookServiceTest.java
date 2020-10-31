@@ -2,6 +2,7 @@ package com.referenceit.book;
 
 import com.referenceit.reference.Author;
 import com.referenceit.reference.Editor;
+import com.referenceit.reference.ReferenceResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,17 +35,12 @@ public class BookServiceTest {
                 .build();
 
         //when
-        BookResponse bookResponse = bookService.generateReference(bookDto);
-        String referenceResult = "";
-        referenceResult += bookResponse.getAuthorsPart();
-        referenceResult += bookResponse.getYearPart();
-        referenceResult += bookResponse.getBookTitlePart();
-        referenceResult += bookResponse.getPublisherAndPublicationPlacePart();
+        ReferenceResponse referenceResponse = bookService.generateReference(bookDto);
 
         //then
         String expectedResult = "CLARKE, S. (2011) Textile design. London: Laurence King.";
 
-        assertEquals(expectedResult,referenceResult);
+        assertEquals(expectedResult,referenceResponse.toString());
     }
 
 
@@ -63,18 +59,12 @@ public class BookServiceTest {
                 .build();
 
         //when
-        BookResponse bookResponse = bookService.generateReference(bookDto);
-        String resultReference = "";
-        resultReference += bookResponse.getAuthorsPart();
-        resultReference += bookResponse.getYearPart();
-        resultReference += bookResponse.getBookTitlePart();
-        resultReference += bookResponse.getEditionPart();
-        resultReference += bookResponse.getPublisherAndPublicationPlacePart();
+        ReferenceResponse referenceResponse = bookService.generateReference(bookDto);
 
         //then
         String expectedResult = "SEIDMAN, S. (2012) Contested knowledge. 5th ed. Hoboken, New Jersey: Wiley-Blackwell.";
 
-        assertEquals(expectedResult, resultReference);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
     @Test
@@ -94,17 +84,12 @@ public class BookServiceTest {
                 .build();
 
         //when
-        BookResponse bookResponse = bookService.generateReference(bookDto);
-        String resultReference = "";
-        resultReference += bookResponse.getAuthorsPart();
-        resultReference += bookResponse.getYearPart();
-        resultReference += bookResponse.getBookTitlePart();
-        resultReference += bookResponse.getPublisherAndPublicationPlacePart();
+        ReferenceResponse referenceResponse = bookService.generateReference(bookDto);
 
         //then
         String expectedResult = "SHARDA, R. and TURBAN, E. (2015) Business intelligence: a managerial perspective on analytics. London: Pearson Education.";
 
-        assertEquals(expectedResult, resultReference);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
 
@@ -127,17 +112,12 @@ public class BookServiceTest {
                 .build();
 
         //when
-        BookResponse bookResponse = bookService.generateReference(bookDto);
-        String resultReference = "";
-        resultReference += bookResponse.getAuthorsPart();
-        resultReference += bookResponse.getYearPart();
-        resultReference += bookResponse.getBookTitlePart();
-        resultReference += bookResponse.getPublisherAndPublicationPlacePart();
+        ReferenceResponse referenceResponse = bookService.generateReference(bookDto);
 
         //then
         String expectedResult = "KARAU, H. et al. (2015) Learning Spark. Sebastopol, Ca: O’Reilly.";
 
-        assertEquals(expectedResult, resultReference);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
     @Test
@@ -154,17 +134,12 @@ public class BookServiceTest {
                 .build();
 
         //when
-        BookResponse bookResponse = bookService.generateReference(bookDto);
-        String resultReference = "";
-        resultReference += bookResponse.getEditorsPart();
-        resultReference += bookResponse.getYearPart();
-        resultReference += bookResponse.getBookTitlePart();
-        resultReference += bookResponse.getPublisherAndPublicationPlacePart();
+        ReferenceResponse referenceResponse = bookService.generateReference(bookDto);
 
         //then
         String expectedResult = "FURSE, A. (ed.) (2011) Theatre in pieces: politics, poetics and interdisciplinary collaboration: an anthology of play texts 1966-2010. London: Methuen Drama.";
 
-        assertEquals(expectedResult, resultReference);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
     @Test
@@ -182,17 +157,12 @@ public class BookServiceTest {
                 .build();
 
         //when
-        BookResponse bookResponse = bookService.generateReference(bookDto);
-        String resultReference = "";
-        resultReference += bookResponse.getEditorsPart();
-        resultReference += bookResponse.getYearPart();
-        resultReference += bookResponse.getBookTitlePart();
-        resultReference += bookResponse.getPublisherAndPublicationPlacePart();
+        ReferenceResponse referenceResponse = bookService.generateReference(bookDto);
 
         //then
         String expectedResult = "FURSE, A. and SCHURK, H. (eds.) (2011) Theatre in pieces: politics, poetics and interdisciplinary collaboration: an anthology of play texts 1966-2010. London: Methuen Drama.";
 
-        assertEquals(expectedResult, resultReference);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
     @Test
@@ -211,17 +181,12 @@ public class BookServiceTest {
                 .build();
 
         //when
-        BookResponse bookResponse = bookService.generateReference(bookDto);
-        String resultReference = "";
-        resultReference += bookResponse.getEditorsPart();
-        resultReference += bookResponse.getYearPart();
-        resultReference += bookResponse.getBookTitlePart();
-        resultReference += bookResponse.getPublisherAndPublicationPlacePart();
+        ReferenceResponse referenceResponse = bookService.generateReference(bookDto);
 
         //then
         String expectedResult = "FURSE, A., SCHURK, H. and KOWALSKI, J. (eds.) (2011) Theatre in pieces: politics, poetics and interdisciplinary collaboration: an anthology of play texts 1966-2010. London: Methuen Drama.";
 
-        assertEquals(expectedResult, resultReference);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
 
@@ -243,21 +208,12 @@ public class BookServiceTest {
                 .build();
 
         //when
-        BookResponse bookResponse = bookService.generateReference(bookDto);
-        String resultReference = "";
-        resultReference += bookResponse.getAuthorsPart();
-        resultReference += bookResponse.getYearPart();
-        resultReference += bookResponse.getChapterTitlePartWithEditors();
-        resultReference += bookResponse.getBookTitlePart();
-        resultReference += bookResponse.getPublisherAndPublicationPlacePart();
-        resultReference += bookResponse.getPagesPart();
-
+        ReferenceResponse referenceResponse = bookService.generateReference(bookDto);
 
         //then
         String expectedResult = "SCHURK, H. (2015) Manipulations in imagined space. In: PERREN, C. and MLECEK, M. (eds.) Perception in architecture: here and now. Newcastle upon Tyne: Cambridge Scholars Publishing, pp. 78-85.";
 
-        assertEquals(expectedResult, resultReference);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
-
 
 }

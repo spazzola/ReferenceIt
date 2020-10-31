@@ -1,6 +1,7 @@
 package com.referenceit.otherprintsource.theseanddissertation;
 
 import com.referenceit.reference.Author;
+import com.referenceit.reference.ReferenceResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,16 +36,12 @@ public class TheseAndDissertationServiceTest {
 
 
         //when
-        TheseAndDissertationResponse theseAndDissertationResponse = theseAndDissertationService.generateReference(theseAndDissertationDto);
-        String referenceResult = "";
-        referenceResult += theseAndDissertationResponse.getAuthorAndYearPart();
-        referenceResult += theseAndDissertationResponse.getTitlePart();
-        referenceResult += theseAndDissertationResponse.getRestReferenceBodyPart();
+        ReferenceResponse referenceResponse = theseAndDissertationService.generateReference(theseAndDissertationDto);
 
         //then
         String expectedResult = "NEDERBERG, A. (2012) Corporeality in music for contemporary dance. Thesis (MA), De Montfort University.";
 
-        assertEquals(expectedResult, referenceResult);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
 }

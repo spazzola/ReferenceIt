@@ -1,5 +1,6 @@
 package com.referenceit.onlinesource.computergame;
 
+import com.referenceit.reference.ReferenceResponse;
 import com.referenceit.reference.ReferenceService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,28 +13,28 @@ public class ComputerGameService {
     private ComputerGameMapper computerGameMapper;
 
 
-    public ComputerGameResponse generateReference(ComputerGameDto computerGameDto) {
+    public ReferenceResponse generateReference(ComputerGameDto computerGameDto) {
         ComputerGame computerGame = computerGameMapper.fromDto(computerGameDto);
 
         return createReference(computerGame);
     }
 
-    private ComputerGameResponse createReference(ComputerGame computerGame) {
-        ComputerGameResponse computerGameResponse = new ComputerGameResponse();
+    private ReferenceResponse createReference(ComputerGame computerGame) {
+        ReferenceResponse referenceResponse = new ReferenceResponse();
 
         String author = referenceService.remakeAndAppendMultipleAuthors(computerGame.getAuthors());
         String year = appendYear(computerGame);
-        computerGameResponse.setAuthorAndYearPart(author + year);
+        referenceResponse.setFirstPartNormal(author + year);
 
         String titlePart = computerGame.getTitle() + ". ";
-        computerGameResponse.setTitlepart(titlePart);
+        referenceResponse.setItalicsPart(titlePart);
 
         String mediumOfItem = appendMediumOfItem(computerGame);
         String platform = computerGame.getPlatform() + ". ";
         String publicationPlaceAndPublisher = appendPublicationPlaceAndPublisher(computerGame);
-        computerGameResponse.setRestReferenceBodyPart(mediumOfItem + platform + publicationPlaceAndPublisher);
+        referenceResponse.setThirdPartNormal(mediumOfItem + platform + publicationPlaceAndPublisher);
 
-        return computerGameResponse;
+        return referenceResponse;
     }
 
     private String appendYear(ComputerGame computerGame) {

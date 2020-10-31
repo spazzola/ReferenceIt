@@ -1,5 +1,6 @@
 package com.referenceit.onlinesource.onlineimage;
 
+import com.referenceit.reference.ReferenceResponse;
 import com.referenceit.reference.ReferenceService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,26 +13,26 @@ public class OnlineImageService {
     private OnlineImageMapper onlineImageMapper;
 
 
-    public OnlineImageResponse generateReference(OnlineImageDto onlineImageDto) {
+    public ReferenceResponse generateReference(OnlineImageDto onlineImageDto) {
         OnlineImage onlineImage = onlineImageMapper.fromDto(onlineImageDto);
 
         return createReference(onlineImage);
     }
 
-    private OnlineImageResponse createReference(OnlineImage onlineImage) {
-        OnlineImageResponse onlineImageResponse = new OnlineImageResponse();
+    private ReferenceResponse createReference(OnlineImage onlineImage) {
+        ReferenceResponse referenceResponse = new ReferenceResponse();
 
         String author = referenceService.remakeAndAppendMultipleAuthors(onlineImage.getAuthors());
         String year = appendYear(onlineImage);
-        onlineImageResponse.setAuthorAndYearPart(author + year);
+        referenceResponse.setFirstPartNormal(author + year);
 
-        onlineImageResponse.setTitlePart(onlineImage.getTitle() + ". ");
+        referenceResponse.setItalicsPart(onlineImage.getTitle() + ". ");
 
         String availableFrom = "[Online image] Available from: " + onlineImage.getAvailableFrom();
         String accessedDate = " [Accessed " + onlineImage.getAccessedDate() + "].";
-        onlineImageResponse.setRestReferenceBodyPart(availableFrom + accessedDate);
+        referenceResponse.setThirdPartNormal(availableFrom + accessedDate);
 
-        return onlineImageResponse;
+        return referenceResponse;
     }
 
     private String appendYear(OnlineImage onlineImage) {

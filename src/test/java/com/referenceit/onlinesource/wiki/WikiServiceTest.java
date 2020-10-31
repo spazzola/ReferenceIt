@@ -1,6 +1,7 @@
 package com.referenceit.onlinesource.wiki;
 
 import com.referenceit.reference.Author;
+import com.referenceit.reference.ReferenceResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,17 +34,13 @@ public class WikiServiceTest {
                 .build();
 
         //when
-        WikiResponse wikiResponse = wikiService.generateReference(wikiDto);
-        String referenceResult = "";
-        referenceResult += wikiResponse.getAuthorAndYearPart();
-        referenceResult += wikiResponse.getTitle();
-        referenceResult += wikiResponse.getRestReferenceBodyPart();
+        ReferenceResponse referenceResponse = wikiService.generateReference(wikiDto);
 
         //then
         String expectedResult = "INFOTEACH (2007) Learning_outcomes. [Online] " +
                 "Available from: http://infoteach.org/wiki/doku. php/learning_outcomes [Accessed 18/04/13].";
 
-        assertEquals(expectedResult, referenceResult);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
 }

@@ -2,6 +2,7 @@ package com.referenceit.book;
 
 import com.referenceit.reference.Author;
 import com.referenceit.reference.Editor;
+import com.referenceit.reference.ReferenceResponse;
 import com.referenceit.reference.ReferenceService;
 import org.springframework.stereotype.Service;
 
@@ -18,60 +19,61 @@ public class BookService {
         this.bookMapper = bookMapper;
     }
 
-    public BookResponse generateReference(BookDto bookDto) {
+
+    public ReferenceResponse generateReference(BookDto bookDto) {
         Book book = bookMapper.fromDto(bookDto);
 
         return createReference(book);
     }
 
-    private BookResponse createReference(Book book) {
-        BookResponse bookResponse = new BookResponse();
+    private ReferenceResponse createReference(Book book) {
+        ReferenceResponse referenceResponse = new ReferenceResponse();
 
         List<Author> authors = book.getAuthors();
         List<Editor> editors = book.getEditors();
 
-        // appendEditorsIfExist?
+        String firstPartNormal = "";
         if (editors != null && !book.isWithChapter()) {
-            String editorsPart = remakeAndAppendMultipleEditors(editors);
-            bookResponse.setEditorsPart(editorsPart);
-        // appendAuthorsIfExist?
+            firstPartNormal += remakeAndAppendMultipleEditors(editors);
         } else {
-            String authorsPart = referenceService.remakeAndAppendMultipleAuthors(authors);
-            bookResponse.setAuthorsPart(authorsPart);
+            firstPartNormal += referenceService.remakeAndAppendMultipleAuthors(authors);
         }
+
         String yearPart = appendYear(book);
-        bookResponse.setYearPart(yearPart);
-        // appendChapterIfExist?
+
+        String chapterTitlePart = "";
         if (book.isWithChapter()) {
-            String chapterTitlePart = "";
             chapterTitlePart += appendChapterTitle(book) + "In: ";
             chapterTitlePart += remakeAndAppendMultipleEditors(book.getEditors()) + " ";
-            bookResponse.setChapterTitlePartWithEditors(chapterTitlePart);
+
         }
+        referenceResponse.setFirstPartNormal(firstPartNormal + yearPart + chapterTitlePart);
+
         String bookTitlePart = appendBookTitle(book);
-        bookResponse.setBookTitlePart(bookTitlePart);
-        // appenEditionIfNotFirst?
+        referenceResponse.setItalicsPart(bookTitlePart);
+
+        String thirdPartNormal = "";
         if (checkIfIsNotFirstEdition(book)) {
-            String editionPart = appendEdition(book);
-            bookResponse.setEditionPart(editionPart);
+            thirdPartNormal += appendEdition(book);
         }
+
         String publisherAndPublicationPlacePart = "";
         publisherAndPublicationPlacePart += appendPublicationPlace(book);
         publisherAndPublicationPlacePart += appendPublisher(book);
-        bookResponse.setPublisherAndPublicationPlacePart(publisherAndPublicationPlacePart);
-        // appendPagesIfBookIsWitchChapter?
+        thirdPartNormal += publisherAndPublicationPlacePart;
+
         if (book.isWithChapter()) {
             String pagesPart = "";
             pagesPart += ", ";
             pagesPart += appendPages(book) + ".";
-            bookResponse.setPagesPart(pagesPart);
+            thirdPartNormal += pagesPart;
         } else {
-            String endOfPublicationPlace = bookResponse.getPublisherAndPublicationPlacePart();
-            endOfPublicationPlace += ".";
-            bookResponse.setPublisherAndPublicationPlacePart(endOfPublicationPlace);
+            thirdPartNormal += ".";
         }
 
-        return bookResponse;
+        referenceResponse.setThirdPartNormal(thirdPartNormal);
+
+        return referenceResponse;
     }
 
     private String remakeAndAppendMultipleEditors(List<Editor> editors) {

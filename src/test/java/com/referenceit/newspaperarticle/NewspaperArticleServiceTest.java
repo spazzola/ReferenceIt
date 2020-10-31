@@ -1,6 +1,7 @@
 package com.referenceit.newspaperarticle;
 
 import com.referenceit.reference.Author;
+import com.referenceit.reference.ReferenceResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,18 +37,11 @@ public class NewspaperArticleServiceTest {
                 .build();
 
         //when
-        NewspaperArticleResponse newspaperArticleResponse = newspaperArticleService.generateReference(newspaperArticleDto);
-        String resultReference = "";
-        resultReference += newspaperArticleResponse.getAuthorsPart();
-        resultReference += newspaperArticleResponse.getYearPart();
-        resultReference += newspaperArticleResponse.getArticleTitlePart();
-        resultReference += newspaperArticleResponse.getNewspaperTitlePart();
-        resultReference += newspaperArticleResponse.getDayAndMonthPart();
-        resultReference += newspaperArticleResponse.getPagesPart();
+        ReferenceResponse referenceResponse = newspaperArticleService.generateReference(newspaperArticleDto);
 
         String expectedResult = "ALDRICK, P. (2014) It’s not just academic: universities could make a difference to Britain’s exports. The Times, 9th Jan. p. 45.";
 
-        assertEquals(expectedResult, resultReference);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
     @Test
@@ -68,20 +62,14 @@ public class NewspaperArticleServiceTest {
                 .build();
 
         //when
-        NewspaperArticleResponse newspaperArticleResponse = newspaperArticleService.generateReference(newspaperArticleDto);
-        String resultReference = "";
-        resultReference += newspaperArticleResponse.getAuthorsPart();
-        resultReference += newspaperArticleResponse.getYearPart();
-        resultReference += newspaperArticleResponse.getArticleTitlePart();
-        resultReference += newspaperArticleResponse.getNewspaperTitlePart();
-        resultReference += newspaperArticleResponse.getDayAndMonthPart();
-        resultReference += newspaperArticleResponse.getAvailableFromAndAccessedDatePart();
+        ReferenceResponse referenceResponse = newspaperArticleService.generateReference(newspaperArticleDto);
 
         String expectedResult = "SHARPE, J. (2016) Jamie Vardy: The complete transfer saga as England striker " +
                 "turns down Arsenal for Leicester City. Leicester Mercury. [Online] 23rd June. Available from: " +
                 "http://www.leicestermercury.co.uk/jamie-vardy-the-complete-transfer-saga-as-england-striker-turns-down-arsenal-for-leicester-city/story-29436003-detail/story.html " +
                 "[Accessed 28/06/16].";
 
-        assertEquals(expectedResult, resultReference);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
+
 }

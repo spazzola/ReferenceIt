@@ -1,5 +1,6 @@
 package com.referenceit.otherprintsource.legislation;
 
+import com.referenceit.reference.ReferenceResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,16 +30,12 @@ public class LegislationServiceTest {
                 .build();
 
         //when
-        LegislationResponse legislationResponse = legislationService.generateReference(legislationDto);
-        String referenceResult = "";
-        referenceResult += legislationResponse.getTitleAndYearPart();
-        referenceResult += legislationResponse.getChapterPart();
-        referenceResult += legislationResponse.getPublisherAndPublicationPlacePart();
+        ReferenceResponse referenceResponse = legislationService.generateReference(legislationDto);
 
         //then
         String expectedResult = "Environment Act 2005 (c.25). London: The Stationery Office.";
 
-        assertEquals(expectedResult, referenceResult);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
     @Test
@@ -55,15 +52,12 @@ public class LegislationServiceTest {
                 .build();
 
         //when
-        LegislationResponse legislationResponse = legislationService.generateReference(legislationDto);
-        String referenceResult = "";
-        referenceResult += legislationResponse.getTitleAndYearPart();
-        referenceResult += legislationResponse.getSiOrYearNumber();
-        referenceResult += legislationResponse.getPublisherAndPublicationPlacePart();
+        ReferenceResponse referenceResponse = legislationService.generateReference(legislationDto);
 
         //then
         String expectedResult = "Insolvency Rules 1986 (SI 1986/925). London: HMSO.";
 
-        assertEquals(expectedResult, referenceResult);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
+
 }

@@ -2,6 +2,7 @@ package com.referenceit.journalarticle;
 
 import com.referenceit.journalarticles.*;
 import com.referenceit.reference.Author;
+import com.referenceit.reference.ReferenceResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,20 +42,12 @@ public class JournalArticleServiceTest {
                 .isOnlyAvailableOnline(false)
                 .build();
         //when
-        JournalArticleResponse journalArticleResponse = journalArticleService.generateReference(journalArticleDto);
-        String resultReference = "";
-        resultReference += journalArticleResponse.getAuthorsPart();
-        resultReference += journalArticleResponse.getYearPart();
-        resultReference += journalArticleResponse.getArticleTitlePart();
-        resultReference += journalArticleResponse.getJournalTitlePart();
-        resultReference += journalArticleResponse.getVolIssueMonthPart();
-        resultReference += journalArticleResponse.getPagesPart();
-        resultReference += journalArticleResponse.getDotPart();
+        ReferenceResponse referenceResponse = journalArticleService.generateReference(journalArticleDto);
 
         //then
         String expectedResult = "MAIMON, D. (2012) Adolescents’ violent victimization in the neighbourhood: situational and contextual determinants. British journal of criminology, 52 (4), pp. 808-833.";
 
-        assertEquals(expectedResult, resultReference);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
     @Test
@@ -74,20 +67,12 @@ public class JournalArticleServiceTest {
                 .isOnlyAvailableOnline(false)
                 .build();
         //when
-        JournalArticleResponse journalArticleResponse = journalArticleService.generateReference(journalArticleDto);
-        String resultReference = "";
-        resultReference += journalArticleResponse.getAuthorsPart();
-        resultReference += journalArticleResponse.getYearPart();
-        resultReference += journalArticleResponse.getArticleTitlePart();
-        resultReference += journalArticleResponse.getJournalTitlePart();
-        resultReference += journalArticleResponse.getVolIssueMonthPart();
-        resultReference += journalArticleResponse.getPagesPart();
-        resultReference += journalArticleResponse.getDotPart();
+        ReferenceResponse referenceResponse = journalArticleService.generateReference(journalArticleDto);
 
         //then
         String expectedResult = "MAIMON, D. and LARENS, C. (2012) Adolescents’ violent victimization in the neighbourhood: situational and contextual determinants. British journal of criminology, 52 (4), pp. 808-833.";
 
-        assertEquals(expectedResult, resultReference);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
     @Test
@@ -108,20 +93,12 @@ public class JournalArticleServiceTest {
                 .isOnlyAvailableOnline(false)
                 .build();
         //when
-        JournalArticleResponse journalArticleResponse = journalArticleService.generateReference(journalArticleDto);
-        String resultReference = "";
-        resultReference += journalArticleResponse.getAuthorsPart();
-        resultReference += journalArticleResponse.getYearPart();
-        resultReference += journalArticleResponse.getArticleTitlePart();
-        resultReference += journalArticleResponse.getJournalTitlePart();
-        resultReference += journalArticleResponse.getVolIssueMonthPart();
-        resultReference += journalArticleResponse.getPagesPart();
-        resultReference += journalArticleResponse.getDotPart();
+        ReferenceResponse referenceResponse = journalArticleService.generateReference(journalArticleDto);
 
         //then
         String expectedResult = "MAIMON, D., LARENS, C. and RALPH, P. (2012) Adolescents’ violent victimization in the neighbourhood: situational and contextual determinants. British journal of criminology, 52 (4), pp. 808-833.";
 
-        assertEquals(expectedResult, resultReference);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
 
@@ -145,20 +122,11 @@ public class JournalArticleServiceTest {
                 .isOnlyAvailableOnline(false)
                 .build();
         //when
-        JournalArticleResponse journalArticleResponse = journalArticleService.generateReference(journalArticleDto);
-        String resultReference = "";
-        resultReference += journalArticleResponse.getAuthorsPart();
-        resultReference += journalArticleResponse.getYearPart();
-        resultReference += journalArticleResponse.getArticleTitlePart();
-        resultReference += journalArticleResponse.getJournalTitlePart();
-        resultReference += journalArticleResponse.getVolIssueMonthPart();
-        resultReference += journalArticleResponse.getPagesPart();
-        resultReference += journalArticleResponse.getDotPart();
+        ReferenceResponse referenceResponse = journalArticleService.generateReference(journalArticleDto);
 
-        //then
         String expectedResult = "MAIMON, D.K. (2012) Adolescents’ violent victimization in the neighbourhood: situational and contextual determinants. British journal of criminology, 52 (4), pp. 808-833.";
 
-        assertEquals(expectedResult, resultReference);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
     @Test
@@ -178,21 +146,12 @@ public class JournalArticleServiceTest {
                 .isOnlyAvailableOnline(false)
                 .build();
         //when
-        JournalArticleResponse journalArticleResponse = journalArticleService.generateReference(journalArticleDto);
-        String resultReference = "";
-        resultReference += journalArticleResponse.getAuthorsPart();
-        resultReference += journalArticleResponse.getYearPart();
-        resultReference += journalArticleResponse.getArticleTitlePart();
-        resultReference += journalArticleResponse.getJournalTitlePart();
-        resultReference += journalArticleResponse.getVolIssueMonthPart();
-        resultReference += journalArticleResponse.getPagesPart();
-        resultReference += journalArticleResponse.getDotPart();
-
+        ReferenceResponse referenceResponse = journalArticleService.generateReference(journalArticleDto);
 
         //then
         String expectedResult = "MAIMON, D.K. and LARENS, C.M. (2012) Adolescents’ violent victimization in the neighbourhood: situational and contextual determinants. British journal of criminology, 52 (4), pp. 808-833.";
 
-        assertEquals(expectedResult, resultReference);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
     @Test
@@ -213,20 +172,12 @@ public class JournalArticleServiceTest {
                 .isOnlyAvailableOnline(false)
                 .build();
         //when
-        JournalArticleResponse journalArticleResponse = journalArticleService.generateReference(journalArticleDto);
-        String resultReference = "";
-        resultReference += journalArticleResponse.getAuthorsPart();
-        resultReference += journalArticleResponse.getYearPart();
-        resultReference += journalArticleResponse.getArticleTitlePart();
-        resultReference += journalArticleResponse.getJournalTitlePart();
-        resultReference += journalArticleResponse.getVolIssueMonthPart();
-        resultReference += journalArticleResponse.getPagesPart();
-        resultReference += journalArticleResponse.getDotPart();
+        ReferenceResponse referenceResponse = journalArticleService.generateReference(journalArticleDto);
 
         //then
         String expectedResult = "MAIMON, D.K., LARENS, C.M. and RALPH, P.Y. (2012) Adolescents’ violent victimization in the neighbourhood: situational and contextual determinants. British journal of criminology, 52 (4), pp. 808-833.";
 
-        assertEquals(expectedResult, resultReference);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
 
@@ -252,20 +203,12 @@ public class JournalArticleServiceTest {
                 .accessedDate("28/06/16")
                 .build();
         //when
-        JournalArticleResponse journalArticleResponse = journalArticleService.generateReference(journalArticleDto);
-        String resultReference = "";
-        resultReference += journalArticleResponse.getAuthorsPart();
-        resultReference += journalArticleResponse.getYearPart();
-        resultReference += journalArticleResponse.getArticleTitlePart();
-        resultReference += journalArticleResponse.getJournalTitlePart();
-        resultReference += journalArticleResponse.getOnlinePart();
-        resultReference += journalArticleResponse.getVolIssueMonthPart();
-        resultReference += journalArticleResponse.getAvailableFromAndAccessedDatePart();
+        ReferenceResponse referenceResponse = journalArticleService.generateReference(journalArticleDto);
 
         //then
         String expectedResult = "HEUS, T. and JONKER, H.J. (2008) Subsiding shells around shallow cumulous clouds. Journal of atmospheric sciences. [Online] 65 (3). Available from: doi:org/10.1175/2007Jas2322.1 [Accessed 28/06/16].";
 
-        assertEquals(expectedResult, resultReference);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
     @Test
@@ -286,20 +229,12 @@ public class JournalArticleServiceTest {
                 .accessedDate("28/06/16")
                 .build();
         //when
-        JournalArticleResponse journalArticleResponse = journalArticleService.generateReference(journalArticleDto);
-        String resultReference = "";
-        resultReference += journalArticleResponse.getAuthorsPart();
-        resultReference += journalArticleResponse.getYearPart();
-        resultReference += journalArticleResponse.getArticleTitlePart();
-        resultReference += journalArticleResponse.getJournalTitlePart();
-        resultReference += journalArticleResponse.getOnlinePart();
-        resultReference += journalArticleResponse.getVolIssueMonthPart();
-        resultReference += journalArticleResponse.getAvailableFromAndAccessedDatePart();
+        ReferenceResponse referenceResponse = journalArticleService.generateReference(journalArticleDto);
 
         //then
         String expectedResult = "MAIMON, D.K. and LARENS, C.M. (2008) Subsiding shells around shallow cumulous clouds. Journal of atmospheric sciences. [Online] 65 (3). Available from: doi:org/10.1175/2007Jas2322.1 [Accessed 28/06/16].";
 
-        assertEquals(expectedResult, resultReference);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
     @Test
@@ -321,20 +256,12 @@ public class JournalArticleServiceTest {
                 .accessedDate("28/06/16")
                 .build();
         //when
-        JournalArticleResponse journalArticleResponse = journalArticleService.generateReference(journalArticleDto);
-        String resultReference = "";
-        resultReference += journalArticleResponse.getAuthorsPart();
-        resultReference += journalArticleResponse.getYearPart();
-        resultReference += journalArticleResponse.getArticleTitlePart();
-        resultReference += journalArticleResponse.getJournalTitlePart();
-        resultReference += journalArticleResponse.getOnlinePart();
-        resultReference += journalArticleResponse.getVolIssueMonthPart();
-        resultReference += journalArticleResponse.getAvailableFromAndAccessedDatePart();
+        ReferenceResponse referenceResponse = journalArticleService.generateReference(journalArticleDto);
 
         //then
         String expectedResult = "MAIMON, D.K., LARENS, C.M. and RALPH, P.Y. (2008) Subsiding shells around shallow cumulous clouds. Journal of atmospheric sciences. [Online] 65 (3). Available from: doi:org/10.1175/2007Jas2322.1 [Accessed 28/06/16].";
 
-        assertEquals(expectedResult, resultReference);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
 
@@ -361,19 +288,12 @@ public class JournalArticleServiceTest {
                 .build();
 
         //when
-        JournalArticleResponse journalArticleResponse = journalArticleService.generateReference(journalArticleDto);
-        String resultReference = "";
-        resultReference += journalArticleResponse.getAuthorsPart();
-        resultReference += journalArticleResponse.getYearPart();
-        resultReference += journalArticleResponse.getArticleTitlePart();
-        resultReference += journalArticleResponse.getJournalTitlePart();
-        resultReference += journalArticleResponse.getOnlinePart();
-        resultReference += journalArticleResponse.getAvailableFromAndAccessedDatePart();
+        ReferenceResponse referenceResponse = journalArticleService.generateReference(journalArticleDto);
 
         //then
         String expectedResult = "ROYALL, D.P., THIEL, B.L. and DONALD, A.M. (Forthcoming) Radiation damage of water in environmental scanning electron microscopy. Journal of microscopy. [Online] Available from: http://onlinelibrary.wiley.com/doi/10.1046/j.1365-2818.2001.00948.x/full [Accessed 14/03/15].";
 
-        assertEquals(expectedResult, resultReference);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
     @Test
@@ -395,21 +315,12 @@ public class JournalArticleServiceTest {
                 .accessedDate("17/03/16")
                 .build();
         //when
-        JournalArticleResponse journalArticleResponse = journalArticleService.generateReference(journalArticleDto);
-        String resultReference = "";
-        resultReference += journalArticleResponse.getAuthorsPart();
-        resultReference += journalArticleResponse.getYearPart();
-        resultReference += journalArticleResponse.getArticleTitlePart();
-        resultReference += journalArticleResponse.getJournalTitlePart();
-        resultReference += journalArticleResponse.getForthcomingOrPostprintPart();
-        resultReference += journalArticleResponse.getVolIssueMonthPart();
-        resultReference += journalArticleResponse.getComaAndSpacePart();
-        resultReference += journalArticleResponse.getPagesPart();
-        resultReference += journalArticleResponse.getAvailableFromAndAccessedDatePart();
+        ReferenceResponse referenceResponse = journalArticleService.generateReference(journalArticleDto);
 
         //then
         String expectedResult = "PALIT, D. and BHATTACHARYYA, S.C. (2014) Adoption of cleaner cookstoves: barriers and way forward. Boiling Point [Post-print] (Issue 64), pp. 6-9. Available from: http://hdl.handle. net/2086/11599 [Accessed 17/03/16].";
 
-        assertEquals(expectedResult, resultReference);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
+
 }

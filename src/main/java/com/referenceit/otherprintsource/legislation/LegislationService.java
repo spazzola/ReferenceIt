@@ -1,5 +1,6 @@
 package com.referenceit.otherprintsource.legislation;
 
+import com.referenceit.reference.ReferenceResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,31 +11,31 @@ public class LegislationService {
     private LegislationMapper legislationMapper;
 
 
-    public LegislationResponse generateReference(LegislationDto legislationDto) {
+    public ReferenceResponse generateReference(LegislationDto legislationDto) {
         Legislation legislation = legislationMapper.fromDto(legislationDto);
 
         return createReference(legislation);
     }
 
-    private LegislationResponse createReference(Legislation legislation) {
-        LegislationResponse legislationResponse = new LegislationResponse();
+    private ReferenceResponse createReference(Legislation legislation) {
+        ReferenceResponse referenceResponse = new ReferenceResponse();
 
         String titlePart = appendTitle(legislation);
         String yearPart = appendYear(legislation);
-        legislationResponse.setTitleAndYearPart(titlePart + yearPart);
+        referenceResponse.setItalicsPart(titlePart + yearPart);
 
+        String thirdPartNormal = "";
         if (legislation.isParliamentAct()) {
-            String chapterPart = appendChapter(legislation);
-            legislationResponse.setChapterPart(chapterPart);
+            thirdPartNormal += appendChapter(legislation);
         } else {
-            String siOrYearNumberPart = appendSiOrYearNumber(legislation);
-            legislationResponse.setSiOrYearNumber(siOrYearNumberPart);
+            thirdPartNormal += appendSiOrYearNumber(legislation);
+
         }
 
         String publisherAndPublicationPlacePart = appendPublisherAndPublicationPlace(legislation);
-        legislationResponse.setPublisherAndPublicationPlacePart(publisherAndPublicationPlacePart);
+        referenceResponse.setThirdPartNormal(thirdPartNormal + publisherAndPublicationPlacePart);
 
-        return legislationResponse;
+        return referenceResponse;
     }
 
     private String appendTitle(Legislation legislation) {
@@ -56,4 +57,5 @@ public class LegislationService {
     private String appendSiOrYearNumber(Legislation legislation) {
         return "(SI " + legislation.getSiYearNumber() + "). ";
     }
+
 }

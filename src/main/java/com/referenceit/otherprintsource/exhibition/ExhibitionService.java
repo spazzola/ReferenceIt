@@ -1,5 +1,6 @@
 package com.referenceit.otherprintsource.exhibition;
 
+import com.referenceit.reference.ReferenceResponse;
 import com.referenceit.reference.ReferenceService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,40 +12,39 @@ public class ExhibitionService {
     private ExhibitionMapper exhibitionMapper;
     private ReferenceService referenceService;
 
-    public ExhibitionResponse generateReference(ExhibitionDto exhibitionDto) {
+
+    public ReferenceResponse generateReference(ExhibitionDto exhibitionDto) {
         Exhibition exhibition = exhibitionMapper.fromDto(exhibitionDto);
 
         return createReference(exhibition);
     }
 
-    private ExhibitionResponse createReference(Exhibition exhibition) {
-        ExhibitionResponse exhibitionResponse = new ExhibitionResponse();
+    private ReferenceResponse createReference(Exhibition exhibition) {
+        ReferenceResponse referenceResponse = new ReferenceResponse();
 
         String artistPart = referenceService.remakeAndAppendMultipleAuthors(exhibition.getAuthors());
         String yearPart = appendYear(exhibition);
-        artistPart += yearPart;
-        exhibitionResponse.setArtistAndYearPart(artistPart);
+        referenceResponse.setFirstPartNormal(artistPart + yearPart);
 
         String titlePart = appendTitle(exhibition);
-        exhibitionResponse.setTitlePart(titlePart);
+        referenceResponse.setItalicsPart(titlePart);
 
         if (!exhibition.isItemFromExhibition()) {
             String exhibitionCataloguePlacesAndPublisherPart = "";
             String exhibitionCatalogue = appendExhibitionCatalogue(exhibition);
-            String exhibitionPlaceAndDate = appendExhibitionPlaceAndDate(exhibition);
+            String exhibitionPlaceAndDate = appendExhibitionDate(exhibition);
             String publisherPlace = appendPublisherAndPlace(exhibition);
 
             exhibitionCataloguePlacesAndPublisherPart += exhibitionCatalogue + exhibitionPlaceAndDate + publisherPlace;
-            exhibitionResponse.setExhibitionCataloguePlacesAndPublisherPart(exhibitionCataloguePlacesAndPublisherPart);
-
+            referenceResponse.setThirdPartNormal(exhibitionCataloguePlacesAndPublisherPart);
         } else {
             String itemTypePart = appendItemType(exhibition);
             String locationAndDatePart = appendLocationAndDate(exhibition);
             String itemTypeLocationAndDatePart = itemTypePart + locationAndDatePart;
-            exhibitionResponse.setItemTypeLocationAndDate(itemTypeLocationAndDatePart);
+            referenceResponse.setThirdPartNormal(itemTypeLocationAndDatePart);
         }
 
-        return exhibitionResponse;
+        return referenceResponse;
     }
 
     private String appendYear(Exhibition exhibition) {
@@ -59,19 +59,19 @@ public class ExhibitionService {
         return "[" + exhibition.getItemType() + "] ";
     }
 
-    private String appendLocationAndDate(Exhibition exhibition){
+    private String appendLocationAndDate(Exhibition exhibition) {
         return "[" + exhibition.getLocation() + ", " + exhibition.getDate() + "].";
     }
 
     private String appendExhibitionCatalogue(Exhibition exhibition) {
-        return "[Catalogue of an exhibition held at the " + exhibition.getLocation();
+        return "[Catalogue of an exhibition held at the " + exhibition.getLocation() + ", ";
     }
 
-    private String appendExhibitionPlaceAndDate(Exhibition exhibition) {
-        return exhibition.getLocation() + exhibition.getDate() + "]";
+    private String appendExhibitionDate(Exhibition exhibition) {
+        return exhibition.getDate() + "] ";
     }
 
     private String appendPublisherAndPlace(Exhibition exhibition) {
-        return exhibition.getPublicationPlace() + ": " + exhibition.getPublisher();
+        return exhibition.getPublicationPlace() + ": " + exhibition.getPublisher() + ".";
     }
 }

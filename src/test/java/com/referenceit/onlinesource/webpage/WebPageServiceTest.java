@@ -1,6 +1,7 @@
 package com.referenceit.onlinesource.webpage;
 
 import com.referenceit.reference.Author;
+import com.referenceit.reference.ReferenceResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,17 +35,13 @@ public class WebPageServiceTest {
                 .build();
 
         //when
-        WebPageResponse webPageResponse = webPageService.generateReference(webPageDto);
-        String referenceResult = "";
-        referenceResult += webPageResponse.getAuthorAndYearPart();
-        referenceResult += webPageResponse.getTitlePart();
-        referenceResult += webPageResponse.getRestReferenceBodyPart();
+        ReferenceResponse referenceResponse = webPageService.generateReference(webPageDto);
 
         //then
         String expectedResult = "NHS (2016) Mobile phone safety. [Online] NHS. " +
                 "Available from: http://www.nhs.uk/conditions/Mobile-phone-safety/Pages/Introduction.aspx [Accessed 28/06/16].";
 
-        assertEquals(expectedResult, referenceResult);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
 }

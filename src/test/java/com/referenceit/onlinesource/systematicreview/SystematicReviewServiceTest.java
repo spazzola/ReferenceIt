@@ -1,6 +1,7 @@
 package com.referenceit.onlinesource.systematicreview;
 
 import com.referenceit.reference.Author;
+import com.referenceit.reference.ReferenceResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,17 +40,13 @@ public class SystematicReviewServiceTest {
                 .build();
 
         //when
-        SystematicReviewResponse systematicReviewResponse = systematicReviewService.generateReference(systematicReviewDto);
-        String referenceResult = "";
-        referenceResult += systematicReviewResponse.getAuthorYearAndReviewTitlePart();
-        referenceResult += systematicReviewResponse.getSourceTitlePart();
-        referenceResult += systematicReviewResponse.getIssueAndDatePart();
+        ReferenceResponse referenceResponse = systematicReviewService.generateReference(systematicReviewDto);
 
         //then
         String expectedResult = "GRANT, N.H. et al. (2013) Elective preterm birth for fetal gastroschisis. " +
                 "[Systematic review] Cochrane Database of Systematic Reviews, Issue 6. [Accessed 17/07/13].";
 
-        assertEquals(expectedResult, referenceResult);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
 }

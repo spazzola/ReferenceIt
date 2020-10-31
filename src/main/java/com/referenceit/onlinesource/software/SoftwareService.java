@@ -1,5 +1,6 @@
 package com.referenceit.onlinesource.software;
 
+import com.referenceit.reference.ReferenceResponse;
 import com.referenceit.reference.ReferenceService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,27 +13,27 @@ public class SoftwareService {
     private SoftwareMapper softwareMapper;
 
 
-    public SoftwareResponse generateReference(SoftwareDto softwareDto) {
+    public ReferenceResponse generateReference(SoftwareDto softwareDto) {
         Software software = softwareMapper.fromDto(softwareDto);
 
         return createReference(software);
     }
 
-    private SoftwareResponse createReference(Software software) {
-        SoftwareResponse softwareResponse = new SoftwareResponse();
+    private ReferenceResponse createReference(Software software) {
+        ReferenceResponse referenceResponse = new ReferenceResponse();
 
         String author = referenceService.remakeAndAppendMultipleAuthors(software.getAuthors());
         String year = " (" + software.getYear() + ") ";
-        softwareResponse.setAuthorAndYearPart(author + year);
+        referenceResponse.setFirstPartNormal(author + year);
 
-        softwareResponse.setTitlePart(software.getTitle() + ". ");
+        referenceResponse.setItalicsPart(software.getTitle() + ". ");
 
         String version = "[Software] Version " + software.getVersion() + ". ";
         String publicationPlace = software.getPublicationPlace() + ": ";
         String publisher = software.getPublisher() + ".";
-        softwareResponse.setRestReferenceBodyPart(version + publicationPlace + publisher);
+        referenceResponse.setThirdPartNormal(version + publicationPlace + publisher);
 
-        return softwareResponse;
+        return referenceResponse;
     }
 
 }

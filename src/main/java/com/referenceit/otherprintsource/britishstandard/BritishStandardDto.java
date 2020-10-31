@@ -4,6 +4,7 @@ import com.referenceit.otherprintsource.OtherPrintSource;
 import com.referenceit.reference.Author;
 import com.referenceit.reference.Reference;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -13,7 +14,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@SuperBuilder
+@Builder
 public class BritishStandardDto  {
 
     private List<Author> authors;

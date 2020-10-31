@@ -1,6 +1,7 @@
 package com.referenceit.journalarticles;
 
 import com.referenceit.reference.Author;
+import com.referenceit.reference.ReferenceResponse;
 import com.referenceit.reference.ReferenceService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,64 +16,54 @@ public class JournalArticleService {
     private JournalArticleMapper journalArticleMapper;
 
 
-    public JournalArticleResponse generateReference(JournalArticleDto journalArticleDto) {
+    public ReferenceResponse generateReference(JournalArticleDto journalArticleDto) {
         JournalArticle journalArticle = journalArticleMapper.fromDto(journalArticleDto);
 
         return createReference(journalArticle);
     }
 
-    private JournalArticleResponse createReference(JournalArticle journalArticle) {
-        JournalArticleResponse journalArticleResponse = new JournalArticleResponse();
-
+    private ReferenceResponse createReference(JournalArticle journalArticle) {
+        ReferenceResponse referenceResponse = new ReferenceResponse();
 
         List<Author> authors = journalArticle.getAuthors();
         String authorsPart = referenceService.remakeAndAppendMultipleAuthors(authors) + " ";
-        journalArticleResponse.setAuthorsPart(authorsPart);
-
         String yearPart = appendYear(journalArticle) + " ";
-        journalArticleResponse.setYearPart(yearPart);
-
         String articleTitlePart = journalArticle.getArticleTitle() + ". ";
-        journalArticleResponse.setArticleTitlePart(articleTitlePart);
+        referenceResponse.setFirstPartNormal(authorsPart + yearPart + articleTitlePart);
 
         String journalTitlePart = journalArticle.getJournalTitle();
-        journalArticleResponse.setJournalTitlePart(journalTitlePart);
+        referenceResponse.setItalicsPart(journalTitlePart);
 
+        String thirdPartNormal = "";
         if (journalArticle.isOnlyAvailableOnline() && !journalArticle.isOpenAccessRepo()) {
-            journalArticleResponse.setOnlinePart(". [Online] ");
+            thirdPartNormal += ". [Online] ";
         } else if (journalArticle.isOnlyAvailableOnline() && journalArticle.isOpenAccessRepo()) {
-            journalArticleResponse.setForthcomingOrPostprintPart(" [Post-print]");
+            thirdPartNormal += " [Post-print]";
         } else {
-            journalTitlePart += ", ";
-            journalArticleResponse.setJournalTitlePart(journalTitlePart);
+            thirdPartNormal += ", ";
         }
 
         if (!journalArticle.isNotYetPrinted()) {
-            String volIssueMonthPart = appendVolPartIssueMonthNumber(journalArticle);
-            journalArticleResponse.setVolIssueMonthPart(volIssueMonthPart);
+            thirdPartNormal += appendVolPartIssueMonthNumber(journalArticle);
         }
 
         if (journalArticle.isOpenAccessRepo()) {
-            String pagesPart = appendPages(journalArticle) + ".";
-            journalArticleResponse.setPagesPart(pagesPart);
+            thirdPartNormal += ", " + appendPages(journalArticle) + ".";
         }
 
         if (journalArticle.isOnlyAvailableOnline()) {
-            String availableFromAndAccessedDatePart = appendAvailableFromAndAccessedDate(journalArticle) + ".";
-            journalArticleResponse.setAvailableFromAndAccessedDatePart(availableFromAndAccessedDatePart);
+            thirdPartNormal += appendAvailableFromAndAccessedDate(journalArticle) + ".";
         } else {
             String pagesPart = appendPages(journalArticle);
-            journalArticleResponse.setPagesPart(", " + pagesPart);
+            thirdPartNormal += ", " + pagesPart;
             if (!journalArticle.isOpenAccessRepo()) {
-                String dotPart = ".";
-                journalArticleResponse.setDotPart(dotPart);
+                thirdPartNormal += ".";
             }
         }
 
-        String comaAndSpacePart = ", ";
-        journalArticleResponse.setComaAndSpacePart(comaAndSpacePart);
+        referenceResponse.setThirdPartNormal(thirdPartNormal);
 
-        return journalArticleResponse;
+        return referenceResponse;
     }
 
     private String appendAvailableFromAndAccessedDate(JournalArticle journalArticle) {

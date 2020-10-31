@@ -1,5 +1,6 @@
 package com.referenceit.onlinesource.systematicreview;
 
+import com.referenceit.reference.ReferenceResponse;
 import com.referenceit.reference.ReferenceService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,28 +13,28 @@ public class SystematicReviewService {
     private SystematicReviewMapper systematicReviewMapper;
 
 
-    public SystematicReviewResponse generateReference(SystematicReviewDto systematicReviewDto) {
+    public ReferenceResponse generateReference(SystematicReviewDto systematicReviewDto) {
         SystematicReview systematicReview = systematicReviewMapper.fromDto(systematicReviewDto);
 
         return createReference(systematicReview);
     }
 
-    private SystematicReviewResponse createReference(SystematicReview systematicReview) {
-        SystematicReviewResponse systematicReviewResponse = new SystematicReviewResponse();
+    private ReferenceResponse createReference(SystematicReview systematicReview) {
+        ReferenceResponse referenceResponse = new ReferenceResponse();
 
         String author = referenceService.remakeAndAppendMultipleAuthors(systematicReview.getAuthors());
         String year = appendYear(systematicReview);
         String reviewTitle = appendReviewTitle(systematicReview);
         String additionalPart = "[Systematic review] ";
-        systematicReviewResponse.setAuthorYearAndReviewTitlePart(author + year + reviewTitle + additionalPart);
+        referenceResponse.setFirstPartNormal(author + year + reviewTitle + additionalPart);
 
-        systematicReviewResponse.setSourceTitlePart(systematicReview.getSourceTitle() + ", ");
+        referenceResponse.setItalicsPart(systematicReview.getSourceTitle() + ", ");
 
         String issueNumber = appendIssueNumber(systematicReview);
         String accessedDate = appendAccessedDate(systematicReview);
-        systematicReviewResponse.setIssueAndDatePart(issueNumber + accessedDate);
+        referenceResponse.setThirdPartNormal(issueNumber + accessedDate);
 
-        return systematicReviewResponse;
+        return referenceResponse;
     }
 
     private String appendYear(SystematicReview systematicReview) {

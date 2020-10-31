@@ -1,5 +1,6 @@
 package com.referenceit.otherprintsource.britishstandard;
 
+import com.referenceit.reference.ReferenceResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -9,28 +10,27 @@ public class BritishStandardService {
 
     private BritishStandardMapper britishStandardMapper;
 
-    public BritishStandardResponse generateReference(BritishStandardDto britishStandardDto) {
+
+    public ReferenceResponse generateReference(BritishStandardDto britishStandardDto) {
         BritishStandard britishStandard = britishStandardMapper.fromDto(britishStandardDto);
 
         return createReference(britishStandard);
     }
 
-    private BritishStandardResponse createReference(BritishStandard britishStandard) {
-        BritishStandardResponse britishStandardResponse = new BritishStandardResponse();
+    private ReferenceResponse createReference(BritishStandard britishStandard) {
+        ReferenceResponse referenceResponse = new ReferenceResponse();
 
         String authorisingOrganisationNamePart = appendAuthorisingOrganisationName(britishStandard);
-        britishStandardResponse.setAuthorisingOrganisationNamePart(authorisingOrganisationNamePart);
-
         String yearPart = appendYear(britishStandard);
-        britishStandardResponse.setYearPart(yearPart);
+        referenceResponse.setFirstPartNormal(authorisingOrganisationNamePart + yearPart);
 
         String titleOfStandardPart = appendTitleOfStandard(britishStandard);
-        britishStandardResponse.setTitleOfStandardPart(titleOfStandardPart);
+        referenceResponse.setItalicsPart(titleOfStandardPart);
 
         String publisherAndPublicationPlacePart = appendPublisherAndPublicationPlace(britishStandard);
-        britishStandardResponse.setPublisherAndPublicationPlacePart(publisherAndPublicationPlacePart);
+        referenceResponse.setThirdPartNormal(publisherAndPublicationPlacePart);
 
-        return britishStandardResponse;
+        return referenceResponse;
     }
 
     private String appendAuthorisingOrganisationName(BritishStandard britishStandard) {

@@ -1,5 +1,6 @@
 package com.referenceit.onlinesource.blog;
 
+import com.referenceit.reference.ReferenceResponse;
 import com.referenceit.reference.ReferenceService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,29 +13,29 @@ public class BlogService {
     private ReferenceService referenceService;
 
 
-    public BlogResponse generateReference(BlogDto blogDto) {
+    public ReferenceResponse generateReference(BlogDto blogDto) {
         Blog blog = blogMapper.fromDto(blogDto);
 
         return createReference(blog);
     }
 
-    private BlogResponse createReference(Blog blog) {
-        BlogResponse blogResponse = new BlogResponse();
+    private ReferenceResponse createReference(Blog blog) {
+        ReferenceResponse referenceResponse = new ReferenceResponse();
 
         String author = referenceService.remakeAndAppendMultipleAuthors(blog.getAuthors());
         String year = appendYear(blog);
         String postingTitle = appendPostingTitle(blog);
-        blogResponse.setAuthorYearAndPostingTitlePart(author + year + postingTitle);
+        referenceResponse.setFirstPartNormal(author + year + postingTitle);
 
         String siteTitle = blog.getSiteTitle() + ". ";
-        blogResponse.setSiteTitlePart(siteTitle);
+        referenceResponse.setItalicsPart(siteTitle);
 
         String postedDay = blog.getDayAndMonth() + ". ";
         String availableFrom = "Available from: " + blog.getAvailableFrom();
         String accessedDay = " [Accessed " + blog.getAccessedDate() + "].";
-        blogResponse.setRestReferenceBodyPart(postedDay + availableFrom + accessedDay);
+        referenceResponse.setThirdPartNormal(postedDay + availableFrom + accessedDay);
 
-        return blogResponse;
+        return referenceResponse;
     }
 
     private String appendYear(Blog blog) {

@@ -1,5 +1,6 @@
 package com.referenceit.newspaperarticle;
 
+import com.referenceit.reference.ReferenceResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +13,7 @@ public class NewspaperArticleController {
     private NewspaperArticleService newspaperArticleService;
 
     @PostMapping("/create")
-    public NewspaperArticleResponse generateNewspaperArticleReferences(@RequestBody NewspaperArticleDto newspaperArticleDto) {
+    public ReferenceResponse generateNewspaperArticleReferences(@RequestBody NewspaperArticleDto newspaperArticleDto) {
         return newspaperArticleService.generateReference(newspaperArticleDto);
     }
 

@@ -1,6 +1,7 @@
 package com.referenceit.otherprintsource.musicscore;
 
 import com.referenceit.reference.Author;
+import com.referenceit.reference.ReferenceResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,16 +34,12 @@ public class MusicReportServiceTest {
                 .build();
 
         //when
-        MusicScoreResponse musicScoreResponse = musicScoreService.generateReference(musicScoreDto);
-        String referenceResult = "";
-        referenceResult += musicScoreResponse.getComposerAndYearPart();
-        referenceResult += musicScoreResponse.getTitlePart();
-        referenceResult += musicScoreResponse.getPublisherAndPublicationPlacePart();
+        ReferenceResponse referenceResponse = musicScoreService.generateReference(musicScoreDto);
 
         //then
         String expectedResult = "BACH, J. S. (1970) Organ music. [Music score] New York: Dover Publications.";
 
-        assertEquals(expectedResult, referenceResult);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
 }

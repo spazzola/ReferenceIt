@@ -1,5 +1,6 @@
 package com.referenceit.otherprintsource.theseanddissertation;
 
+import com.referenceit.reference.ReferenceResponse;
 import com.referenceit.reference.ReferenceService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,28 +13,28 @@ public class TheseAndDissertationService {
     private TheseAndDissertationMapper theseAndDissertationMapper;
 
 
-    public TheseAndDissertationResponse generateReference(TheseAndDissertationDto theseAndDissertationDto) {
+    public ReferenceResponse generateReference(TheseAndDissertationDto theseAndDissertationDto) {
         TheseAndDissertation theseAndDissertation = theseAndDissertationMapper.fromDto(theseAndDissertationDto);
 
         return createReference(theseAndDissertation);
     }
 
-    private TheseAndDissertationResponse createReference(TheseAndDissertation theseAndDissertation) {
-        TheseAndDissertationResponse theseAndDissertationResponse = new TheseAndDissertationResponse();
+    private ReferenceResponse createReference(TheseAndDissertation theseAndDissertation) {
+        ReferenceResponse referenceResponse = new ReferenceResponse();
 
         String author = referenceService.remakeAndAppendMultipleAuthors(theseAndDissertation.getAuthors());
         String year = appendYear(theseAndDissertation);
-        theseAndDissertationResponse.setAuthorAndYearPart(author + year);
+        referenceResponse.setFirstPartNormal(author + year);
 
         String titlePart = theseAndDissertation.getTitle() + ". ";
-        theseAndDissertationResponse.setTitlePart(titlePart);
+        referenceResponse.setItalicsPart(titlePart);
 
         String designation = theseAndDissertation.getDesignation();
         String degreeLevel = appendDegreeLevel(theseAndDissertation);
         String institution = theseAndDissertation.getInstitution() + ".";
-        theseAndDissertationResponse.setRestReferenceBodyPart(designation + degreeLevel + institution);
+        referenceResponse.setThirdPartNormal(designation + degreeLevel + institution);
 
-        return theseAndDissertationResponse;
+        return referenceResponse;
     }
 
     private String appendYear(TheseAndDissertation theseAndDissertation) {

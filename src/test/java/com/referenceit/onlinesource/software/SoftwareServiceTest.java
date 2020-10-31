@@ -1,6 +1,7 @@
 package com.referenceit.onlinesource.software;
 
 import com.referenceit.reference.Author;
+import com.referenceit.reference.ReferenceResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,16 +35,12 @@ public class SoftwareServiceTest {
                 .build();
 
         //when
-        SoftwareResponse softwareResponse = softwareService.generateReference(softwareDto);
-        String referenceResult = "";
-        referenceResult += softwareResponse.getAuthorAndYearPart();
-        referenceResult += softwareResponse.getTitlePart();
-        referenceResult += softwareResponse.getRestReferenceBodyPart();
+        ReferenceResponse referenceResponse = softwareService.generateReference(softwareDto);
 
         //then
         String expectedResult = "SPSS (2015) SPSS Statistics. [Software] Version 22. Chicago: SPSS.";
 
-        assertEquals(expectedResult, referenceResult);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
 }

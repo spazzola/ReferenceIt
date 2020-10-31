@@ -1,6 +1,7 @@
 package com.referenceit.onlinesource.lecturenote;
 
 import com.referenceit.reference.Author;
+import com.referenceit.reference.ReferenceResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,17 +39,13 @@ public class LectureNoteServiceTest {
                 .accessedDate("17/07/13")
                 .build();
 
-        LectureNoteResponse lectureNoteResponse = lectureNoteService.generateReference(lectureNoteDto);
-        String referenceResult = "";
-        referenceResult += lectureNoteResponse.getAuthorAndYearPart();
-        referenceResult += lectureNoteResponse.getTitlePart();
-        referenceResult += lectureNoteResponse.getRestReferenceBodyPart();
+        ReferenceResponse referenceResponse = lectureNoteService.generateReference(lectureNoteDto);
 
         //then
         String expectedResult = "HALL, S.M. (2012) Critical analysis- meta-analysis & systematic reviews, " +
                 "from PHAR3504 Practitioner and patient. De Montfort University, Hawthorn Building on 22nd November. Available from Blackboard [Accessed 17/07/13].";
 
-        assertEquals(expectedResult, referenceResult);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
 }

@@ -1,5 +1,6 @@
 package com.referenceit.otherprintsource.governmentpublication;
 
+import com.referenceit.reference.ReferenceResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,61 +11,57 @@ public class GovernmentPublicationService {
     private GovernmentPublicationMapper governmentPublicationMapper;
 
 
-    public GovernmentPublicationResponse generateReference(GovernmentPublicationDto governmentPublicationDto) {
+    public ReferenceResponse generateReference(GovernmentPublicationDto governmentPublicationDto) {
         GovernmentPublication governmentPublication = governmentPublicationMapper.fromDto(governmentPublicationDto);
 
         return createReference(governmentPublication);
     }
 
-    private GovernmentPublicationResponse createReference(GovernmentPublication governmentPublication) {
-        GovernmentPublicationResponse governmentPublicationResponse = new GovernmentPublicationResponse();
+    private ReferenceResponse createReference(GovernmentPublication governmentPublication) {
+        ReferenceResponse referenceResponse = new ReferenceResponse();
 
         String knowBy = standardizeType(governmentPublication);
 
-        if (knowBy.equals("GOVERNMENT")) {
-            governmentPublicationResponse = processReferencingKnowByGovernment(governmentPublication, governmentPublicationResponse);
-        } else if (knowBy.equals("TITLE") || knowBy.equals("CHAIRMAN")) {
-            governmentPublicationResponse = processReferencingKnowByTitleOrChairman(governmentPublication, governmentPublicationResponse);
+        if (knowBy.equals("GOVERNMENT"))
+            referenceResponse = processReferencingKnowByGovernment(governmentPublication, referenceResponse);
+        else if (knowBy.equals("TITLE") || knowBy.equals("CHAIRMAN")) {
+            referenceResponse = processReferencingKnowByTitleOrChairman(governmentPublication, referenceResponse);
         }
-        return governmentPublicationResponse;
+        return referenceResponse;
     }
 
-    private GovernmentPublicationResponse processReferencingKnowByGovernment(
-            GovernmentPublication governmentPublication, GovernmentPublicationResponse governmentPublicationResponse) {
+    private ReferenceResponse processReferencingKnowByGovernment(
+            GovernmentPublication governmentPublication, ReferenceResponse referenceResponse) {
 
         String nameOfIssuingBodyPart = appendNameOfIssuingBodyAndYear(governmentPublication);
-        governmentPublicationResponse.setNameOfIssuingBodyAndYearPart(nameOfIssuingBodyPart);
+        referenceResponse.setFirstPartNormal(nameOfIssuingBodyPart);
 
         String titlePart = appendTitle(governmentPublication);
-        governmentPublicationResponse.setTitlePart(titlePart);
+        referenceResponse.setItalicsPart(titlePart);
 
         String publicationPlaceAndPublisherPart = appendPublicationPlaceAndPublisher(governmentPublication);
 
         if (governmentPublication.getReportNumber() != null) {
             publicationPlaceAndPublisherPart += ", ";
-            governmentPublicationResponse.setPublicationPlaceAndPublisherPart(publicationPlaceAndPublisherPart);
-
             String reportNumberPart = appendReportNumber(governmentPublication);
-            governmentPublicationResponse.setReportNumberPart(reportNumberPart);
+            referenceResponse.setThirdPartNormal(publicationPlaceAndPublisherPart + reportNumberPart);
         }
         else {
             publicationPlaceAndPublisherPart += ".";
-            governmentPublicationResponse.setPublicationPlaceAndPublisherPart(publicationPlaceAndPublisherPart);
-            governmentPublicationResponse.setReportNumberPart("");
+            referenceResponse.setThirdPartNormal(publicationPlaceAndPublisherPart);
+            //referenceResponse.setReportNumberPart("");
         }
-        return governmentPublicationResponse;
+        return referenceResponse;
     }
 
-    private GovernmentPublicationResponse processReferencingKnowByTitleOrChairman(
-            GovernmentPublication governmentPublication, GovernmentPublicationResponse governmentPublicationResponse) {
+    private ReferenceResponse processReferencingKnowByTitleOrChairman(
+            GovernmentPublication governmentPublication, ReferenceResponse referenceResponse) {
 
         String nameOfKnowByPart = appendNameOfKnowBy(governmentPublication);
-        governmentPublicationResponse.setNameOfKnowByPart(nameOfKnowByPart);
-
         String nameOfIssuingBodyPart = appendNameOfIssuingBodyAndYear(governmentPublication);
-        governmentPublicationResponse.setNameOfIssuingBodyAndYearPart(nameOfIssuingBodyPart + ".");
+        referenceResponse.setThirdPartNormal(nameOfKnowByPart + nameOfIssuingBodyPart + ".");
 
-        return governmentPublicationResponse;
+        return referenceResponse;
     }
 
     private String standardizeType(GovernmentPublication governmentPublication) {
@@ -94,4 +91,5 @@ public class GovernmentPublicationService {
     private String appendNameOfKnowBy(GovernmentPublication governmentPublication) {
         return governmentPublication.getNameOfKnowBy() + " - see ";
     }
+
 }

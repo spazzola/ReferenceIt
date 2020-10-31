@@ -1,6 +1,7 @@
 package com.referenceit.otherprintsource.exhibition;
 
 import com.referenceit.reference.Author;
+import com.referenceit.reference.ReferenceResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +31,20 @@ public class ExhibitionServiceTest {
                 .year("1983")
                 .title("William Harris as designer")
                 .exhibitionCatalogue("")
+                .location("Whitworth Art Gallery")
+                .date("3 May – 4 June 1983")
+                .publicationPlace("London")
+                .publisher("Arts Council")
                 .isItemFromExhibition(false)
                 .build();
 
+        //when
+        ReferenceResponse referenceResponse = exhibitionService.generateReference(exhibitionDto);
 
+        //then
         String expectedResult = "HARRIS, W. (1983) William Harris as designer. [Catalogue of an exhibition held at the Whitworth Art Gallery, 3 May – 4 June 1983] London: Arts Council.";
+
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
 
@@ -53,16 +63,12 @@ public class ExhibitionServiceTest {
                 .build();
 
         //when
-        ExhibitionResponse exhibitionResponse = exhibitionService.generateReference(exhibitionDto);
-        String resultReference = "";
-        resultReference += exhibitionResponse.getArtistAndYearPart();
-        resultReference += exhibitionResponse.getTitlePart();
-        resultReference += exhibitionResponse.getItemTypeLocationAndDate();
+        ReferenceResponse referenceResponse = exhibitionService.generateReference(exhibitionDto);
 
         //then
         String expectedResult = "CALDER, A. (c.1953) Antennae with Red and Blue Dots. [Sculpture] [Tate Modern, London, 15th December 2015].";
 
-        assertEquals(expectedResult, resultReference);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
 }

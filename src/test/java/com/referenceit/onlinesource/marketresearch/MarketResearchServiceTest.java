@@ -1,6 +1,7 @@
 package com.referenceit.onlinesource.marketresearch;
 
 import com.referenceit.reference.Author;
+import com.referenceit.reference.ReferenceResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,17 +35,13 @@ public class MarketResearchServiceTest {
                 .build();
 
         //when
-        MarketResearchResponse marketResearchResponse = marketResearchService.generateReference(marketResearchDto);
-        String referenceResult = "";
-        referenceResult += marketResearchResponse.getAuthorAndYearPart();
-        referenceResult += marketResearchResponse.getTitleAndDatePart();
-        referenceResult += marketResearchResponse.getRestReferenceBodyPart();
+        ReferenceResponse referenceResponse = marketResearchService.generateReference(marketResearchDto);
 
         //then
         String expectedResult = "MINTEL OXYGEN (2020) Cider - UK, February 2020. [Online] " +
                 "Available from: https://reports.mintel.com/display/987702/?fromSearch=%3Ffreetext%3Dcider%2520uk [Accessed 13/05/20].";
 
-        assertEquals(expectedResult, referenceResult);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
     @Test
@@ -62,17 +59,13 @@ public class MarketResearchServiceTest {
                 .build();
 
         //when
-        MarketResearchResponse marketResearchResponse = marketResearchService.generateReference(marketResearchDto);
-        String referenceResult = "";
-        referenceResult += marketResearchResponse.getAuthorAndYearPart();
-        referenceResult += marketResearchResponse.getTitleAndDatePart();
-        referenceResult += marketResearchResponse.getRestReferenceBodyPart();
+        ReferenceResponse referenceResponse = marketResearchService.generateReference(marketResearchDto);
 
         //then
         String expectedResult = "MINTEL OXYGEN (2020) Cider - UK, February 2020. 3rd ed. [Online] " +
                 "Available from: https://reports.mintel.com/display/987702/?fromSearch=%3Ffreetext%3Dcider%2520uk [Accessed 13/05/20].";
 
-        assertEquals(expectedResult, referenceResult);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
     @Test
@@ -88,17 +81,13 @@ public class MarketResearchServiceTest {
                 .build();
 
         //when
-        MarketResearchResponse marketResearchResponse = marketResearchService.generateReference(marketResearchDto);
-        String referenceResult = "";
-        referenceResult += marketResearchResponse.getAuthorAndYearPart();
-        referenceResult += marketResearchResponse.getTitleAndDatePart();
-        referenceResult += marketResearchResponse.getRestReferenceBodyPart();
+        ReferenceResponse referenceResponse = marketResearchService.generateReference(marketResearchDto);
 
         //then
         String expectedResult = "MINTEL OXYGEN (2020) Cider - UK. [Online] " +
                 "Available from: https://reports.mintel.com/display/987702/?fromSearch=%3Ffreetext%3Dcider%2520uk [Accessed 13/05/20].";
 
-        assertEquals(expectedResult, referenceResult);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
     @Test
@@ -115,17 +104,13 @@ public class MarketResearchServiceTest {
                 .build();
 
         //when
-        MarketResearchResponse marketResearchResponse = marketResearchService.generateReference(marketResearchDto);
-        String referenceResult = "";
-        referenceResult += marketResearchResponse.getAuthorAndYearPart();
-        referenceResult += marketResearchResponse.getTitleAndDatePart();
-        referenceResult += marketResearchResponse.getRestReferenceBodyPart();
+        ReferenceResponse referenceResponse = marketResearchService.generateReference(marketResearchDto);
 
         //then
         String expectedResult = "MINTEL OXYGEN (2020) Cider - UK. 2nd ed. [Online] " +
                 "Available from: https://reports.mintel.com/display/987702/?fromSearch=%3Ffreetext%3Dcider%2520uk [Accessed 13/05/20].";
 
-        assertEquals(expectedResult, referenceResult);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
 }

@@ -1,6 +1,7 @@
 package com.referenceit.onlinesource.computergame;
 
 import com.referenceit.reference.Author;
+import com.referenceit.reference.ReferenceResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,16 +36,12 @@ public class ComputerGameServiceTest {
                 .build();
 
         //when
-        ComputerGameResponse computerGameResponse = computerGameService.generateReference(computerGameDto);
-        String referenceResult = "";
-        referenceResult += computerGameResponse.getAuthorAndYearPart();
-        referenceResult += computerGameResponse.getTitlepart();
-        referenceResult += computerGameResponse.getRestReferenceBodyPart();
+        ReferenceResponse referenceResponse = computerGameService.generateReference(computerGameDto);
 
         //then
         String expectedResult = "ELECTRONIC ARTS (2003) The Sims. [CD] PlayStation2. London: Electronic Arts Inc.";
 
-        assertEquals(expectedResult, referenceResult);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
 }

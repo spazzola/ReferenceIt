@@ -1,5 +1,6 @@
 package com.referenceit.otherprintsource.marketreport;
 
+import com.referenceit.reference.ReferenceResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,17 +33,12 @@ public class MarketReportServiceTest {
 
 
         //when
-        MarketReportResponse marketReportResponse = marketReportService.generateReference(marketReportDto);
-        String resultReference = "";
-        resultReference += marketReportResponse.getNameOfIssuingBodyAndYearPart();
-        resultReference += marketReportResponse.getTitleAndDatePart();
-        resultReference += marketReportResponse.getRestReferenceBodyPart();
-
+        ReferenceResponse referenceResponse = marketReportService.generateReference(marketReportDto);
 
         String expectedResult = "MINTEL (2016) Researching and buying technology products: Mintel marketing report, June 2016. London: Mintel International.";
 
         //then
-        assertEquals(expectedResult, resultReference);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
 }

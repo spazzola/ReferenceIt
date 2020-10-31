@@ -1,5 +1,6 @@
 package com.referenceit.otherprintsource.governmentpublication;
 
+import com.referenceit.reference.ReferenceResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,17 +31,12 @@ public class GovernmentPublicationServiceTest {
                 .build();
 
         //when
-        GovernmentPublicationResponse governmentPublicationResponse = governmentPublicationService.generateReference(governmentPublicationDto);
-        String resultReference = "";
-        resultReference += governmentPublicationResponse.getNameOfIssuingBodyAndYearPart();
-        resultReference += governmentPublicationResponse.getTitlePart();
-        resultReference += governmentPublicationResponse.getPublicationPlaceAndPublisherPart();
-        resultReference += governmentPublicationResponse.getReportNumberPart();
+        ReferenceResponse referenceResponse = governmentPublicationService.generateReference(governmentPublicationDto);
 
         //then
         String expectedResult = "GREAT BRITAIN. DEPARTMENT OF HEALTH AND SOCIAL SECURITY (1988) Report of the enquiry into child abuse in Cleveland. London: HMSO, Cm413.";
 
-        assertEquals(expectedResult, resultReference);
+        assertEquals(expectedResult, referenceResponse.toString());
 
     }
 
@@ -55,15 +51,12 @@ public class GovernmentPublicationServiceTest {
                 .build();
 
         //when
-        GovernmentPublicationResponse governmentPublicationResponse = governmentPublicationService.generateReference(governmentPublicationDto);
-        String resultReference = "";
-        resultReference += governmentPublicationResponse.getNameOfKnowByPart();
-        resultReference += governmentPublicationResponse.getNameOfIssuingBodyAndYearPart();
+        ReferenceResponse referenceResponse = governmentPublicationService.generateReference(governmentPublicationDto);
 
         //then
         String expectedResult = "The Cleveland Enquiry - see GREAT BRITAIN. DEPARTMENT OF HEALTH AND SOCIAL SECURITY (1988).";
 
-        assertEquals(expectedResult, resultReference);
+        assertEquals(expectedResult, referenceResponse.toString());
 
     }
 
@@ -78,15 +71,13 @@ public class GovernmentPublicationServiceTest {
                 .build();
 
         //when
-        GovernmentPublicationResponse governmentPublicationResponse = governmentPublicationService.generateReference(governmentPublicationDto);
-        String resultReference = "";
-        resultReference += governmentPublicationResponse.getNameOfKnowByPart();
-        resultReference += governmentPublicationResponse.getNameOfIssuingBodyAndYearPart();
+        ReferenceResponse referenceResponse = governmentPublicationService.generateReference(governmentPublicationDto);
 
         //then
         String expectedResult = "Cadbury report - see COMMITTEE ON THE FINANCIAL ASPECTS OF CORPORATE GOVERNANCE (1992).";
 
-        assertEquals(expectedResult, resultReference);
+        assertEquals(expectedResult, referenceResponse.toString());
 
     }
+
 }

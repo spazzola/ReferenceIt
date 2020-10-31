@@ -1,5 +1,6 @@
 package com.referenceit.otherprintsource.marketreport;
 
+import com.referenceit.reference.ReferenceResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,25 +12,25 @@ public class MarketReportService {
     private MarketReportMapper marketReportMapper;
 
 
-    public MarketReportResponse generateReference(MarketReportDto marketReportDto) {
+    public ReferenceResponse generateReference(MarketReportDto marketReportDto) {
         MarketReport marketReport = marketReportMapper.fromDto(marketReportDto);
 
         return createReference(marketReport);
     }
 
-    private MarketReportResponse createReference(MarketReport marketReport) {
-        MarketReportResponse marketReportResponse = new MarketReportResponse();
+    private ReferenceResponse createReference(MarketReport marketReport) {
+        ReferenceResponse referenceResponse = new ReferenceResponse();
 
         String nameOfIssuingBodyAndYearPart = appendIssuingBodyAndYearPart(marketReport);
-        marketReportResponse.setNameOfIssuingBodyAndYearPart(nameOfIssuingBodyAndYearPart);
+        referenceResponse.setFirstPartNormal(nameOfIssuingBodyAndYearPart);
 
         String titleAndYearPart = appendTitleAndDatePart(marketReport);
-        marketReportResponse.setTitleAndDatePart(titleAndYearPart);
+        referenceResponse.setItalicsPart(titleAndYearPart);
 
         String publicationPlaceAndPublisherPart = appendPublicationPlaceAndPublisher(marketReport);
-        marketReportResponse.setRestReferenceBodyPart(publicationPlaceAndPublisherPart);
+        referenceResponse.setThirdPartNormal(publicationPlaceAndPublisherPart);
 
-        return marketReportResponse;
+        return referenceResponse;
     }
 
     private String appendIssuingBodyAndYearPart(MarketReport marketReport) {

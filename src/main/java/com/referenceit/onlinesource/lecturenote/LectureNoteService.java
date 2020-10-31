@@ -1,5 +1,6 @@
 package com.referenceit.onlinesource.lecturenote;
 
+import com.referenceit.reference.ReferenceResponse;
 import com.referenceit.reference.ReferenceService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,29 +13,30 @@ public class LectureNoteService {
     private LectureNoteMapper lectureNoteMapper;
 
 
-    public LectureNoteResponse generateReference(LectureNoteDto lectureNoteDto) {
+    public ReferenceResponse generateReference(LectureNoteDto lectureNoteDto) {
         LectureNote lectureNote = lectureNoteMapper.fromDto(lectureNoteDto);
 
         return createReference(lectureNote);
     }
 
-    private LectureNoteResponse createReference(LectureNote lectureNote) {
-        LectureNoteResponse lectureNoteResponse = new LectureNoteResponse();
+    private ReferenceResponse createReference(LectureNote lectureNote) {
+        ReferenceResponse referenceResponse = new ReferenceResponse();
 
         String author = referenceService.remakeAndAppendMultipleAuthors(lectureNote.getAuthors());
         String year = appendYear(lectureNote);
-        lectureNoteResponse.setAuthorAndYearPart(author + year);
+        referenceResponse.setFirstPartNormal(author + year);
 
-        lectureNoteResponse.setTitlePart(lectureNote.getTitle() + ", ");
+        referenceResponse.setItalicsPart(lectureNote.getTitle() + ", ");
+
         String moduleCode = "from " + lectureNote.getModuleCode() + " ";
         String moduleName = lectureNote.getModuleName() + ". ";
         String location = lectureNote.getTeachingOrganisation() + ", " + lectureNote.getLocation() + " on ";
         String date = lectureNote.getDate() + ". ";
         String availableFrom = "Available from Blackboard ";
         String accessedDate = "[Accessed " + lectureNote.getAccessedDate() + "].";
-        lectureNoteResponse.setRestReferenceBodyPart(moduleCode + moduleName + location + date + availableFrom + accessedDate);
+        referenceResponse.setThirdPartNormal(moduleCode + moduleName + location + date + availableFrom + accessedDate);
 
-        return lectureNoteResponse;
+        return referenceResponse;
     }
 
     private String appendYear(LectureNote lectureNote) {

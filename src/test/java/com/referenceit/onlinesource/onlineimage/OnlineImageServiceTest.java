@@ -1,6 +1,7 @@
 package com.referenceit.onlinesource.onlineimage;
 
 import com.referenceit.reference.Author;
+import com.referenceit.reference.ReferenceResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,17 +34,13 @@ public class OnlineImageServiceTest {
                 .build();
 
         //when
-        OnlineImageResponse onlineImageResponse = onlineImageService.generateReference(onlineImageDto);
-        String referenceResult = "";
-        referenceResult += onlineImageResponse.getAuthorAndYearPart();
-        referenceResult += onlineImageResponse.getTitlePart();
-        referenceResult += onlineImageResponse.getRestReferenceBodyPart();
+        ReferenceResponse referenceResponse = onlineImageService.generateReference(onlineImageDto);
 
         //then
         String expectedResult = "JSCREATIONZS (2012) Gears concept. [Online image] " +
                 "Available from: www.freedigitalphotos.net/ images/search.php?searc [Accessed 19/06/13].";
 
-        assertEquals(expectedResult, referenceResult);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
 }

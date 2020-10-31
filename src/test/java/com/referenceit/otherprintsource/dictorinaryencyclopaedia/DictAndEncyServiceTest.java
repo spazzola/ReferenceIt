@@ -1,10 +1,10 @@
 package com.referenceit.otherprintsource.dictorinaryencyclopaedia;
 
 import com.referenceit.otherprintsource.dictionaryencyclopaedia.DictAndEncyDto;
-import com.referenceit.otherprintsource.dictionaryencyclopaedia.DictAndEncyResponse;
 import com.referenceit.otherprintsource.dictionaryencyclopaedia.DictAndEncyService;
 import com.referenceit.reference.Author;
 import com.referenceit.reference.Editor;
+import com.referenceit.reference.ReferenceResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,17 +42,13 @@ public class DictAndEncyServiceTest {
                 .build();
 
         //when
-        DictAndEncyResponse dictAndEncyResponse = dictAndEncyService.generateReference(dictAndEncyDto);
-        String referenceResult = "";
-        referenceResult += dictAndEncyResponse.getFirstPartNormal();
-        referenceResult += dictAndEncyResponse.getSecondPartItalics();
-        referenceResult += dictAndEncyResponse.getThirdPartNorma();
+        ReferenceResponse referenceResponse = dictAndEncyService.generateReference(dictAndEncyDto);
 
         //then
         String expectedResult = "KESNER, R.P. (2002) Memory neurobiology. In: RAMACHANDRAN, V.S. (ed.) " +
                 "Encyclopedia of the human brain, Vol. 2. San Diego: Academic Press, pp. 783-796.";
 
-        assertEquals(expectedResult, referenceResult);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
     @Test
@@ -74,17 +70,13 @@ public class DictAndEncyServiceTest {
                 .build();
 
         //when
-        DictAndEncyResponse dictAndEncyResponse = dictAndEncyService.generateReference(dictAndEncyDto);
-        String referenceResult = "";
-        referenceResult += dictAndEncyResponse.getFirstPartNormal();
-        referenceResult += dictAndEncyResponse.getSecondPartItalics();
-        referenceResult += dictAndEncyResponse.getThirdPartNorma();
+        ReferenceResponse referenceResponse = dictAndEncyService.generateReference(dictAndEncyDto);
 
         //then
         String expectedResult = "KESNER, R.P. (2002) Memory neurobiology. In: RAMACHANDRAN, V.S. (ed.) " +
                 "Encyclopedia of the human brain, Vol. 2. 3rd ed. San Diego: Academic Press, pp. 783-796.";
 
-        assertEquals(expectedResult, referenceResult);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
     @Test
@@ -105,17 +97,13 @@ public class DictAndEncyServiceTest {
                 .build();
 
         //when
-        DictAndEncyResponse dictAndEncyResponse = dictAndEncyService.generateReference(dictAndEncyDto);
-        String referenceResult = "";
-        referenceResult += dictAndEncyResponse.getFirstPartNormal();
-        referenceResult += dictAndEncyResponse.getSecondPartItalics();
-        referenceResult += dictAndEncyResponse.getThirdPartNorma();
+        ReferenceResponse referenceResponse = dictAndEncyService.generateReference(dictAndEncyDto);
 
         //then
         String expectedResult = "KESNER, R.P. (2002) Memory neurobiology. In: RAMACHANDRAN, V.S. (ed.) " +
                 "Encyclopedia of the human brain. San Diego: Academic Press, pp. 783-796.";
 
-        assertEquals(expectedResult, referenceResult);
+        assertEquals(expectedResult, referenceResponse.toString());
     }
 
 }

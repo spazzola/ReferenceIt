@@ -1,7 +1,7 @@
 package com.referenceit.otherprintsource.musicscore;
 
 import com.referenceit.reference.Author;
-import com.referenceit.reference.ReferenceService;
+import com.referenceit.reference.ReferenceResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,26 +12,26 @@ public class MusicScoreService {
     private MusicScoreMapper musicScoreMapper;
 
 
-    public MusicScoreResponse generateReference(MusicScoreDto musicScoreDto) {
+    public ReferenceResponse generateReference(MusicScoreDto musicScoreDto) {
         MusicScore musicScore = musicScoreMapper.fromDto(musicScoreDto);
 
         return createReference(musicScore);
     }
 
-    private MusicScoreResponse createReference(MusicScore musicScore) {
-        MusicScoreResponse musicScoreResponse = new MusicScoreResponse();
+    private ReferenceResponse createReference(MusicScore musicScore) {
+        ReferenceResponse referenceResponse = new ReferenceResponse();
 
         String composer = remakeAndAppendComposer(musicScore.getAuthors().get(0));
         String year = appendYear(musicScore);
-        musicScoreResponse.setComposerAndYearPart(composer + year);
+        referenceResponse.setFirstPartNormal(composer + year);
 
         String titlePart = musicScore.getTitle() + ". ";
-        musicScoreResponse.setTitlePart(titlePart);
+        referenceResponse.setItalicsPart(titlePart);
 
         String publisherAndPublicationPlacePart = appendPublisherAndPublicationPlace(musicScore);
-        musicScoreResponse.setPublisherAndPublicationPlacePart(publisherAndPublicationPlacePart);
+        referenceResponse.setThirdPartNormal(publisherAndPublicationPlacePart);
 
-        return musicScoreResponse;
+        return referenceResponse;
     }
 
     private String remakeAndAppendComposer(Author author) {

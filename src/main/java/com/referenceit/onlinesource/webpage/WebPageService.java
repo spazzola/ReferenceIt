@@ -1,5 +1,6 @@
 package com.referenceit.onlinesource.webpage;
 
+import com.referenceit.reference.ReferenceResponse;
 import com.referenceit.reference.ReferenceService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,29 +13,29 @@ public class WebPageService {
     private WebPageMapper webPageMapper;
 
 
-    public WebPageResponse generateReference(WebPageDto webPageDto) {
+    public ReferenceResponse generateReference(WebPageDto webPageDto) {
         WebPage webPage = webPageMapper.fromDto(webPageDto);
 
         return createReference(webPage);
     }
 
-    private WebPageResponse createReference(WebPage webPage) {
-        WebPageResponse webPageResponse = new WebPageResponse();
+    private ReferenceResponse createReference(WebPage webPage) {
+        ReferenceResponse referenceResponse = new ReferenceResponse();
 
         String author = referenceService.remakeAndAppendMultipleAuthors(webPage.getAuthors());
         String year = appendYear(webPage);
-        webPageResponse.setAuthorAndYearPart(author + year);
+        referenceResponse.setFirstPartNormal(author + year);
 
         String title = appendTitle(webPage);
-        webPageResponse.setTitlePart(title);
+        referenceResponse.setItalicsPart(title);
 
         String additionalPart = " [Online] ";
         String responsibleOrganisation = appendResponsibleOrganisation(webPage);
         String availableFrom = "Available from: " + webPage.getAvailableFrom();
         String accessedDate = " [Accessed " + webPage.getAccessedDate() + "].";
-        webPageResponse.setRestReferenceBodyPart(additionalPart + responsibleOrganisation + availableFrom + accessedDate);
+        referenceResponse.setThirdPartNormal(additionalPart + responsibleOrganisation + availableFrom + accessedDate);
 
-        return webPageResponse;
+        return referenceResponse;
     }
 
     private String appendYear(WebPage webPage) {
@@ -48,4 +49,5 @@ public class WebPageService {
     private String appendResponsibleOrganisation(WebPage webPage) {
         return webPage.getResponsibleOrganisation() + ". ";
     }
+
 }

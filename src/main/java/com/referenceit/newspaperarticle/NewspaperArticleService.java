@@ -1,6 +1,7 @@
 package com.referenceit.newspaperarticle;
 
 import com.referenceit.reference.Author;
+import com.referenceit.reference.ReferenceResponse;
 import com.referenceit.reference.ReferenceService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,40 +15,35 @@ public class NewspaperArticleService {
     private ReferenceService referenceService;
     private NewspaperArticleMapper newspaperArticleMapper;
 
-    public NewspaperArticleResponse generateReference(NewspaperArticleDto newspaperArticleDto) {
+    public ReferenceResponse generateReference(NewspaperArticleDto newspaperArticleDto) {
         NewspaperArticle newspaperArticle = newspaperArticleMapper.fromDto(newspaperArticleDto);
 
         return createReference(newspaperArticle);
     }
 
-    private NewspaperArticleResponse createReference(NewspaperArticle newspaperArticle) {
-        NewspaperArticleResponse newspaperArticleResponse = new NewspaperArticleResponse();
+    private ReferenceResponse createReference(NewspaperArticle newspaperArticle) {
+        ReferenceResponse referenceResponse = new ReferenceResponse();
         List<Author> authors = newspaperArticle.getAuthors();
 
         String authorsPart = referenceService.remakeAndAppendMultipleAuthors(authors);
-        newspaperArticleResponse.setAuthorsPart(authorsPart);
-
         String yearPart = appendYear(newspaperArticle);
-        newspaperArticleResponse.setYearPart(yearPart);
-
         String articleTitlePart = appendArticleTitle(newspaperArticle);
-        newspaperArticleResponse.setArticleTitlePart(articleTitlePart);
+        referenceResponse.setFirstPartNormal(authorsPart + yearPart + articleTitlePart);
 
         String newspaperTitlePart = appendNewspaperTitleAndOnline(newspaperArticle);
-        newspaperArticleResponse.setNewspaperTitlePart(newspaperTitlePart);
+        referenceResponse.setItalicsPart(newspaperTitlePart);
 
-        String dayAndMonthPart = appendDayAndMonth(newspaperArticle);
-        newspaperArticleResponse.setDayAndMonthPart(dayAndMonthPart);
+        String thirdPartNormal = "";
+        thirdPartNormal += appendDayAndMonth(newspaperArticle);
 
         if (newspaperArticle.isOnlyAvailableOnline()) {
-            String availableFromAndAccessedDatePart = appendAvailableFromAndAccessedDatePart(newspaperArticle);
-            newspaperArticleResponse.setAvailableFromAndAccessedDatePart(availableFromAndAccessedDatePart);
+            thirdPartNormal += appendAvailableFromAndAccessedDatePart(newspaperArticle);
         } else {
-            String pagesPart = appendPages(newspaperArticle);
-            newspaperArticleResponse.setPagesPart(pagesPart);
+           thirdPartNormal += appendPages(newspaperArticle);
         }
+        referenceResponse.setThirdPartNormal(thirdPartNormal);
 
-        return newspaperArticleResponse;
+        return referenceResponse;
     }
 
     private String appendYear(NewspaperArticle newspaperArticle) {

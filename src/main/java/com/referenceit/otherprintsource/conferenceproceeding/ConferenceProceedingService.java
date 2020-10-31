@@ -1,6 +1,7 @@
 package com.referenceit.otherprintsource.conferenceproceeding;
 
 import com.referenceit.reference.Author;
+import com.referenceit.reference.ReferenceResponse;
 import com.referenceit.reference.ReferenceService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,38 +15,31 @@ public class ConferenceProceedingService {
     private ReferenceService referenceService;
     private ConferenceProceedingMapper conferenceProceedingMapper;
 
-    public ConferenceProceedingResponse generateReference(ConferenceProceedingDto conferenceProceedingDto) {
+
+    public ReferenceResponse generateReference(ConferenceProceedingDto conferenceProceedingDto) {
         ConferenceProceeding conferenceProceeding = conferenceProceedingMapper.fromDto(conferenceProceedingDto);
 
         return createReference(conferenceProceeding);
     }
 
-    private ConferenceProceedingResponse createReference(ConferenceProceeding conferenceProceeding) {
-        ConferenceProceedingResponse conferenceProceedingResponse = new ConferenceProceedingResponse();
+    private ReferenceResponse createReference(ConferenceProceeding conferenceProceeding) {
+        ReferenceResponse referenceResponse = new ReferenceResponse();
         List<Author> authors = conferenceProceeding.getAuthors();
 
         String authorsPart = referenceService.remakeAndAppendMultipleAuthors(authors);
-        conferenceProceedingResponse.setAuthorsPart(authorsPart);
-
         String yearPart = appendYear(conferenceProceeding);
-        conferenceProceedingResponse.setYearPart(yearPart);
-
         String titlePart = appendTitle(conferenceProceeding);
-        conferenceProceedingResponse.setTitlePart(titlePart);
+        referenceResponse.setFirstPartNormal(authorsPart + yearPart + titlePart);
 
         String titleOfConferenceProceedingsPart = appendTitleOfConferenceProceedings(conferenceProceeding);
-        conferenceProceedingResponse.setTitleOfConferenceProceedingsPart(titleOfConferenceProceedingsPart);
-
         String placeAndDatePart = appendPlaceAndDate(conferenceProceeding);
-        conferenceProceedingResponse.setPlaceAndDatePart(placeAndDatePart);
+        referenceResponse.setItalicsPart(titleOfConferenceProceedingsPart + placeAndDatePart);
 
         String publicationPlaceAndPublisherPart = appendPublicationPlaceAndPublisher(conferenceProceeding);
-        conferenceProceedingResponse.setPublicationPlaceAndPublisherPart(publicationPlaceAndPublisherPart);
-
         String pagesPart = appendPages(conferenceProceeding);
-        conferenceProceedingResponse.setPages(pagesPart);
+        referenceResponse.setThirdPartNormal(publicationPlaceAndPublisherPart + pagesPart);
 
-        return conferenceProceedingResponse;
+        return referenceResponse;
     }
 
     private String appendYear(ConferenceProceeding conferenceProceeding) {
@@ -71,4 +65,5 @@ public class ConferenceProceedingService {
     private String appendPages(ConferenceProceeding conferenceProceeding) {
         return "pp. " + conferenceProceeding.getPages() + ".";
     }
+
 }

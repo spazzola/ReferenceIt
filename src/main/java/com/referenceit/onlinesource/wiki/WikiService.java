@@ -1,5 +1,6 @@
 package com.referenceit.onlinesource.wiki;
 
+import com.referenceit.reference.ReferenceResponse;
 import com.referenceit.reference.ReferenceService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,27 +13,27 @@ public class WikiService {
     private WikiMapper wikiMapper;
 
 
-    public WikiResponse generateReference(WikiDto wikiDto) {
+    public ReferenceResponse generateReference(WikiDto wikiDto) {
         Wiki wiki = wikiMapper.fromDto(wikiDto);
 
         return createReference(wiki);
     }
 
-    private WikiResponse createReference(Wiki wiki) {
-        WikiResponse wikiResponse = new WikiResponse();
+    private ReferenceResponse createReference(Wiki wiki) {
+        ReferenceResponse referenceResponse = new ReferenceResponse();
 
         String author = referenceService.remakeAndAppendMultipleAuthors(wiki.getAuthors());
         String year = appendYear(wiki);
-        wikiResponse.setAuthorAndYearPart(author + year);
+        referenceResponse.setFirstPartNormal(author + year);
 
         String title = appendTitle(wiki);
-        wikiResponse.setTitle(title);
+        referenceResponse.setItalicsPart(title);
 
         String availableFrom = appendAvailableFrom(wiki);
         String accessedDate = appendAccessedDate(wiki);
-        wikiResponse.setRestReferenceBodyPart(availableFrom + accessedDate);
+        referenceResponse.setThirdPartNormal(availableFrom + accessedDate);
 
-        return wikiResponse;
+        return referenceResponse;
     }
 
     private String appendYear(Wiki wiki) {
